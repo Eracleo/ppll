@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 class Pais(models.Model):
     nombre = models.CharField(max_length=30)
@@ -17,23 +17,31 @@ class Persona(models.Model):
 class Paquete(models.Model):
     nombre = models.CharField(max_length=20)
     precio = models.FloatField()
-    # link = models.UrlField()
+    descripcion = models.TextField()
+    user = models.ForeignKey(User)
     creado = models.DateField()
+    estado = models.BooleanField(default=True)
     def __unicode__(self):
         return self.nombre
-class Evento(models.Model):
-    fecha_viaje = models.DateField()
-    paquete = models.ForeignKey(Paquete)
-    def __unicode__(self):
-        return "Es un viaje"
 class Reserva(models.Model):
+    paquete = models.ForeignKey(Paquete)
+    cantidad_personas = models.IntegerField(default=0)
+    precio = models.FloatField()
+    user = models.ForeignKey(User)
     creado = models.DateTimeField()
-    precio = models.FloatField()
-    pagado = models.FloatField()
-class ReservaDetalle(models.Model):
-    evento = models.ForeignKey(Evento)
-    persona = models.ForeignKey(Persona)
-    reserva = models.ForeignKey(Reserva)
-    precio = models.FloatField()
+    estado = models.BooleanField(default=True)
     def __unicode__(self):
-        return "detalle reserva"
+        return "Una reserva"
+class ReservaDetalle(models.Model):
+    reserva = models.ForeignKey(Reserva)
+    persona = models.ForeignKey(Persona)
+    def __unicode__(self):
+        return "Detalle Reserva"
+class Rubro(models.Model):
+    nombre = models.CharField(max_length=120)
+    def __unicode__(self):
+        return self.nombre
+class ContactoInfo(models.Model):
+    direccion = models.CharField(max_length=120)
+    def __unicode__(self):
+        return self.direccion
