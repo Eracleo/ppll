@@ -12,6 +12,7 @@ class Persona(models.Model):
     doc_nro = models.CharField(max_length=10)
     pais = models.ForeignKey(Pais)
     edad = models.IntegerField()
+    creado = models.DateField()
     def __unicode__(self):
         return self.nombre
 class Paquete(models.Model):
@@ -30,6 +31,9 @@ class Reserva(models.Model):
     user = models.ForeignKey(User)
     creado = models.DateTimeField()
     estado = models.BooleanField(default=True)
+    def save(self, *args, **kwargs):
+        self.user = self.paquete.user
+        super(Reserva,self).save(*args,**kwargs)
     def __unicode__(self):
         return "Una reserva"
 class ReservaDetalle(models.Model):
