@@ -1,3 +1,4 @@
 *.pyc
 *.sqlite3
 ppll/urls.pyc
+ppll/*.pyc
