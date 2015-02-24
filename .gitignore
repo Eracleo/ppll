@@ -6,6 +6,8 @@ ppll/__init__.pyc
 ppll/wsgi.pyc
 pyllik/fixtures/*.pyc
 pyllik/fixtures/*.py
+pyllik/migrations/*.pyc
+pyllik/migrations/*.py
 
 user/migrations/*.pyc
 user/migrations/*.py
