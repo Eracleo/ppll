@@ -1,4 +1,11 @@
 *.pyc
 *.sqlite3
 ppll/urls.pyc
-ppll/*.pyc
+ppll/settingc.pyc
+ppll/__init__.pyc
+ppll/wsgi.pyc
+pyllik/fixtures/*.pyc
+pyllik/fixtures/*.py
+
+user/migrations/*.pyc
+user/migrations/*.py

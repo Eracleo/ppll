@@ -1,0 +1,81 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields":
+        {
+            "username": "juan",
+            "first_name": "",
+            "last_name": "",
+            "is_active": true,
+            "is_superuser": true,
+            "is_staff": true,
+            "last_login": "2015-02-23T17:45:15.895Z",
+            "groups": [],
+            "user_permissions": [],
+            "password": "pbkdf2_sha256$15000$T6U4RJ0JoRaN$KAX2KGWJlMHDKkUyBLohwEo2y6AbKMBdgr0+e8OXSw0=",
+            "email": "juan@llika.com",
+            "date_joined": "2015-02-23T17:44:55.104Z"
+        },
+    },
+{
+    "model": "auth.user",
+    "pk": 2
+    "fields":
+    {
+        "username": "agencia",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_superuser": false,
+        "is_staff": false,
+        "last_login": "2015-02-23T17:47:07.152Z",
+        "groups": [],
+        "user_permissions": [],
+        "password": "pbkdf2_sha256$15000$9rnUav4Hue89$Us5cHzEVdfM5H0uC+ph5idtLiVWADz3+zk8JBVigf/4=",
+        "email": "",
+        "date_joined": "2015-02-23T17:47:07.152Z"},
+    },
+  {
+    "model": "pyllik.pais",
+    "pk": 1,
+    "fields": {"nombre": "Peru"}
+  },{
+    "model": "pyllik.pais",
+    "pk": 2,
+    "fields": {"nombre": "Argentina"}
+  },{
+    "model": "pyllik.pais",
+    "pk": 3,
+    "fields": {"nombre": "Mexico"}
+  },
+  {
+    "model": "pyllik.rubro",
+    "pk": 1,
+    "fields": {"nombre": "Agencia de Viajes"}
+  },
+  {
+    "model": "pyllik.paquete",
+    "pk": 1,
+    "fields": {
+        "precio": 20.0,
+        "creado": "2015-02-23",
+        "user": 2,
+        "descripcion": "Un pase por la ciudad de cusco",
+        "nombre": "City Tour",
+        "estado": true
+    }
+  },{
+    "model": "pyllik.paquete",
+    "pk": 2,
+    "fields":
+    {
+        "precio": 20.0,
+        "creado": "2015-02-23",
+        "user": 2,
+        "descripcion": "Viaje a machupicchu",
+        "nombre": "Inka jungle to machupicchu",
+        "estado": true
+    }
+  },
+]

@@ -24,7 +24,7 @@ class Paquete(models.Model):
     precio = models.FloatField(default=0)
     descripcion = models.TextField(blank=True)
     user = models.ForeignKey(User)
-    creado = models.DateField(auto_now_add=True)
+    creado = models.DateField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
     def __unicode__(self):
         return self.nombre
@@ -33,7 +33,7 @@ class Reserva(models.Model):
     cantidad_personas = models.IntegerField(default=0)
     precio = models.FloatField(default=0)
     user = models.ForeignKey(User)
-    creado = models.DateTimeField(auto_now_add=True)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
     def save(self, *args, **kwargs):
         self.user = self.paquete.user
