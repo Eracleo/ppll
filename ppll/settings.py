@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pyllik',
+    'usuario',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -85,3 +86,8 @@ STATIC_URL = '/assets/'
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
+
+# Redirect when login is correct.
+LOGIN_REDIRECT_URL = "/user/home"
+# Redirect when login is not correct.
+LOGIN_URL = '/'
