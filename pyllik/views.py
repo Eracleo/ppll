@@ -1,11 +1,9 @@
 from django.shortcuts import render
-from pyllik.forms import PostForm
+from django.views.generic import ListView
 from .models import Paquete
+from pyllik.forms import PostForm
 def index(request):
     return render(request,'index.html')
-# Create your views here.
-
-
 #Nuevo formularios
 def index(request):
     if request.method == 'GET':
@@ -22,7 +20,7 @@ def index(request):
                                          created_at=created_at)
             return HttpResponseRedirect(reverse('post_detail',
                                                 kwargs={'post_id': post.id}))
- 			#return HttpResponseRedirect(reverse('post_detail', kwargs={'pk': post.id}))
+            #return HttpResponseRedirect(reverse('post_detail', kwargs={'pk': post.id}))
     return render(request, 'f_reservar.html', {
         'form': form,
     })
@@ -40,3 +38,7 @@ def detalle(request):
         return render(request,'detalle.html',context)
     else :
         HttpResponseRedirect('/')
+# Create your views here.
+def ListarPaquetes(request):
+	paquetes = Paquete.objects.all()
+	return render(request,'layout/listarpaquetes.html',{'paquetes':paquetes})
