@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView
-from .models import Paqu
+from .models import Paquete
 
 def index(request):
     return render(request,'index.html')
