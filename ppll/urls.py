@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^$',views.index,name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('usuario.urls')),
+    url(r'^reservar/', include('pyllik.urls')),
 )
