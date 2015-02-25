@@ -1,0 +1,28 @@
+{% extends "layout/base.html" %}
+{% block title %}Listar Paquetes...!
+	
+	<table border="1">
+      <tr>
+                        <td><b>Nombre</b></td> 
+                        <td><b>Precio</b></td> 
+                        <td><b>Descripcion</b></td>  
+                        <td><b>Usuario</b></td>  
+                        <td><b>Estado</b></td>
+                        <td><b>Creado por</b></td>
+                        <td><b>Acción</b></td>
+
+                  </tr>
+		{% for paquete in paquetes %}
+			<tr>
+      			<td>{{paquete.nombre}}</td>
+      			<td>{{paquete.precio}}</td>   
+      			<td>{{paquete.descripcion}}</td> 
+      			<td>{{paquete.user}}</td>  
+      			<td>{{paquete.estado}}</td> 
+      			<td>{{paquete.creado}}</td>		
+      			<td style="color:red">Desactivar</td>	
+      			<td style="color:red">Modificar</td>	
+      		</tr>      		     									
+		{% endfor %}
+	</table>
+{% endblock%}
