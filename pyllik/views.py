@@ -26,18 +26,22 @@ def index(request):
     })
 def detalle(request):
     if request.POST :
-        paquete_id = 1# request.POST.get('paquete_id')
+        paquete_id =  request.POST.get('Paquete_Id')
         paquete = Paquete.objects.get(id=paquete_id)
-        cantidad_personas = request.POST.get('cantidad_personas')
-        fecha_viaje = request.POST.get('fecha')
+        cantidad_personas = request.POST.get('Cantidad_Personas')
+        fecha_viaje = request.POST.get('Fecha')
+        monto = int(cantidad_personas) * int(paquete.precio)
         context = {
             'paquete':paquete,
             'cantidad_personas':cantidad_personas,
-            'fecha_viaje':fecha_viaje
+            'fecha_viaje':fecha_viaje,
+            'monto':monto
         }
         return render(request,'detalle.html',context)
     else :
         HttpResponseRedirect('/')
+
+
 # Create your views here.
 def ListarPaquetes(request):
 	paquetes = Paquete.objects.all()
