@@ -17,20 +17,26 @@ class Persona(models.Model):
     pais = models.ForeignKey(Pais)
     # edad = models.IntegerField()
     creado = models.DateField(auto_now_add=True)
+    email = models.CharField(blank=True)
+    telefono = models.CharField(max_length=50, blank=True)
+    cod_telefono = models.CharField(max_length=10, blank=True)
     def __unicode__(self):
         return self.nombre
 class Paquete(models.Model):
     nombre = models.CharField(max_length=20)
     precio = models.FloatField(default=0)
+    adelanto =models.FloatField(default=0) # Adelanto de pago
     descripcion = models.TextField(blank=True)
     user = models.ForeignKey(User)
     creado = models.DateField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
+    link = models.CharField(max_length=120)
     def __unicode__(self):
         return self.nombre
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
     cantidad_personas = models.IntegerField(default=0)
+    fecha_viaje = models.DateField()
     precio = models.FloatField(default=0)
     user = models.ForeignKey(User)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
@@ -50,6 +56,12 @@ class Rubro(models.Model):
     def __unicode__(self):
         return self.nombre
 class ContactoInfo(models.Model):
+    razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
+    ruc = models.CharField(max_length=11)
+    web = models.CharField(max_length=64)
+    paypal_email = models.CharField(max_length=100)
+    paypal_code = models.CharField(max_length=50)
+    user = models.ForeignKey(User)
     def __unicode__(self):
         return self.direccion
