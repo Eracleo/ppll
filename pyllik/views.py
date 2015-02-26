@@ -42,7 +42,38 @@ def detalle(request):
         HttpResponseRedirect('/')
 
 
-# Create your views here.
+# Vistas para Gestionar Paquetes
 def ListarPaquetes(request):
 	paquetes = Paquete.objects.all()
 	return render(request,'layout/listarpaquetes.html',{'paquetes':paquetes})
+
+# Editar Paquetes
+@login_required
+def editar_paquetes(request, paquete_id):
+    	paquete = Paquete.objects.get(id=paquete_id)
+    	if request.method == 'POST':
+    		paquete_form = PaqueteForm(request.POST,request.FILES)
+    		if paquete_form.is_valid():
+    			nombre = paquete_form.cleaned_data['nombre']
+    			precio = paquete_form.cleaned_data['precio']
+    			descripcion = paquete_form.cleaned_data['descripcion']
+    			user = paquete_form.cleaned_data['user']
+    			estado = paquete_form.cleaned_data['estado']
+    			paquete.nombre = nombre
+    			paquete.precio = precio
+    			paquete.descripcion = descripcion
+    			paquete.estado = estado
+    			paquete.save() #Guardar el modelo editar
+    			return HttpResponseRedirect('/listarpaquetes/')
+    	if request.method == 'GET':
+        	paquete_form = PaqueteForm(initial=
+        		{
+        			'nombre':paquete.nombre,
+        			'precio':paquete.precio,
+        			'descripcion':paquete.descripcion,
+        			'user':paquete.user,
+        			'estado':paquete.estado,        			
+        		})  
+        ctx = {'paquete_form':paquete_form,'Paquete':paquete}  
+                
+	return render_to_response('layout/editar_paquete.html', ctx, context_instance=RequestContext(request))
