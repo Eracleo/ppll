@@ -17,7 +17,7 @@ class Persona(models.Model):
     pais = models.ForeignKey(Pais)
     # edad = models.IntegerField()
     creado = models.DateField(auto_now_add=True)
-    email = models.CharField(blank=True)
+    email = models.EmailField(max_length=60,blank=True)
     telefono = models.CharField(max_length=50, blank=True)
     cod_telefono = models.CharField(max_length=10, blank=True)
     def __unicode__(self):
@@ -30,7 +30,7 @@ class Paquete(models.Model):
     user = models.ForeignKey(User)
     creado = models.DateField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
-    link = models.CharField(max_length=120)
+    link = models.URLField(max_length=120)
     def __unicode__(self):
         return self.nombre
 class Reserva(models.Model):
@@ -59,8 +59,8 @@ class ContactoInfo(models.Model):
     razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
     ruc = models.CharField(max_length=11)
-    web = models.CharField(max_length=64)
-    paypal_email = models.CharField(max_length=100)
+    web = models.URLField(max_length=64)
+    paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
     user = models.ForeignKey(User)
     def __unicode__(self):
