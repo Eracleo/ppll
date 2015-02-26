@@ -1,7 +1,12 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.shortcuts import render_to_response
+from django.template import RequestContext, loader
 from .models import Paquete
 from pyllik.forms import PostForm
+from django.contrib.auth.decorators import login_required
+from forms import PaqueteForm
+from django.http import HttpResponseRedirect, HttpResponse
+
 def index(request):
     return render(request,'index.html')
 #Nuevo formularios
