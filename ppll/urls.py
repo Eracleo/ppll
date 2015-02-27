@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('usuario.urls')),
     url(r'^reservar/', include('pyllik.urls')),
+    url(r'^agregarpaquete/$' , views.AgregarPaquete , name="agregar_paquete"),
     url(r'^listarpaquetes/$' , views.ListarPaquetes , name="listar_paquetes"),
     url(r'^listarpaquetes/editar_paquetes/(?P<paquete_id>\d+)/$', views.editar_paquetes, name="editar_paquetes"),
 )
