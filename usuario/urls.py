@@ -1,9 +1,4 @@
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
-from pyllik import views
-
-from django.conf.urls import patterns, url
-from django.contrib.auth.views import login
 from django.contrib.auth.views import login, logout
 from usuario import views
 
