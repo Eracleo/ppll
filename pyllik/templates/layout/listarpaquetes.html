@@ -4,31 +4,37 @@ Listar Paquetes
 {% endblock %}
 
 {% block content %}
-	
+<script type="text/javascript">
+  function desactiva()
+  { 
+    document.nombreform.nombreboton.disabled=true; 
+    document.nombreform.nombreboton.disabled=true; 
+  } 
+</script>
+  {% if user.is_authenticated %}
 	<table border="1">
-      <tr>
-                        <td><b>Nombre</b></td> 
-                        <td><b>Precio</b></td> 
-                        <td><b>Descripcion</b></td>  
-                        <td><b>Usuario</b></td>  
-                        <td><b>Estado</b></td>
-                        <td><b>Creado por</b></td>
-                        <td><b>Desactivar Paquete</b></td>
-                        <td><b>Editar Paquete</b></td>
 
-                  </tr>
+      <tr align="center">
+            <td><b>Nombre</b></td> 
+            <td><b>Precio</b></td> 
+            <td><b>Descripcion</b></td>  
+            <td><b>Usuario</b></td>  
+            <td><b>Creado por</b></td>
+            <td><b>Estado Paquete</b></td>
+            <td><b>Editar Paquete</b></td>
+    </tr>
 		{% for paquete in paquetes %}
+
 			<tr>
       			<td>{{paquete.nombre}}</td>
       			<td>{{paquete.precio}}</td>   
       			<td>{{paquete.descripcion}}</td> 
       			<td>{{paquete.user}}</td>  
-      			<td>{{paquete.estado}}</td> 
-      			<td>{{paquete.creado}}</td>
+      			<td>{{paquete.creado}}</td>                
                 {% ifequal paquete.estado True %}	
-      			   <td><input name="cbdesac" type="checkbox"/>Desactivar</td>
-                    {% else %}
-                        <td><input name="cbdesac" type="checkbox"/>Activar</td>
+      			       <td><label style="color:blue">Paquete Habilitado</label></td>                   
+                {% else %}
+                  <td><label style="color:red">Paquete Desabilitado</label></td>                              
                 {% endifequal %}
                 {%if user.is_authenticated%}
       			<td><a href="editar_paquetes/{{paquete.id}}">Editar<a/></td>	
@@ -36,6 +42,6 @@ Listar Paquetes
       		</tr>      		     									
 		{% endfor %}
 	</table>
-      <br>
-      <button name="Submit" value="Submit" type="Submit">Guardar</button>
+    {% endif %}
 {% endblock%}
+
