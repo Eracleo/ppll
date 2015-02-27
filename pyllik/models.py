@@ -6,31 +6,44 @@ class Pais(models.Model):
     def __unicode__(self):
         return self.nombre
 DOC_TIPO = (
-    ('dni','DNI'),
-    ('pas','Passport'),
+    ('di','Document Identification'),
+    ('ps','Passport'),
+    )
+PORCENTAJE = (
+    ('0','0%'),
+    ('10','10%'),
+    ('20','20%'),
+    ('30','30%'),
+    ('40','40%'),
+    ('50','50%'),
+    ('60','60%'),
+    ('70','70%'),
+    ('80','80%'),
+    ('90','90%'),
+    ('100','100%'),
     )
 class Persona(models.Model):
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=60)
-    doc_tipo = models.CharField(max_length=3, choices=DOC_TIPO)
+    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
     doc_nro = models.CharField(max_length=10)
     pais = models.ForeignKey(Pais)
-    # edad = models.IntegerField()
     creado = models.DateField(auto_now_add=True)
     email = models.EmailField(max_length=60,blank=True)
+    cod_telefono = models.CharField(max_length=5, blank=True)
     telefono = models.CharField(max_length=50, blank=True)
-    cod_telefono = models.CharField(max_length=10, blank=True)
     def __unicode__(self):
         return self.nombre
 class Paquete(models.Model):
     nombre = models.CharField(max_length=20)
     precio = models.FloatField(default=0)
-    adelanto =models.FloatField(default=0) # Adelanto de pago
+    porcentaje = models.CharField(max_length=3,choices=PORCENTAJE)
+    pre_pago = models.FloatField(default=0) # Adelanto de pago
     descripcion = models.TextField(blank=True)
     user = models.ForeignKey(User)
     creado = models.DateField(auto_now_add=True, editable=False)
+    link = models.URLField(max_length=120, blank=True)
     estado = models.BooleanField(default=True)
-    link = models.URLField(max_length=120)
     def __unicode__(self):
         return self.nombre
 class Reserva(models.Model):
@@ -59,7 +72,7 @@ class ContactoInfo(models.Model):
     razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
     ruc = models.CharField(max_length=11)
-    web = models.URLField(max_length=64)
+    web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
     user = models.ForeignKey(User)

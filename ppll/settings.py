@@ -88,6 +88,6 @@ STATICFILES_DIRS = (
 )
 
 # Redirect when login is correct.
-LOGIN_REDIRECT_URL = "/user/home"
+LOGIN_REDIRECT_URL = "/user"
 # Redirect when login is not correct.
-LOGIN_URL = '/'
+LOGIN_URL = '/user/login'
