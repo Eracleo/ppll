@@ -6,6 +6,7 @@ from pyllik.forms import PostForm
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.models import User
 
 def index(request):
     return render(request,'index.html')
@@ -48,9 +49,23 @@ def detalle(request):
 
 
 # Vistas para Gestionar Paquetes
+#Listar Paquetes
 def ListarPaquetes(request):
-	paquetes = Paquete.objects.all()
+	id_user = request.user.id	
+	paquetes = Paquete.objects.filter(user_id = id_user)
 	return render(request,'layout/listarpaquetes.html',{'paquetes':paquetes})
+
+# Agregar Paquete
+def AgregarPaquete(request):
+	if request.method == 'POST':
+		formAgregar = PaqueteForm(request.POST,request.FILES)
+		if formAgregar.is_valid():
+			formAgregar.save()
+
+			return HttpResponseRedirect('/listarpaquetes/')
+	else:
+		formAgregar = PaqueteForm()
+	return render_to_response('layout/agregar_paquete.html', {'formAgregar':formAgregar},context_instance=RequestContext(request))
 
 # Editar Paquetes
 @login_required
