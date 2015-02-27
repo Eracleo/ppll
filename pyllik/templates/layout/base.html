@@ -41,9 +41,14 @@
           </button>
           <a class="navbar-brand" href="/">PyLLIKA</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="dropdown" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="listarpaquetes">Paquetes</a></li>
+           <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Paquetes<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/agregarpaquete">Agregar Paquete</a></li>
+                <li><a href="/listarpaquetes">Listar Paquetes</a></li>                
+              </ul>
             <li><a href="#contact">Reservas</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ayuda<span class="caret"></span></a>
