@@ -1,7 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.shortcuts import render_to_response
+from django.template import RequestContext, loader
 from .models import Paquete
 from pyllik.forms import PostForm
+from django.contrib.auth.decorators import login_required
+from forms import PaqueteForm
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.models import User
+
 def index(request):
     return render(request,'index.html')
 #Nuevo formularios
@@ -42,7 +48,52 @@ def detalle(request):
         HttpResponseRedirect('/')
 
 
-# Create your views here.
+# Vistas para Gestionar Paquetes
+#Listar Paquetes
 def ListarPaquetes(request):
-	paquetes = Paquete.objects.all()
+	id_user = request.user.id	
+	paquetes = Paquete.objects.filter(user_id = id_user)
 	return render(request,'layout/listarpaquetes.html',{'paquetes':paquetes})
+
+# Agregar Paquete
+def AgregarPaquete(request):
+	if request.method == 'POST':
+		formAgregar = PaqueteForm(request.POST,request.FILES)
+		if formAgregar.is_valid():
+			formAgregar.save()
+
+			return HttpResponseRedirect('/listarpaquetes/')
+	else:
+		formAgregar = PaqueteForm()
+	return render_to_response('layout/agregar_paquete.html', {'formAgregar':formAgregar},context_instance=RequestContext(request))
+
+# Editar Paquetes
+@login_required
+def editar_paquetes(request, paquete_id):
+    	paquete = Paquete.objects.get(id=paquete_id)
+    	if request.method == 'POST':
+    		paquete_form = PaqueteForm(request.POST,request.FILES)
+    		if paquete_form.is_valid():
+    			nombre = paquete_form.cleaned_data['nombre']
+    			precio = paquete_form.cleaned_data['precio']
+    			descripcion = paquete_form.cleaned_data['descripcion']
+    			user = paquete_form.cleaned_data['user']
+    			estado = paquete_form.cleaned_data['estado']
+    			paquete.nombre = nombre
+    			paquete.precio = precio
+    			paquete.descripcion = descripcion
+    			paquete.estado = estado
+    			paquete.save() #Guardar el modelo editar
+    			return HttpResponseRedirect('/listarpaquetes/')
+    	if request.method == 'GET':
+        	paquete_form = PaqueteForm(initial=
+        		{
+        			'nombre':paquete.nombre,
+        			'precio':paquete.precio,
+        			'descripcion':paquete.descripcion,
+        			'user':paquete.user,
+        			'estado':paquete.estado,        			
+        		})  
+        ctx = {'paquete_form':paquete_form,'Paquete':paquete}  
+                
+	return render_to_response('layout/editar_paquete.html', ctx, context_instance=RequestContext(request))

@@ -1,5 +1,9 @@
 {% extends "layout/base.html" %}
-{% block title %}Listar Paquetes...!
+{% block title %}
+Listar Paquetes
+{% endblock %}
+
+{% block content %}
 	
 	<table border="1">
       <tr>
@@ -9,7 +13,8 @@
                         <td><b>Usuario</b></td>  
                         <td><b>Estado</b></td>
                         <td><b>Creado por</b></td>
-                        <td><b>Acción</b></td>
+                        <td><b>Desactivar Paquete</b></td>
+                        <td><b>Editar Paquete</b></td>
 
                   </tr>
 		{% for paquete in paquetes %}
@@ -19,10 +24,18 @@
       			<td>{{paquete.descripcion}}</td> 
       			<td>{{paquete.user}}</td>  
       			<td>{{paquete.estado}}</td> 
-      			<td>{{paquete.creado}}</td>		
-      			<td style="color:red">Desactivar</td>	
-      			<td style="color:red">Modificar</td>	
+      			<td>{{paquete.creado}}</td>
+                {% ifequal paquete.estado True %}	
+      			   <td><input name="cbdesac" type="checkbox"/>Desactivar</td>
+                    {% else %}
+                        <td><input name="cbdesac" type="checkbox"/>Activar</td>
+                {% endifequal %}
+                {%if user.is_authenticated%}
+      			<td><a href="editar_paquetes/{{paquete.id}}">Editar<a/></td>	
+                {% endif %}
       		</tr>      		     									
 		{% endfor %}
 	</table>
+      <br>
+      <button name="Submit" value="Submit" type="Submit">Guardar</button>
 {% endblock%}

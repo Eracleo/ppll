@@ -1,0 +1,14 @@
+{% extends "layout/base.html" %}
+{% block title %}
+Agregar Paquete
+{% endblock %}
+
+{% block content %}	
+	
+<form action="" method="POST">
+    {%csrf_token%}
+    {{formAgregar.as_p}}
+    <button type= "submit"> Añadir Paquete</button>
+    <button type= "reset"> Limpiar</button>
+</form>
+{% endblock%}
