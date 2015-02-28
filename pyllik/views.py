@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from .models import Paquete, Empresa
 from django.contrib.auth.decorators import login_required
@@ -7,6 +6,7 @@ from forms import PaqueteForm, EmpresaForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 # EMPRESA
+@login_required
 def empresaDetail(request):
     id_user = request.user.id
     empresa = Empresa.objects.get(user_id = id_user)
