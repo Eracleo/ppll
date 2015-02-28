@@ -1,13 +1,34 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
-from .models import Paquete
-from pyllik.forms import PostForm
+from .models import Paquete, Empresa
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm
+from forms import PaqueteForm, EmpresaForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
-# PAQUETES
+# EMPRESA
+def empresaDetail(request):
+    id_user = request.user.id
+    empresa = Empresa.objects.get(user_id = id_user)
+    return render(request,'information.html',{'obj':empresa})
+@login_required
+def empresaEdit(request):
+    id_user = request.user.id
+    empresa = Empresa.objects.get(user_id = id_user)
+    if request.method == 'POST':
+        empresa_form = EmpresaForm(request.POST,request.FILES)
+        if empresa_form.is_valid():
+            empresa.razon_social = empresa_form.cleaned_data['razon_social']
+            paquete.save()
+            return HttpResponseRedirect('/empresa/paquetes')
+    if request.method == 'GET':
+        empresa_form = EmpresaForm(initial=
+            {
+                'razon_social':empresa.razon_social,
+                'ruc':empresa.ruc,
+            })
+    ctx = {'empresa_form':empresa_form,'empresa':empresa}
+    return render(request,'edit.html', ctx)
 @login_required
 def paqueteList(request):
     id_user = request.user.id
@@ -24,16 +45,11 @@ def paqueteEdit(request, id):
     if request.method == 'POST':
         paquete_form = PaqueteForm(request.POST,request.FILES)
         if paquete_form.is_valid():
-            nombre = paquete_form.cleaned_data['nombre']
-            precio = paquete_form.cleaned_data['precio']
-            descripcion = paquete_form.cleaned_data['descripcion']
-            user = paquete_form.cleaned_data['user']
-            estado = paquete_form.cleaned_data['estado']
-            paquete.nombre = nombre
-            paquete.precio = precio
-            paquete.descripcion = descripcion
-            paquete.estado = estado
-            paquete.save() #Guardar el modelo editar
+            paquete.nombre = paquete_form.cleaned_data['nombre']
+            paquete.precio = paquete_form.cleaned_data['precio']
+            paquete.descripcion = paquete_form.cleaned_data['descripcion']
+            paquete.estado = paquete_form.cleaned_data['estado']
+            paquete.save()
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         paquete_form = PaqueteForm(initial=
@@ -41,7 +57,7 @@ def paqueteEdit(request, id):
                 'nombre':paquete.nombre,
                 'precio':paquete.precio,
                 'descripcion':paquete.descripcion,
-                'user':paquete.user,
+                #'user':paquete.user,
                 'estado':paquete.estado,
             })
     ctx = {'paquete_form':paquete_form,'Paquete':paquete}
@@ -56,7 +72,6 @@ def paqueteAdd(request):
     else:
         formAgregar = PaqueteForm()
     return render(request,'paquete/add.html', {'formAgregar':formAgregar})
-
 #Nuevo formularios
 def index(request):
     if request.method == 'GET':
@@ -93,34 +108,3 @@ def detalle(request):
         return render(request,'detalle.html',context)
     else :
         HttpResponseRedirect('/')
-# Vistas para Gestionar Paquetes
-# Editar Paquetes
-@login_required
-def editar_paquetes(request, paquete_id):
-    	paquete = Paquete.objects.get(id=paquete_id)
-    	if request.method == 'POST':
-    		paquete_form = PaqueteForm(request.POST,request.FILES)
-    		if paquete_form.is_valid():
-    			nombre = paquete_form.cleaned_data['nombre']
-    			precio = paquete_form.cleaned_data['precio']
-    			descripcion = paquete_form.cleaned_data['descripcion']
-    			user = paquete_form.cleaned_data['user']
-    			estado = paquete_form.cleaned_data['estado']
-    			paquete.nombre = nombre
-    			paquete.precio = precio
-    			paquete.descripcion = descripcion
-    			paquete.estado = estado
-    			paquete.save() #Guardar el modelo editar
-    			return HttpResponseRedirect('/listarpaquetes/')
-    	if request.method == 'GET':
-        	paquete_form = PaqueteForm(initial=
-        		{
-        			'nombre':paquete.nombre,
-        			'precio':paquete.precio,
-        			'descripcion':paquete.descripcion,
-        			'user':paquete.user,
-        			'estado':paquete.estado,
-        		})
-        ctx = {'paquete_form':paquete_form,'Paquete':paquete}
-
-	return render_to_response('layout/editar_paquete.html', ctx, context_instance=RequestContext(request))

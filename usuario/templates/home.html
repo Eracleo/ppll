@@ -6,5 +6,5 @@
 <p><b>Nombres y Apellidos: </b>{{ user.first_name }} {{ user.last_name }}</p>
 <p><b>Ultima ingreso: </b>{{ user.last_login }}</p>
 <p><b>Miembro desde: </b>{{ user.date_joined }}</p>
-<p><a href="{% url 'logout' %}">Logout</a> | <a href="#">Detalles de la empresa</a></p>
+<p><a href="{% url 'logout' %}">Logout</a> | <a href="/empresa/information">Detalles de la empresa</a></p>
 {% endblock %}
