@@ -8,9 +8,9 @@ urlpatterns = patterns('',
     url(r'^paquete/detalle/(?P<id>\d+)$','pyllik.views.paqueteDetalle', name='paqueteDetalle'),
     url(r'^paquete/edit/(?P<id>\d+)$','pyllik.views.paqueteEdit', name='paqueteEdit'),
     url(r'^paquete/add$','pyllik.views.paqueteAdd', name='paqueteAdd'),
-    # Agencia
-    url(r'^agencia$','pyllik.views.agenciaDetalle', name='agenciaDetalle'),
-    url(r'^agencia/edit/(?P<id>\d+)$','pyllik.views.agenciaEdit', name='agenciaEdit'),
+    # Empresa
+    url(r'^empresa$','pyllik.views.empresaDetalle', name='empresaDetalle'),
+    url(r'^empresa/edit/(?P<id>\d+)$','pyllik.views.empresaEdit', name='empresaEdit'),
     # Reservas
     url(r'^reservas$','pyllik.views.reservaListar', name='reservaListar'),
     url(r'^reserva/detalle/(?P<id>\d+)$','pyllik.views.reservaDetalle', name='reservaDetalle'),
