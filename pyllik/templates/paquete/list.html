@@ -1,0 +1,41 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Listar Paquetes{% endblock %}
+{% block content %}
+<script type="text/javascript">
+  function desactiva()
+  {
+    document.nombreform.nombreboton.disabled=true;
+    document.nombreform.nombreboton.disabled=true;
+  }
+</script>
+  {% if user.is_authenticated %}
+	<table class="table table-striped">
+      <tr>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Descripción</th>
+        <th>Usuario</th>
+        <th>Creado por</th>
+        <th>Estado Paquete</th>
+        <th>Editar Paquete</th>
+    </tr>
+		{% for paquete in paquetes %}
+			<tr>
+      			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
+      			<td>{{paquete.precio}}</td>
+      			<td>{{paquete.descripcion}}</td>
+      			<td>{{paquete.user}}</td>
+      			<td>{{paquete.creado}}</td>
+                {% ifequal paquete.estado True %}
+      			       <td><label style="color:blue">Paquete Habilitado</label></td>
+                {% else %}
+                  <td><label style="color:red">Paquete Desabilitado</label></td>
+                {% endifequal %}
+                {%if user.is_authenticated%}
+      			<td><a href="paquete/edit/{{paquete.id}}">Editar<a/></td>
+                {% endif %}
+      		</tr>
+		{% endfor %}
+	</table>
+    {% endif %}
+{% endblock%}
