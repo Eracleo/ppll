@@ -8,8 +8,6 @@ from forms import PaqueteForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 
-def index(request):
-    return render(request,'index.html')
 #Nuevo formularios
 def index(request):
     if request.method == 'GET':
@@ -17,7 +15,7 @@ def index(request):
     else:
         # A POST request: Handle Form Upload
         form = PostForm(request.POST) # Bind data from request.POST into a PostForm
- 
+
         # If data is valid, proceeds to create a new post and redirect the user
         if form.is_valid():
             content = form.cleaned_data['content']
@@ -50,12 +48,14 @@ def detalle(request):
 
 # Vistas para Gestionar Paquetes
 #Listar Paquetes
+@login_required()
 def ListarPaquetes(request):
-	id_user = request.user.id	
+	id_user = request.user.id
 	paquetes = Paquete.objects.filter(user_id = id_user)
 	return render(request,'layout/listarpaquetes.html',{'paquetes':paquetes})
 
 # Agregar Paquete
+@login_required()
 def AgregarPaquete(request):
 	if request.method == 'POST':
 		formAgregar = PaqueteForm(request.POST,request.FILES)
@@ -92,8 +92,8 @@ def editar_paquetes(request, paquete_id):
         			'precio':paquete.precio,
         			'descripcion':paquete.descripcion,
         			'user':paquete.user,
-        			'estado':paquete.estado,        			
-        		})  
-        ctx = {'paquete_form':paquete_form,'Paquete':paquete}  
-                
+        			'estado':paquete.estado,
+        		})
+        ctx = {'paquete_form':paquete_form,'Paquete':paquete}
+
 	return render_to_response('layout/editar_paquete.html', ctx, context_instance=RequestContext(request))
