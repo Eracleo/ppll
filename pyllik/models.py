@@ -68,13 +68,14 @@ class Rubro(models.Model):
     nombre = models.CharField(max_length=120)
     def __unicode__(self):
         return self.nombre
-class ContactoInfo(models.Model):
+class Empresa(models.Model):
     razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
     ruc = models.CharField(max_length=11)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
+    nro_paquetes = models.IntegerField(default=1)
     user = models.ForeignKey(User)
     def __unicode__(self):
-        return self.direccion
+        return self.razon_social
