@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     url(r'^$',views.index,name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('usuario.urls')),
-    url(r'^bit/', include('pyllik.urls')), #
+    url(r'^empresa/', include('pyllik.urls')), #
     url(r'^reservar/', include('pyllik.urls')),
     url(r'^agregarpaquete/$' , views.AgregarPaquete , name="agregar_paquete"),
     url(r'^listarpaquetes/$' , views.ListarPaquetes , name="listar_paquetes"),
