@@ -8,7 +8,6 @@
     document.nombreform.nombreboton.disabled=true;
   }
 </script>
-  {% if user.is_authenticated %}
 	<table class="table table-striped">
       <tr>
         <th>Nombre</th>
@@ -19,7 +18,7 @@
         <th>Estado Paquete</th>
         <th>Editar Paquete</th>
     </tr>
-		{% for paquete in paquetes %}
+		{% for paquete in objs %}
 			<tr>
       			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
       			<td>{{paquete.precio}}</td>
@@ -37,5 +36,4 @@
       		</tr>
 		{% endfor %}
 	</table>
-    {% endif %}
 {% endblock%}
