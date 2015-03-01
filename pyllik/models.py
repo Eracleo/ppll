@@ -74,6 +74,7 @@ class Rubro(models.Model):
     def __unicode__(self):
         return self.nombre
 class Empresa(models.Model):
+    rubro = models.ForeignKey(Rubro)
     razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
     ruc = models.CharField(max_length=11)
