@@ -1,0 +1,31 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Perfil Turista{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        <td width="200"><b>Nombres y Apellidos:</b></td>
+        <td>{{obj.nombre}} {{obj.apellidos}}</td>
+    </tr>
+    <tr>
+        <td><b>{{obj.doc_tipo}}:</b></td>
+        <td>{{obj.doc_nro}}</td>
+    </tr>
+    <tr>
+        <td><b>E-mail:</b></td>
+        <td>{{obj.email}}</td>
+    </tr>
+    <tr>
+        <td><b>Telefono:</b></td>
+        <td>{{obj.cod_telefono}} + {{obj.telefono}}</td>
+    </tr>
+    <tr>
+        <td><b>Pais:</b></td>
+        <td>{{obj.pais}}</td>
+    </tr>
+    <tr>
+        <td><b>creado:</b></td>
+        <td>{{obj.creado}}</td>
+    </tr>
+</table>
+<p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-primary">Editar</a> </p>
+{% endblock%}

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.template import RequestContext, loader
-from .models import Paquete, Empresa, Reserva, ReservaDetalle
+from .models import Paquete, Empresa, Reserva, ReservaDetalle, Persona
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, EmpresaForm
 from django.http import HttpResponseRedirect, HttpResponse
@@ -88,3 +88,8 @@ def reservaDetail(request, id):
     reserva = Reserva.objects.get(id=id,user_id = id_user)
     reservaDetail = ReservaDetalle.objects.filter(reserva_id=id)
     return render(request,'reserva/detail.html',{'obj':reserva,'detail':reservaDetail })
+# PERSONA
+@login_required
+def personaDetail(request, id):
+    persona = Persona.objects.get(id=id)
+    return render(request,'persona/detail.html',{'obj':persona})
