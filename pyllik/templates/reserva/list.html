@@ -1,0 +1,27 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Listar Reservas{% endblock %}
+{% block content %}
+	<table class="table table-striped">
+      <tr>
+        <th>Id</th>
+        <th>Fecha Viaje</th>
+        <th>Paquete</th>
+        <th>Cantidad Personas</th>
+        <th>Usuario</th>
+        <th>Creado</th>
+        <th>Estado</th>
+        <th>Detalle</th>
+    </tr>
+		{% for reserva in objs %}
+			<tr>
+            <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}</a></td>
+      			<td>{{reserva.fecha_viaje}}</td>
+      			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
+      			<td>{{reserva.cantidad_personas}}</td>
+      			<td>{{reserva.user}}</td>
+            <td>{{reserva.creado}}</td>
+      			<td>{{reserva.pago_estado}}</td>
+      		</tr>
+		{% endfor %}
+	</table>
+{% endblock%}

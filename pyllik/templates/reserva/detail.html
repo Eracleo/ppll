@@ -1,0 +1,50 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Detalles{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        <td width="150"><b>ID:</b></td>
+        <td>{{obj.id}}</td>
+    </tr>
+    <tr>
+        <td><b>Precio:</b></td>
+        <td>{{obj.precio}}</td>
+    </tr>
+    <tr>
+        <td><b>Fecha Viaje:</b></td>
+        <td>{{obj.fecha_viaje}}</td>
+    </tr>
+    <tr>
+        <td><b>Modalidad de pago:</b></td>
+        <td>{{obj.modo_pago}}</td>
+    </tr>
+    <tr>
+        <td><b>Estado:</b></td>
+        <td>{{obj.pago_estado}}</td>
+    </tr>
+    <tr>
+        <td><b>creado:</b></td>
+        <td>{{obj.creado}}</td>
+    </tr>
+</table>
+<h1>VIAJEROS</h1>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Tipo Documento</th>
+        <th>Número Documento</th>
+        <th>Nombres y Apellidos</th>
+        <th>Pais</th>
+    </tr>
+{% for obj in detail %}
+    <tr>
+        <td><a href="/empresa/persona/detail/{{obj.persona.id}}">{{obj.persona.id}}</a></td>
+        <td>{{obj.persona.doc_tipo}}</td>
+        <td>{{obj.persona.doc_nro}}</td>
+        <td>{{obj.persona}}</td>
+        <td>{{obj.persona.pais}}</td>
+    </tr>
+{% endfor %}
+</table>
+<p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-primary">Editar</a> </p>
+{% endblock%}
