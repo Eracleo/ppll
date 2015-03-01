@@ -1,8 +1,6 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
-    url(r'^$','pyllik.views.index', name='index'),
-    url(r'^paquete.html$','pyllik.views.detalle', name='detalle'),
     # Paquetes
     url(r'^paquetes$','pyllik.views.paqueteList', name='paqueteList'),
     url(r'^paquete/detail/(?P<id>\d+)$','pyllik.views.paqueteDetail', name='paqueteDetail'),
@@ -12,8 +10,8 @@ urlpatterns = patterns('',
     url(r'^information/$','pyllik.views.empresaDetail', name='empresaDetail'),
     url(r'^edit/$','pyllik.views.empresaEdit', name='empresaEdit'),
     # Reservas
-    #rl(r'^reservas$','pyllik.views.reservaListar', name='reservaListar'),
-    #rl(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetalle', name='reservaDetalle'),
+    url(r'^reservas$','pyllik.views.reservaList', name='reservaList'),
+    url(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetail', name='reservaDetail'),
     #rl(r'^reserva/edit/(?P<id>\d+)$','pyllik.views.reservaEdit', name='reservaEdit'),
     #rl(r'^reserva/add$','pyllik.views.reservaAdd', name='reservaAdd'),
 )

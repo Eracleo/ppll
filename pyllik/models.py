@@ -1,43 +1,44 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
-class Pais(models.Model):
-    nombre = models.CharField(max_length=30)
-    def __unicode__(self):
-        return self.nombre
 DOC_TIPO = (
     ('di','Document Identification'),
     ('ps','Passport'),
     )
-PORCENTAJE = (
-    ('0','0%'),
-    ('10','10%'),
-    ('20','20%'),
-    ('30','30%'),
-    ('40','40%'),
-    ('50','50%'),
-    ('60','60%'),
-    ('70','70%'),
-    ('80','80%'),
-    ('90','90%'),
-    ('100','100%'),
+PAGO_ESTADO = (
+    ('re','En Reserva'),
+    ('ad','Con Adelanto'),
+    ('pc','Pago Completado'),
+    ('ca','Cancelado'),
     )
+MODO_PAGO = (
+    ('pa','Paypay'),
+    ('wu','Wester Union'),
+    ('ba','Banco'),
+    ('pe','Presencial'),
+    ('ot','Otros'),
+    )
+class Pais(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
 class Persona(models.Model):
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=60)
     doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
     doc_nro = models.CharField(max_length=10)
     pais = models.ForeignKey(Pais)
-    creado = models.DateField(auto_now_add=True)
+    creado = models.DateField(auto_now_add=True, editable=False)
+    editado = models.DateTimeField(auto_now=True, editable=False)
     email = models.EmailField(max_length=60,blank=True)
     cod_telefono = models.CharField(max_length=5, blank=True)
     telefono = models.CharField(max_length=50, blank=True)
     def __unicode__(self):
         return self.nombre
 class Paquete(models.Model):
+    # sku = identificador del Paquete
     nombre = models.CharField(max_length=20)
     precio = models.FloatField(default=0)
-    porcentaje = models.CharField(max_length=3,choices=PORCENTAJE)
+    porcentaje = models.FloatField(default=100)
     pre_pago = models.FloatField(default=0) # Adelanto de pago
     descripcion = models.TextField(blank=True)
     user = models.ForeignKey(User)
@@ -51,9 +52,12 @@ class Reserva(models.Model):
     cantidad_personas = models.IntegerField(default=0)
     fecha_viaje = models.DateField()
     precio = models.FloatField(default=0)
+    modo_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
+    # llego_de = (recomendado, web, web_reserva, oficina)
+    # nro re referencia al documento(id_paypal,nro_boleta,nro_factura)
     user = models.ForeignKey(User)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
-    estado = models.BooleanField(default=True)
+    pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
     def save(self, *args, **kwargs):
         self.user = self.paquete.user
         super(Reserva,self).save(*args,**kwargs)
@@ -62,6 +66,7 @@ class Reserva(models.Model):
 class ReservaDetalle(models.Model):
     reserva = models.ForeignKey(Reserva)
     persona = models.ForeignKey(Persona)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
     def __unicode__(self):
         return "Detalle Reserva"
 class Rubro(models.Model):

@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.template import RequestContext, loader
-from .models import Paquete, Empresa
+from .models import Paquete, Empresa, Reserva, ReservaDetalle
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, EmpresaForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
+@login_required
+def index(request):
+    id_user = request.user.id
+    empresa = Empresa.objects.get(user_id = id_user)
+    return render(request,'information.html',{'obj':empresa})
 # EMPRESA
 @login_required
 def empresaDetail(request):
@@ -33,12 +38,12 @@ def empresaEdit(request):
 def paqueteList(request):
     id_user = request.user.id
     paquetes = Paquete.objects.filter(user_id = id_user)
-    return render(request,'paquete/list.html',{'paquetes':paquetes})
+    return render(request,'paquete/list.html',{'objs':paquetes})
 @login_required
 def paqueteDetail(request, id):
     id_user = request.user.id
     paquete = Paquete.objects.get(id=id,user_id = id_user)
-    return render(request,'paquete/detail.html',{'paquete':paquete})
+    return render(request,'paquete/detail.html',{'obj':paquete})
 @login_required
 def paqueteEdit(request, id):
     paquete = Paquete.objects.get(id=id)
@@ -72,39 +77,14 @@ def paqueteAdd(request):
     else:
         formAgregar = PaqueteForm()
     return render(request,'paquete/add.html', {'formAgregar':formAgregar})
-#Nuevo formularios
-def index(request):
-    if request.method == 'GET':
-        form = PostForm()
-    else:
-        # A POST request: Handle Form Upload
-        form = PostForm(request.POST) # Bind data from request.POST into a PostForm
-
-        # If data is valid, proceeds to create a new post and redirect the user
-        if form.is_valid():
-            content = form.cleaned_data['content']
-            created_at = form.cleaned_data['created_at']
-            post = m.Post.objects.create(content=content,
-                                         created_at=created_at)
-            return HttpResponseRedirect(reverse('post_detail',
-                                                kwargs={'post_id': post.id}))
-            #return HttpResponseRedirect(reverse('post_detail', kwargs={'pk': post.id}))
-    return render(request, 'f_reservar.html', {
-        'form': form,
-    })
-def detalle(request):
-    if request.POST :
-        paquete_id =  request.POST.get('Paquete_Id')
-        paquete = Paquete.objects.get(id=paquete_id)
-        cantidad_personas = request.POST.get('Cantidad_Personas')
-        fecha_viaje = request.POST.get('Fecha')
-        monto = int(cantidad_personas) * int(paquete.precio)
-        context = {
-            'paquete':paquete,
-            'cantidad_personas':cantidad_personas,
-            'fecha_viaje':fecha_viaje,
-            'monto':monto
-        }
-        return render(request,'detalle.html',context)
-    else :
-        HttpResponseRedirect('/')
+@login_required
+def reservaList(request):
+    id_user = request.user.id
+    objs = Reserva.objects.filter(user_id = id_user)
+    return render(request,'reserva/list.html',{'objs':objs})
+@login_required
+def reservaDetail(request, id):
+    id_user = request.user.id
+    reserva = Reserva.objects.get(id=id,user_id = id_user)
+    reservaDetail = ReservaDetalle.objects.filter(reserva_id=id)
+    return render(request,'reserva/detail.html',{'obj':reserva,'detail':reservaDetail })
