@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .forms import PostForm
+from pyllik.models import Paquete
 def index(request):
     if request.method == 'GET':
         form = PostForm()
