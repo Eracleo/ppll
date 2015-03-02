@@ -1,10 +1,28 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Editar Paquetes{% endblock %}
+
 {% block content %}
+<script type="text/javascript">	
+	$(function(){
+		$("#id_precio, #id_porcentaje").change(function() {
+			pre = $("#id_precio").val();
+			por = $("#id_porcentaje").val();
+			$("#id_pre_pago").val(pre*por/100);
+		});
+	});
+	$(function(){
+		$("#id_pre_pago").change(function() {
+			pre = $("#id_precio").val();
+			por = $("#id_pre_pago").val();
+			$("#id_porcentaje").val(por*100/pre);
+		});
+	});
+</script>
+
 <form action="" method="POST">
     {%csrf_token%}
     {{paquete_form.as_p}}
-    <button type= "submit"> Guardar</button>
-    <button type= "reset"> Limpiar</button>
+    <button type= "submit" class="btn btn-primary"> Guardar</button>
+    <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
 {% endblock%}
