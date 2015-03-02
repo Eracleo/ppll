@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 DOC_TIPO = (
     ('di','Document Identification'),
     ('ps','Passport'),
@@ -37,9 +38,9 @@ class Persona(models.Model):
 class Paquete(models.Model):
     # sku = identificador del Paquete
     nombre = models.CharField(max_length=20)
-    precio = models.FloatField(default=0)
-    porcentaje = models.FloatField(default=100)
-    pre_pago = models.FloatField(default=0) # Adelanto de pago
+    precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)]) 
+    pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)]) # Adelanto de pago
     descripcion = models.TextField(blank=True)
     user = models.ForeignKey(User)
     creado = models.DateField(auto_now_add=True, editable=False)
