@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import PostForm
-from pyllik.models import Paquete
+from django.views.generic import ListView
+from pyllik.models import Paquete, Pais
+from reservar.forms import PostForm
 def index(request):
     if request.method == 'GET':
         form = PostForm()
@@ -34,5 +36,19 @@ def detalle(request):
             'monto':monto
         }
         return render(request,'detalle.html',context)
+    else :
+        HttpResponseRedirect('/')
+
+# Creando formulario registro personas con comboBox pais-
+def persona(request):
+    if request.POST :
+        cantidad_personas = request.POST.get('cantidad_personas')
+        listapais = Pais.objects.all()
+        context = {
+            'cantidad_personas':cantidad_personas,
+            'paises': listapais,
+            'range':range(int(cantidad_personas))
+        }
+        return render(request,'persona.html',context)
     else :
         HttpResponseRedirect('/')
