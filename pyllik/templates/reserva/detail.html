@@ -16,11 +16,11 @@
     </tr>
     <tr>
         <td><b>Modalidad de pago:</b></td>
-        <td>{{obj.modo_pago}}</td>
+        <td>{{obj.get_modo_pago_display}}</td>
     </tr>
     <tr>
         <td><b>Estado:</b></td>
-        <td>{{obj.pago_estado}}</td>
+        <td>{{obj.get_pago_estado_display}}</td>
     </tr>
     <tr>
         <td><b>creado:</b></td>
@@ -33,16 +33,16 @@
         <th>Id</th>
         <th>Tipo Documento</th>
         <th>Número Documento</th>
-        <th>Nombres y Apellidos</th>
+        <th>Apellidos y Nombres </th>
         <th>Pais</th>
     </tr>
-{% for obj in detail %}
+{% for persona in obj.viajeros.all %}
     <tr>
-        <td><a href="/empresa/persona/detail/{{obj.persona.id}}">{{obj.persona.id}}</a></td>
-        <td>{{obj.persona.doc_tipo}}</td>
-        <td>{{obj.persona.doc_nro}}</td>
-        <td>{{obj.persona}}</td>
-        <td>{{obj.persona.pais}}</td>
+        <td><a href="/empresa/persona/detail/{{persona.id}}">{{persona.id}}</a></td>
+        <td>{{persona.get_doc_tipo_display}}</td>
+        <td>{{persona.doc_nro}}</td>
+        <td><b>{{persona.apellidos}} </b> {{persona.nombre}}</td>
+        <td>{{persona.pais}}</td>
     </tr>
 {% endfor %}
 </table>

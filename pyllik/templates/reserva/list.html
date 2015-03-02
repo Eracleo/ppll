@@ -5,6 +5,7 @@
       <tr>
         <th>Id</th>
         <th>Fecha Viaje</th>
+        <th>Falta</th>
         <th>Paquete</th>
         <th>Cantidad Personas</th>
         <th>Usuario</th>
@@ -15,7 +16,8 @@
 		{% for reserva in objs %}
 			<tr>
             <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}</a></td>
-      			<td>{{reserva.fecha_viaje}}</td>
+            <td>{{reserva.fecha_viaje}}</td>
+      			<td>{{reserva.fecha_viaje|timeuntil}}</td>
       			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
       			<td>{{reserva.cantidad_personas}}</td>
       			<td>{{reserva.user}}</td>

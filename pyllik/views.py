@@ -7,14 +7,22 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 @login_required
 def index(request):
-    id_user = request.user.id
-    empresa = Empresa.objects.get(user_id = id_user)
-    return render(request,'information.html',{'obj':empresa})
+    return empresaDetail(request)
 # EMPRESA
 @login_required
 def empresaDetail(request):
-    id_user = request.user.id
-    empresa = Empresa.objects.get(user_id = id_user)
+    try:
+        id_user = request.user.id
+        empresa = Empresa.objects.get(user_id = id_user)
+    except Empresa.DoesNotExist:
+        if request.method == 'POST':
+            formAgregar = EmpresaForm(request.POST,request.FILES)
+            if formAgregar.is_valid():
+                formAgregar.save()
+                return HttpResponseRedirect('/empresa/information')
+        else:
+            formAgregar = EmpresaForm()
+        return render(request,'add.html', {'formAgregar':formAgregar})
     return render(request,'information.html',{'obj':empresa})
 @login_required
 def empresaEdit(request):
