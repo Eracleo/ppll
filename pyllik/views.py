@@ -83,8 +83,10 @@ def paqueteEdit(request, id):
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):
+    context_instance = RequestContext(request)
     if request.method == 'POST':
-        formAgregar = PaqueteForm(request.POST,request.FILES)
+        usuario = Paquete(user=request.user)
+        formAgregar = PaqueteForm(request.POST,instance=usuario)        
         if formAgregar.is_valid():
             formAgregar.save()
             return HttpResponseRedirect('/empresa/paquetes')
