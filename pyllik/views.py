@@ -60,8 +60,11 @@ def paqueteEdit(request, id):
         if paquete_form.is_valid():
             paquete.nombre = paquete_form.cleaned_data['nombre']
             paquete.precio = paquete_form.cleaned_data['precio']
+            paquete.porcentaje = paquete_form.cleaned_data['porcentaje']
+            paquete.pre_pago = paquete_form.cleaned_data['pre_pago']
             paquete.descripcion = paquete_form.cleaned_data['descripcion']
             paquete.estado = paquete_form.cleaned_data['estado']
+            paquete.link = paquete_form.cleaned_data['link']
             paquete.save()
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
@@ -70,8 +73,11 @@ def paqueteEdit(request, id):
                 'nombre':paquete.nombre,
                 'precio':paquete.precio,
                 'descripcion':paquete.descripcion,
-                #'user':paquete.user,
+                'user':paquete.user,
                 'estado':paquete.estado,
+                'porcentaje':paquete.porcentaje,
+                'pre_pago':paquete.pre_pago,
+                'link':paquete.link,
             })
     ctx = {'paquete_form':paquete_form,'Paquete':paquete}
     return render(request,'paquete/edit.html', ctx)
