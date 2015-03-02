@@ -58,17 +58,12 @@ class Reserva(models.Model):
     user = models.ForeignKey(User)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
+    viajeros = models.ManyToManyField(Persona)
     def save(self, *args, **kwargs):
         self.user = self.paquete.user
         super(Reserva,self).save(*args,**kwargs)
     def __unicode__(self):
         return "Una reserva"
-class ReservaDetalle(models.Model):
-    reserva = models.ForeignKey(Reserva)
-    persona = models.ForeignKey(Persona)
-    creado = models.DateTimeField(auto_now_add=True, editable=False)
-    def __unicode__(self):
-        return "Detalle Reserva"
 class Rubro(models.Model):
     nombre = models.CharField(max_length=120)
     def __unicode__(self):
