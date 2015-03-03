@@ -78,6 +78,7 @@ class Reserva(models.Model):
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
     viajeros = models.ManyToManyField(Persona)
+    user = models.ForeignKey(User)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
         super(Reserva,self).save(*args,**kwargs)
