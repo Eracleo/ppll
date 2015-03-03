@@ -35,36 +35,7 @@ class Persona(models.Model):
     telefono = models.CharField(max_length=50, blank=True)
     def __unicode__(self):
         return self.nombre
-class Paquete(models.Model):
-    # sku = identificador del Paquete
-    nombre = models.CharField(max_length=20)
-    precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)]) 
-    pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)]) # Adelanto de pago
-    descripcion = models.TextField(blank=True)
-    user = models.ForeignKey(User)
-    creado = models.DateField(auto_now_add=True, editable=False)
-    link = models.URLField(max_length=120, blank=True)
-    estado = models.BooleanField(default=True)
-    def __unicode__(self):
-        return self.nombre
-class Reserva(models.Model):
-    paquete = models.ForeignKey(Paquete)
-    cantidad_personas = models.IntegerField(default=0)
-    fecha_viaje = models.DateField()
-    precio = models.FloatField(default=0)
-    modo_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
-    # llego_de = (recomendado, web, web_reserva, oficina)
-    # nro re referencia al documento(id_paypal,nro_boleta,nro_factura)
-    user = models.ForeignKey(User)
-    creado = models.DateTimeField(auto_now_add=True, editable=False)
-    pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
-    viajeros = models.ManyToManyField(Persona)
-    def save(self, *args, **kwargs):
-        self.user = self.paquete.user
-        super(Reserva,self).save(*args,**kwargs)
-    def __unicode__(self):
-        return "Una reserva"
+
 class Rubro(models.Model):
     nombre = models.CharField(max_length=120)
     def __unicode__(self):
@@ -78,6 +49,37 @@ class Empresa(models.Model):
     paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
     nro_paquetes = models.IntegerField(default=1)
+    logo = models.CharField(max_length=120, blank=True)
     user = models.ForeignKey(User)
     def __unicode__(self):
         return self.razon_social
+class Paquete(models.Model):
+    sku = models.CharField(max_length=20, blank=True)
+    nombre = models.CharField(max_length=20)
+    precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)])
+    pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    descripcion = models.TextField(blank=True)
+    empresa = models.ForeignKey(Empresa)
+    creado = models.DateField(auto_now_add=True, editable=False)
+    link = models.URLField(max_length=120, blank=True)
+    estado = models.BooleanField(default=True)
+    def __unicode__(self):
+        return self.nombre
+class Reserva(models.Model):
+    paquete = models.ForeignKey(Paquete)
+    cantidad_personas = models.IntegerField(default=0)
+    fecha_viaje = models.DateField()
+    precio = models.FloatField(default=0)
+    modo_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
+    # llego_de = (recomendado, web, web_reserva, oficina)
+    # nro re referencia al documento(id_paypal,nro_boleta,nro_factura)
+    empresa = models.ForeignKey(Empresa)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
+    pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
+    viajeros = models.ManyToManyField(Persona)
+    def save(self, *args, **kwargs):
+        self.empresa = self.paquete.empresa
+        super(Reserva,self).save(*args,**kwargs)
+    def __unicode__(self):
+        return "Una reserva"
