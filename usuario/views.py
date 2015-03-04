@@ -1,7 +1,6 @@
-# Create your views here.
 from django.shortcuts import render
 from django.template.context import RequestContext
-
+from pyllik.models import Empresa
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
@@ -10,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def main(request):
+    request.session["empresa"]=1
+    del request.session["empresa"]
     return render(request,'main.html')
 def signup(request):
     if request.method == 'POST':  # If the form has been submitted...
@@ -31,16 +32,22 @@ def signup(request):
 
             # Save new user attributes
             user.save()
-            return HttpResponseRedirect(reverse('main'))  # Redirect after POST
+            return HttpResponseRedirect(reverse('main'))
     else:
         form = SignUpForm()
-
     data = {
         'form': form,
     }
     return render(request,'signup.html', data)
-
-
 @login_required()
 def home(request):
     return render(request,'home.html', {'user': request.user})
+@login_required()
+def config(request):
+    try:
+        id_user = request.user.id
+        empresa = Empresa.objects.get(user_id = id_user)
+        request.session["empresa"] = empresa.id
+        return HttpResponseRedirect('/user')
+    except Empresa.DoesNotExist:
+        return HttpResponseRedirect('/empresa/information')

@@ -14,6 +14,7 @@ def empresaDetail(request):
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
+        request.session["empresa"] = empresa.id
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             formAgregar = EmpresaForm(request.POST,request.FILES)
@@ -26,8 +27,8 @@ def empresaDetail(request):
     return render(request,'information.html',{'obj':empresa})
 @login_required
 def empresaEdit(request):
-    id_user = request.user.id
-    empresa = Empresa.objects.get(user_id = id_user)
+    user_id = request.user.id
+    empresa = Empresa.objects.get(user_id = user_id)
     if request.method == 'POST':
         empresa_form = EmpresaForm(request.POST,request.FILES)
         if empresa_form.is_valid():
@@ -44,19 +45,19 @@ def empresaEdit(request):
     return render(request,'edit.html', ctx)
 @login_required
 def paqueteList(request):
-    id_user = request.user.id
-    paquetes = Paquete.objects.filter(user_id = id_user)
+    empresa_id = request.session["empresa"]
+    paquetes = Paquete.objects.filter(empresa_id = empresa_id)
     return render(request,'paquete/list.html',{'objs':paquetes})
 @login_required
 def paqueteDetail(request, id):
-    id_user = request.user.id
-    paquete = Paquete.objects.get(id=id,user_id = id_user)
+    empresa_id = request.session["empresa"]
+    paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
     return render(request,'paquete/detail.html',{'obj':paquete})
 @login_required
 def paqueteEdit(request, id):
     paquete = Paquete.objects.get(id=id)
     if request.method == 'POST':
-        paquete_form = PaqueteForm(request.POST,request.FILES)
+        paquete_form = PaqueteForm(request.POST)
         if paquete_form.is_valid():
             paquete.nombre = paquete_form.cleaned_data['nombre']
             paquete.precio = paquete_form.cleaned_data['precio']
@@ -73,7 +74,6 @@ def paqueteEdit(request, id):
                 'nombre':paquete.nombre,
                 'precio':paquete.precio,
                 'descripcion':paquete.descripcion,
-                'user':paquete.user,
                 'estado':paquete.estado,
                 'porcentaje':paquete.porcentaje,
                 'pre_pago':paquete.pre_pago,
@@ -85,8 +85,7 @@ def paqueteEdit(request, id):
 def paqueteAdd(request):
     context_instance = RequestContext(request)
     if request.method == 'POST':
-        usuario = Paquete(user=request.user)
-        formAgregar = PaqueteForm(request.POST,instance=usuario)        
+        formAgregar = PaqueteForm(request.POST)
         if formAgregar.is_valid():
             formAgregar.save()
             return HttpResponseRedirect('/empresa/paquetes')
@@ -95,13 +94,13 @@ def paqueteAdd(request):
     return render(request,'paquete/add.html', {'formAgregar':formAgregar})
 @login_required
 def reservaList(request):
-    id_user = request.user.id
-    objs = Reserva.objects.filter(user_id = id_user)
+    empresa_id = request.session["empresa"]
+    objs = Reserva.objects.filter(empresa_id = empresa_id)
     return render(request,'reserva/list.html',{'objs':objs})
 @login_required
 def reservaDetail(request, id):
-    id_user = request.user.id
-    reserva = Reserva.objects.get(id=id,user_id = id_user)
+    empresa_id = request.session["empresa"]
+    reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
     return render(request,'reserva/detail.html',{'obj':reserva})
 # PERSONA
 @login_required
