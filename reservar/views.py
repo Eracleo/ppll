@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import PostForm
 from django.views.generic import ListView
-from pyllik.models import Paquete, Pais
+from pyllik.models import Paquete, Pais, Reserva
 from reservar.forms import PostForm
 from django.http import HttpResponseRedirect
 def index(request):
@@ -55,3 +55,6 @@ def persona(request):
         return render(request,'persona.html',context)
     else :
         HttpResponseRedirect('/')
+def pasajeros(request,id):
+    reserva = Reserva.objects.get(id=id)
+    return render(request,'pasajeros.html',{'reserva':reserva})

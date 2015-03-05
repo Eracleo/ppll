@@ -1,0 +1,21 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li><a href="#">1. Products</a></li>
+    <li><a href="#" class="active">2. Passangers</a></li>
+    <li><a href="#">3. Payments</a></li>
+    <li><a href="#">4. Confirm</a></li>
+{% endblock %}
+{% block content %}
+<p><b>Paquete: </b> {{reserva.paquete}}</p>
+<p><b>id Reserva : </b>{{ reserva.id }}</p>
+<p><b>Cantidad Personas: </b>{{ reserva.cantidad_personas }}</p>
+<p><b>Fecha de viaje: </b>{{ reserva.fecha_viaje}} </p>
+<form action='/reservar/dato.html' method="post">{%csrf_token%}
+    <!-- Todos los campos ocultos para enviar a paypal -->
+    <p>TipoDoc----- NroDoc----- Nombre------- Apellidos------- Pais------ AGREGAR</p>
+    <p>TipoDoc----- NroDoc----- Nombre------- Apellidos------- Pais------ </p>
+    <p>TipoDoc----- NroDoc----- Nombre------- Apellidos------- Pais------ </p>
+    <p>TipoDoc----- NroDoc----- Nombre------- Apellidos------- Pais------ </p>
+    <input type="submit" value="guardar" class="btn btn-primary">
+</form>
+{% endblock %}
