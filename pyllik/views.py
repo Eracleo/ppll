@@ -34,7 +34,7 @@ def empresaEdit(request):
         if empresa_form.is_valid():
             empresa.razon_social = empresa_form.cleaned_data['razon_social']
             paquete.save()
-            return HttpResponseRedirect('/empresa/paquetes')
+            return HttpResponseRedirect('/empresa/')
     if request.method == 'GET':
         empresa_form = EmpresaForm(initial=
             {
