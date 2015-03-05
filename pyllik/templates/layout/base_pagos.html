@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>{% block page_title %}Pago con Paypal{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+
+    <body>
+      <div id="page">
+        <div id="header">
+            <div class="logoizq"><IMG SRC="{% static 'images/logo1.png' %}"></div>   
+            <div class="logoder"><IMG SRC="{% static 'images/power.png' %}"></div>          
+        </div>
+        <div id="wrapper">
+          <div id="menu">
+            <ul class="nav">
+                <li><a href="#">1. Products</a></li>
+                <li><a href="#">2. Passangers</a></li>
+                <li><a href="#">3. Payments</a></li>
+                <li><a href="#">4. Confirm</a></li>            
+            </ul>
+          </div>
+          <div id="contenido">
+           <br>
+           <br>
+          </div>
+        </div>
+        <div id="footer"><!-- Aquí vendría el código del pié --></div>
+      </div>
+    </body>
+</html>
