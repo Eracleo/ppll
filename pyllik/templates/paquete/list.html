@@ -24,7 +24,8 @@
       			<td>{{paquete.descripcion}}</td>
       			<td>{{paquete.creado}}</td>
                 {% ifequal paquete.estado True %}
-                   <td><label style="color:blue">Paquete Habilitado</label> <a href="/reservar/">Reservar</a></td>
+                  
+                   <td><label style="color:blue">Paquete Habilitado</label> <a href="/reservar/paquete/{{ paquete.id }}">Reservar</a></td>
                 {% else %}
                   <td><label style="color:red">Paquete Desabilitado</label></td>
                 {% endifequal %}

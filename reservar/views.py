@@ -23,18 +23,20 @@ def index(request):
     return render(request, 'f_reservar.html', {
         'form': form,
     })
-def detalle(request):
-    if request.POST :
-        paquete_id =  request.POST.get('Paquete_Id')
-        paquete = Paquete.objects.get(id=paquete_id)
-        cantidad_personas = request.POST.get('Cantidad_Personas')
-        fecha_viaje = request.POST.get('Fecha')
-        monto = int(cantidad_personas) * int(paquete.precio)
+def detalle(request, id):
+    paquete = Paquete.objects.get(id=id)
+    if request.method == 'GET':
+    #if request.POST :
+        #paquete_nombre =  request.GET.get('paquete_id')
+        #paquete = Paquete.objects.get(id=paquete_nombre)
+        #cantidad_personas = request.POST.get('Cantidad_Personas')
+        #fecha_viaje = request.POST.get('Fecha')
+        #monto = int(cantidad_personas) * int(paquete.precio)
         context = {
             'paquete':paquete,
-            'cantidad_personas':cantidad_personas,
-            'fecha_viaje':fecha_viaje,
-            'monto':monto
+            #'cantidad_personas':cantidad_personas,
+            #'fecha_viaje':fecha_viaje,
+            #'monto':monto
         }
         return render(request,'detalle.html',context)
     else :
