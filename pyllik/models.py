@@ -27,7 +27,7 @@ class Persona(models.Model):
     apellidos = models.CharField(max_length=60)
     doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
     doc_nro = models.CharField(max_length=10)
-    pais = models.ForeignKey(Pais)
+    pais = models.ForeignKey(Pais, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     email = models.EmailField(max_length=60,blank=True)
