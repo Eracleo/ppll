@@ -1,9 +1,11 @@
 body {
 	background-color: white;
+}
+#page{
+
 	width: 1000px;
 	margin: 0px auto;
 }
-
 /*Inicio : estilo para el menu*/
 #menu {
 	height: 29px;
