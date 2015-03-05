@@ -16,15 +16,17 @@
       <div id="page">
         <div id="header">
             <div class="logoizq"><IMG SRC="{% static 'images/logo1.png' %}"></div>
-            <div class="logoder"><IMG SRC="{% static 'images/power.png' %}"></div>
+            <div class="logoder"><a href="/"><IMG SRC="{% static 'images/power.png' %}"></a></div>
         </div>
         <div id="wrapper">
           <div id="menu">
             <ul class="nav">
+                {% block menu %}
                 <li><a href="#">1. Products</a></li>
                 <li><a href="#">2. Passangers</a></li>
                 <li><a href="#">3. Payments</a></li>
                 <li><a href="#">4. Confirm</a></li>
+                {%endblock%}
             </ul>
           </div>
           <div id="contenido">

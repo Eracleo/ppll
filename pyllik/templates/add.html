@@ -1,10 +1,6 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}
-Agregar Paquete
-{% endblock %}
-
+{% block title %}Información de la empresa{% endblock %}
 {% block content %}
-
 <form action="" method="POST">
     {%csrf_token%}
     {{formAgregar.as_p}}
