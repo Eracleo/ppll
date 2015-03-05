@@ -1,0 +1,58 @@
+body {
+	background-color: white;
+	width: 1000px;
+	padding: 5px 100px 5px 100px;
+}
+
+/*Inicio : estilo para el menu*/
+#menu {
+	height: 27px;
+	margin-left: 3%;	
+}
+
+.nav {  
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+.nav li {
+	margin:2px;
+	padding:0;
+	float:left;
+	position: relative;
+}
+
+.nav li a {
+	display:block; //Convertimos el vínculo en un bloque.
+	width:150px;
+	text-decoration:none;
+	text-align:center;
+	font-size:15px;
+	color:#FFFFFF;
+	background-color:rgb(72,72,72);
+	border:1px solid black;
+	padding: 4px 20px 4px 20px;
+	font-family: sans-serif;
+	font-weight: bolder;	
+}
+.nav li a:focus {
+	color:black;
+	background-color: white;
+	border-top:1px solid black;
+	border-right:1px solid black;
+	border-bottom:1px solid white;
+	border-left:1px solid black;
+
+	
+}
+.logoizq {position: absolute;margin-top: 2%}
+.logoder {position: relative;margin-left: 80%}
+/*Fin : estilo para el menu*/
+
+/*Inicio : estilo para el contenido*/
+#contenido {
+	border: 1px solid;
+	border-color: rgb(63, 56, 56);
+
+}
+/*Fin: estilo para el contenido*/
