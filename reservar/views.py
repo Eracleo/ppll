@@ -3,6 +3,7 @@ from .forms import PostForm
 from django.views.generic import ListView
 from pyllik.models import Paquete, Pais
 from reservar.forms import PostForm
+from django.http import HttpResponseRedirect
 def index(request):
     if request.method == 'GET':
         form = PostForm()

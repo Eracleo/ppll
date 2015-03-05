@@ -13,7 +13,6 @@
         <th>Nombre</th>
         <th>Precio</th>
         <th>Descripción</th>
-        <th>Usuario</th>
         <th>Creado por</th>
         <th>Estado Paquete</th>
         <th>Editar Paquete</th>
@@ -23,10 +22,9 @@
       			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
       			<td>{{paquete.precio}}</td>
       			<td>{{paquete.descripcion}}</td>
-      			<td>{{paquete.user}}</td>
       			<td>{{paquete.creado}}</td>
                 {% ifequal paquete.estado True %}
-      			       <td><label style="color:blue">Paquete Habilitado</label></td>
+                   <td><label style="color:blue">Paquete Habilitado</label> <a href="/reservar/">Reservar</a></td>
                 {% else %}
                   <td><label style="color:red">Paquete Desabilitado</label></td>
                 {% endifequal %}
