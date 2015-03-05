@@ -7,10 +7,10 @@ body {
 /*Inicio : estilo para el menu*/
 #menu {
 	height: 27px;
-	margin-left: 3%;	
+	margin-left: 3%;
 }
 
-.nav {  
+.nav {
 	list-style:none;
 	margin:0;
 	padding:0;
@@ -33,7 +33,7 @@ body {
 	border:1px solid black;
 	padding: 4px 20px 4px 20px;
 	font-family: sans-serif;
-	font-weight: bolder;	
+	font-weight: bolder;
 }
 .nav li a:focus {
 	color:black;
@@ -43,7 +43,7 @@ body {
 	border-bottom:1px solid white;
 	border-left:1px solid black;
 
-	
+
 }
 .logoizq {position: absolute;margin-top: 2%}
 .logoder {position: relative;margin-left: 80%}
@@ -53,6 +53,6 @@ body {
 #contenido {
 	border: 1px solid;
 	border-color: rgb(63, 56, 56);
-
+	padding: 10px 20px;
 }
 /*Fin: estilo para el contenido*/
