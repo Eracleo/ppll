@@ -1,4 +1,10 @@
 {% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li><a href="#" class="active">1. Products</a></li>
+    <li><a href="#">2. Passangers</a></li>
+    <li><a href="#">3. Payments</a></li>
+    <li><a href="#">4. Confirm</a></li>
+{% endblock %}
 {% block content %}
 <p><b>Paquete: </b> {{ paquete.nombre }}</p>
 <p><b>Precio : </b>$ {{ paquete.precio }}</p>

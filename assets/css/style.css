@@ -35,7 +35,7 @@ body {
 	font-family: sans-serif;
 	font-weight: bolder;
 }
-.nav li a:focus {
+.nav li a.active {
 	color:black;
 	background-color: white;
 	border-top:1px solid black;
