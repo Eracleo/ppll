@@ -34,6 +34,7 @@ def detalle(request, id):
         #monto = int(cantidad_personas) * int(paquete.precio)
         context = {
             'paquete':paquete,
+            'range':xrange(1,16)
             #'cantidad_personas':cantidad_personas,
             #'fecha_viaje':fecha_viaje,
             #'monto':monto
@@ -41,11 +42,10 @@ def detalle(request, id):
         return render(request,'detalle.html',context)
     else :
         HttpResponseRedirect('/')
-
-# Creando formulario registro personas con comboBox pais-
+# Creando formulario registro personas con comboBox pais-gfgd
 def persona(request):
     if request.POST :
-        cantidad_personas = request.POST.get('cantidad_personas')
+        cantidad_personas = request.POST.get('cantidad')
         listapais = Pais.objects.all()
         context = {
             'cantidad_personas':cantidad_personas,
