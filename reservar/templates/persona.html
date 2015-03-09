@@ -10,9 +10,9 @@
 
 </select>
 </p>
-<p><b>Nro de Docuemto: </b><input type="text" value=""> </p>
-<p><b>Nombre: </b><input type="text" value=""></p>
-<p><b>Apellidos: </b><input type="text" value=""></p>
+<p><b>Nro de Documento: </b><input type="text" value="" pattern="[0-9]{8}" maxlength="8" required/> </p>
+<p><b>Nombre: </b><input type="text" value="" required/></p>
+<p><b>Apellidos: </b><input type="text" value="" required/></p>
 <p><b>Pais: </b>
     <select name="pais">
     {% for pais in paises %}
@@ -21,7 +21,7 @@
 </select>
 </p>
 {% endfor %}
-<form action='paypal'>
+<form action=''>
 	<!-- Todos los campos ocultos para enviar a paypal -->
 	<label>Email: </label>
 	<input type="email" value="">
