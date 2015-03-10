@@ -1,9 +1,16 @@
 from django.shortcuts import render
 from .forms import PostForm
 from django.views.generic import ListView
-from pyllik.models import Paquete, Pais, Reserva
+from pyllik.models import Paquete, Pais, Reserva,Persona
 from reservar.forms import PostForm
 from django.http import HttpResponseRedirect
+from  django.forms.models  import  modelformset_factory 
+from  django.shortcuts  import  render_to_response 
+from  django.forms.models  import  inlineformset_factory 
+from django.template import RequestContext
+from django.forms.formsets import formset_factory
+ 
+
 def index(request):
     if request.method == 'GET':
         form = PostForm()
@@ -44,17 +51,30 @@ def detalle(request, id):
         HttpResponseRedirect('/')
 # Creando formulario registro personas con comboBox pais-gfgd
 def persona(request):
-    if request.POST :
+    if request.POST : 
         cantidad_personas = request.POST.get('cantidad')
+        paquete_id = request.POST.get('paquete_id')
+        fecha_viaje = request.POST.get('fecha')
+        monto_total = request.POST.get('id_monto')
+        AuthorFormSet  =  modelformset_factory ( Persona, extra=int(cantidad_personas) ) 
+        formset  =  AuthorFormSet
         listapais = Pais.objects.all()
         context = {
-            'cantidad_personas':cantidad_personas,
+            'cantidad':cantidad_personas,
+            'paquete_id':paquete_id,
+            'fecha':fecha_viaje,
+            'monto':monto_total,
             'paises': listapais,
-            'range':range(int(cantidad_personas))
-        }
+            'range':range(int(cantidad_personas)),
+            'formset':formset
+        }  
         return render(request,'persona.html',context)
     else :
-        HttpResponseRedirect('/')
+        HttpResponseRedirect('/')   
+
+
+
 def pasajeros(request,id):
     reserva = Reserva.objects.get(id=id)
     return render(request,'pasajeros.html',{'reserva':reserva})
+

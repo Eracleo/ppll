@@ -21,6 +21,9 @@
 </script>
 
 <form action='/reservar/dato.html' method="post">{%csrf_token%}
+    <!-- campos ocultos -->
+    <input id="id_paquete" name="paquete_id" type="hidden" name="id_paquete" value={{paquete.id}}></input></p>
+
     <!-- Todos los campos ocultos para enviar a paypal -->
     <p><b>Paquete: </b> {{ paquete.nombre }}</p>
     <p><b>Precio : </b>$ <input id="id_precio" type="text" value="{{paquete.precio}}" readonly="readonly"></input></p>
@@ -28,17 +31,19 @@
     <p><label for="id_cantidad"> Cantidad Personas:</label>
     <input id="id_cantidad" type="number" name="cantidad" min="0" max="10" required/></input></p>
 
-    <p><b>Monto Total : </b>$<input id="id_monto" type="text" value="" readonly="readonly"></input></p>
+    <p><b>Monto Total : </b>$<input id="id_monto" name="id_monto" type="text" value="" readonly="readonly"></input></p>
 
-    <p><b>Fecha de viaje: </b><input type="date" value=""  placeholder="dd/mm/aaaa" required/></p>
+    <p><b>Fecha de viaje: </b><input  name="fecha" type="date" value=""  placeholder="dd/mm/aaaa" required/></p>
 
-    <input name="cantidad_personas" type="hidden" value="">
+   
 
     <label>Correo: </label>
     <input type="email" value="" placeholder="micorreo@gmail.com">
     <br>
     <input type="submit" value="Pagar">
     <iframe width="1" height="1" frameborder="0" scrolling="no" src="http://www.diariomadrid.eu/noticia_ultima_hora.php"> </iframe>
+
+
         
 </form>
 {% endblock %}

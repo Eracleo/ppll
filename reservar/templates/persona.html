@@ -1,31 +1,18 @@
 {% extends "layout/base_pagos.html" %}
 {% block content %}
-{% for icon in range %}
-<!--{{icon}}:-->
-<p><b>Tipo de documento: </b>
- <select name="documento">
- 		<option value="0" selected> Seleccione tipo Documento </option>
-        <option value="1" >DI</option>
-        <option value="2" >Pasaporte</option>
 
-</select>
-</p>
-<p><b>Nro de Documento: </b><input type="text" value="" pattern="[0-9]{8}" maxlength="8" required/> </p>
-<p><b>Nombre: </b><input type="text" value="" required/></p>
-<p><b>Apellidos: </b><input type="text" value="" required/></p>
-<p><b>Pais: </b>
-    <select name="pais">
-    {% for pais in paises %}
-        <option value="{{ pais.id }}" >{{ pais.nombre }}</option>
+<!--{{icon}}:-->
+<form action='' method = "post">
+{{cantidad}}
+{{paquete_id}}
+{{fecha}}
+{{monto}}
+{{  formset.management_form  }} 
+    </br>
+    {% for form in formset %}
+         {{ form.as_p }}
+    </br>
     {% endfor %}
-</select>
-</p>
-{% endfor %}
-<form action=''>
-	<!-- Todos los campos ocultos para enviar a paypal -->
-	<label>Email: </label>
-	<input type="email" value="">
-	<br>
-	<input type="submit" value="Pagar">
 </form>
+<input type="submit" value="Guardar">
 {% endblock %}
