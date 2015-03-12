@@ -51,16 +51,16 @@ class Empresa(models.Model):
     nro_paquetes = models.IntegerField(default=1)
     logo = models.CharField(max_length=120, blank=True)
     user = models.ForeignKey(User)
-    abreviatura = models.CharField(max_length=3, blank=True)
+    abreviatura = models.CharField(max_length=3)
     def __unicode__(self):
         return self.razon_social
 class Paquete(models.Model):
-    sku = models.CharField(max_length=20, blank=True)
+    sku = models.CharField(max_length=6)
     nombre = models.CharField(max_length=20)
     precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
     porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)])
     pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    descripcion = models.TextField(blank=True)
+    descripcion = models.TextField(max_length=500)
     empresa = models.ForeignKey(Empresa)
     creado = models.DateField(auto_now_add=True, editable=False)
     link = models.URLField(max_length=120, blank=True)
