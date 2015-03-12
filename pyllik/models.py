@@ -51,6 +51,7 @@ class Empresa(models.Model):
     nro_paquetes = models.IntegerField(default=1)
     logo = models.CharField(max_length=120, blank=True)
     user = models.ForeignKey(User)
+    abreviatura = models.CharField(max_length=3, blank=True)
     def __unicode__(self):
         return self.razon_social
 class Paquete(models.Model):
