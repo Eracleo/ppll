@@ -59,6 +59,7 @@ def paqueteEdit(request, id):
     if request.method == 'POST':
         paquete_form = PaqueteForm(request.POST)
         if paquete_form.is_valid():
+            paquete.sku = paquete_form.cleaned_data['sku']
             paquete.nombre = paquete_form.cleaned_data['nombre']
             paquete.precio = paquete_form.cleaned_data['precio']
             paquete.porcentaje = paquete_form.cleaned_data['porcentaje']
@@ -71,6 +72,7 @@ def paqueteEdit(request, id):
     if request.method == 'GET':
         paquete_form = PaqueteForm(initial=
             {
+                'sku':paquete.sku,
                 'nombre':paquete.nombre,
                 'precio':paquete.precio,
                 'descripcion':paquete.descripcion,
