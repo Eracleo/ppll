@@ -97,9 +97,9 @@ def paqueteAdd(request):
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         formAgregar=PaqueteForm()
-        ctx = { 'ultimo':ultimo.sku,
-                'formAgregar':formAgregar                
-        }
+        ctx =   {   'ultimo':ultimo.sku,
+                    'formAgregar':formAgregar             
+                }
     else:
         formAgregar = PaqueteForm()
     return render(request,'paquete/add.html', ctx)

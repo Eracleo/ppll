@@ -24,14 +24,19 @@ Agregar Paquete
 			var str = "{{ultimo}}";
 			var letra = str.substring(0,3);
 			var nro = parseInt(str.substring(3,6))+1;
-			$("#id_sku").val(letra + nro);
+			var snro = String(nro);
+			var ceros= "";
+			for(var i= snro.length;i<3;i++){
+				ceros=ceros+0;
+			}
+			var nro1 = ceros + snro;
+			$("#id_sku").val(letra + nro1);
 		});
 	});
 </script>
 
 <form action="" method="POST">
 	{%csrf_token%}
-
     {{formAgregar.as_p}}
     {{ultimo}}
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
