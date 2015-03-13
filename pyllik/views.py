@@ -86,14 +86,20 @@ def paqueteEdit(request, id):
 @login_required
 def paqueteAdd(request):
     context_instance = RequestContext(request)
+    abrev = request.session["abreviatura"]
     if request.method == 'POST':
         formAgregar = PaqueteForm(request.POST)
         if formAgregar.is_valid():
             formAgregar.save()
             return HttpResponseRedirect('/empresa/paquetes')
+    if request.method == 'GET':
+        formAgregar=PaqueteForm()
+        ctx = {'sku':abrev,
+                'formAgregar':formAgregar                
+        }
     else:
         formAgregar = PaqueteForm()
-    return render(request,'paquete/add.html', {'formAgregar':formAgregar})
+    return render(request,'paquete/add.html', ctx)
 @login_required
 def reservaList(request):
     empresa_id = request.session["empresa"]

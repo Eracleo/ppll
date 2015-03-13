@@ -48,6 +48,7 @@ def config(request):
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
         request.session["empresa"] = empresa.id
+        request.session["abreviatura"] = empresa.abreviatura
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')

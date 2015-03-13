@@ -21,14 +21,16 @@ Agregar Paquete
 	});
 	$(function(){
 		$("#id_sku").ready(function() {
-			$("#id_sku").val("INK001");
+			$("#id_sku").val("{{sku}}");
 		});
 	});
 </script>
 
 <form action="" method="POST">
 	{%csrf_token%}
+
     {{formAgregar.as_p}}
+    {{sku}}
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
