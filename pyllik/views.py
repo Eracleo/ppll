@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, EmpresaForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
+from django.db.models import Count
+from collections import defaultdict
 @login_required
 def index(request):
     return empresaDetail(request)
@@ -86,7 +88,8 @@ def paqueteEdit(request, id):
 @login_required
 def paqueteAdd(request):
     context_instance = RequestContext(request)
-    abrev = request.session["abreviatura"]
+    empresa_id = request.session["empresa"]
+    ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')
     if request.method == 'POST':
         formAgregar = PaqueteForm(request.POST)
         if formAgregar.is_valid():
@@ -94,7 +97,7 @@ def paqueteAdd(request):
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         formAgregar=PaqueteForm()
-        ctx = {'sku':abrev,
+        ctx = { 'ultimo':ultimo.sku,
                 'formAgregar':formAgregar                
         }
     else:

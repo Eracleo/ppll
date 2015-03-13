@@ -21,7 +21,7 @@ Agregar Paquete
 	});
 	$(function(){
 		$("#id_sku").ready(function() {
-			$("#id_sku").val("{{sku}}");
+			$("#id_sku").val("{{ultimo}}");
 		});
 	});
 </script>
@@ -30,7 +30,7 @@ Agregar Paquete
 	{%csrf_token%}
 
     {{formAgregar.as_p}}
-    {{sku}}
+    {{ultimo}}
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
