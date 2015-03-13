@@ -21,7 +21,10 @@ Agregar Paquete
 	});
 	$(function(){
 		$("#id_sku").ready(function() {
-			$("#id_sku").val("{{ultimo}}");
+			var str = "{{ultimo}}";
+			var letra = str.substring(0,3);
+			var nro = parseInt(str.substring(3,6))+1;
+			$("#id_sku").val(letra + nro);
 		});
 	});
 </script>
