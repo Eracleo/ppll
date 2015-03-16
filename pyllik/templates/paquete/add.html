@@ -31,14 +31,15 @@ Agregar Paquete
 			}
 			var nro1 = ceros + snro;
 			$("#id_sku").val(letra + nro1);
+			var campo = document.getElementById('id_sku');
+			campo.readOnly=true;
 		});
-	});
+	});	
 </script>
 
 <form action="" method="POST">
 	{%csrf_token%}
     {{formAgregar.as_p}}
-    {{ultimo}}
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>

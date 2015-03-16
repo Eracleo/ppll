@@ -17,6 +17,12 @@
 			$("#id_porcentaje").val(por*100/pre);
 		});
 	});
+	$(function(){
+		$("#id_sku").ready(function() {
+		var campo = document.getElementById('id_sku');
+			campo.readOnly=true;
+		});
+	});
 </script>
 
 <form action="" method="POST">

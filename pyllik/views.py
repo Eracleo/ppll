@@ -90,14 +90,15 @@ def paqueteAdd(request):
     context_instance = RequestContext(request)
     empresa_id = request.session["empresa"]
     ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')
+    nombre_empresa = Paquete.objects.filter(empresa_id=empresa_id).latest('empresa')
     if request.method == 'POST':
-        formAgregar = PaqueteForm(request.POST)
+        formAgregar = PaqueteForm(request.POST,instance=nombre_empresa)
         if formAgregar.is_valid():
             formAgregar.save()
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         formAgregar=PaqueteForm()
-        ctx =   {   'ultimo':ultimo.sku,
+        ctx =   {   'ultimo':ultimo.sku,                    
                     'formAgregar':formAgregar             
                 }
     else:
