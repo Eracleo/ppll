@@ -7,3 +7,4 @@ class PaqueteForm(forms.ModelForm):
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
+        exclude = ('user',)

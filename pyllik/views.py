@@ -13,15 +13,17 @@ def index(request):
 # EMPRESA
 @login_required
 def empresaDetail(request):
+    context_instance = RequestContext(request)
     try:
         id_user = request.user.id
-        empresa = Empresa.objects.get(user_id = id_user)
-        request.session["empresa"] = empresa.id
+        empresa = Empresa.objects.get(user_id = id_user)        
+        request.session["empresa"] = empresa.id        
     except Empresa.DoesNotExist:
         if request.method == 'POST':
-            formAgregar = EmpresaForm(request.POST,request.FILES)
-            if formAgregar.is_valid():
-                formAgregar.save()
+            usuario = Empresa(user=request.user)
+            formAgregar = EmpresaForm(request.POST,instance=usuario)            
+            if formAgregar.is_valid():                                
+                formAgregar.save()                             
                 return HttpResponseRedirect('/empresa/information')
         else:
             formAgregar = EmpresaForm()
