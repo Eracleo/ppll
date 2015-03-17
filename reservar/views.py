@@ -2,13 +2,14 @@ from django.shortcuts import render
 from .forms import PostForm
 from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
-from reservar.forms import PostForm
+from reservar.forms import PostForm, ContactoForm
 from django.http import HttpResponseRedirect
 from  django.forms.models  import  modelformset_factory 
 from  django.shortcuts  import  render_to_response 
 from  django.forms.models  import  inlineformset_factory 
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
+from django.core.mail import EmailMessage
  
 
 def index(request):
@@ -78,3 +79,17 @@ def pasajeros(request,id):
     reserva = Reserva.objects.get(id=id)
     return render(request,'pasajeros.html',{'reserva':reserva})
 
+#Correo de Confirmacion
+def confircorreo(request):
+    if request.method=='POST':
+        formulario = ContactoForm(request.POST)
+        if formulario.is_valid():
+            titulo = 'Mensaje des pagos en LLIKA EIRL'
+            contenido = formulario.cleaned_data['mensaje'] + "\n"
+            contenido += 'Comunicarse a: ' + formulario.cleaned_data['correo']
+            correo = EmailMessage(titulo, contenido, to=['aridni81@gmail.com'])
+            correo.send()
+            return HttpResponseRedirect('/')
+    else:
+        formulario = ContactoForm()
+    return render_to_response('confirmar.html',{'formulario':formulario}, context_instance=RequestContext(request))

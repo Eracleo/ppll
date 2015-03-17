@@ -23,7 +23,10 @@ def empresaDetail(request):
             usuario = Empresa(user=request.user)
             formAgregar = EmpresaForm(request.POST,instance=usuario)            
             if formAgregar.is_valid():                                
-                formAgregar.save()                             
+                formAgregar.save()
+                #AgregarPaquete = Paquete.objects.create(sku='PAR001',nombre='Nombre',descripcion='Descripcion',
+                #precio='0',porcentaje='0',pre_pago='0',empresa=empresa.razon_social,link='',estado=True) 
+                #AgregarPaquete.save()                              
                 return HttpResponseRedirect('/empresa/information')
         else:
             formAgregar = EmpresaForm()
@@ -121,3 +124,5 @@ def reservaDetail(request, id):
 def personaDetail(request, id):
     persona = Persona.objects.get(id=id)
     return render(request,'persona/detail.html',{'obj':persona})
+
+

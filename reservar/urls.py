@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^paquete/(?P<id>\d+)$','reservar.views.detalle', name='detalle'),
     url(r'^pasajeros/(?P<id>\d+)$','reservar.views.pasajeros', name='pasajeros'),
     url(r'^dato.html$','reservar.views.persona', name='persona'),
+    url(r'^confirmar/$','reservar.views.confircorreo', name='ConfirmarCorreo'),
 )

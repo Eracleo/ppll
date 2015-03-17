@@ -8,3 +8,6 @@ class PostForm(forms.Form):
 class ReservarForm(forms.ModelForm):
     class Meta:
         model = Reserva
+class ContactoForm(forms.Form):
+	correo = forms.EmailField()
+	mensaje = forms.CharField(widget=forms.Textarea)

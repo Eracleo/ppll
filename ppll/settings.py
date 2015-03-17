@@ -92,3 +92,10 @@ STATICFILES_DIRS = (
 LOGIN_REDIRECT_URL = "/user/config"
 # Redirect when login is not correct.
 LOGIN_URL = '/user/login'
+
+#Configuraciones para enviar mensajes usando gmail
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'luisjfr2309@gmail.com'
+EMAIL_HOST_PASSWORD = 'contraseña'
+EMAIL_PORT = 587
