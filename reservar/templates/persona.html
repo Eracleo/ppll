@@ -1,18 +1,52 @@
-{% extends "layout/base_pagos.html" %}
-{% block content %}
+<html>
+<head>
+    {% load static %}
+    <title></title>
 
-<!--{{icon}}:-->
-<form action='' method = "post">
-{{cantidad}}
-{{paquete_id}}
-{{fecha}}
-{{monto}}
-{{  formset.management_form  }} 
-    </br>
-    {% for form in formset %}
-         {{ form.as_p }}
-    </br>
-    {% endfor %}
+    <script src="{% static 'js/jquery-v1.min.js' %}"></script>
+</head>
+<body>
+<form action="/reservar/agregara/" method="post" class="">
+{% csrf_token %}
+<h2> Reservar:</h2>
+
+<input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS" />
+<input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" />
+<input type="hidden" name="form-MAX_NUM_FORMS" value="3" id="id_form-MAX_NUM_FORMS" />
+
+<input type="hidden" name="paquete_id" value="{{paquete_id}}" id="paquete_id" />
+<input type="hidden" name="id_monto" value="{{monto}}" id="monto" />
+<input type="hidden" name="cantidad" value="{{cantidad_personas}}" id="cantidad" />
+<input type="hidden" name="fecha" value="{{fecha_viaje}}" id="cantidad" /> 
+{% for field in form %}
+  {{ field.errors }}
+  {{ field.label_tag }}  {{ field }}
+{% endfor %}
+
+{{ form.viajeros.management_form }}
+
+<h3> Persona Instance(s)</h3>
+<table width = "1000px"> 
+  <thead>
+      <tr>
+        <th>nombre</th>
+        <th>apellidos</th>
+        <th>doc_tipo</th>
+        <th>doc_numero</th>
+        <th>pais</th>
+        <th>email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for f in form.viajeros_instances %}
+      {{ f.as_p }}
+      <hr>
+      {% endfor%}
+
+    </tbody>
+</table>
+<input type="submit" name="submit" class="button" value="Save"/>
 </form>
-<input type="submit" value="Guardar">
-{% endblock %}
+
+</body>
+</html>
