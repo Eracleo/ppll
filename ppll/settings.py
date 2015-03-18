@@ -97,5 +97,5 @@ LOGIN_URL = '/user/login'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'luisjfr2309@gmail.com'
-#EMAIL_HOST_PASSWORD = 'tu contraseña'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
