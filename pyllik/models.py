@@ -30,6 +30,7 @@ class Persona(models.Model):
     email = models.EmailField(max_length=60,blank=True)
     cod_telefono = models.CharField(max_length=5, blank=True)
     telefono = models.CharField(max_length=50, blank=True)
+    pais = models.ForeignKey(Pais, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
@@ -51,7 +52,6 @@ class Empresa(models.Model):
     logo = models.CharField(max_length=120, blank=True)
     user = models.ForeignKey(User)
     abreviatura = models.CharField(max_length=3)
-    pais = models.ForeignKey(Pais, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
@@ -74,7 +74,8 @@ class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
     cantidad_personas = models.IntegerField(default=0)
     fecha_viaje = models.DateField()
-    precio = models.FloatField(default=0)
+    precio = models.FloatField(blank=True)
+    pre_pago = models.FloatField(blank=True)
     modo_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
     # llego_de = (recomendado, web, web_reserva, oficina)
     tx = models.CharField(max_length=64, blank=True)
@@ -85,6 +86,8 @@ class Reserva(models.Model):
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
+        self.pre_pago = self.paquete.pre_pago
+        self.precio = self.paquete.precio
         super(Reserva,self).save(*args,**kwargs)
     def __unicode__(self):
         return "Una reserva de "+self.email
