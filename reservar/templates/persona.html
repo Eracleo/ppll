@@ -1,3 +1,11 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li><a href="#">1. Products</a></li>
+    <li><a href="#" class="active">2. Passangers</a></li>
+    <li><a href="#">3. Payments</a></li>
+    <li><a href="#">4. Confirm</a></li>
+{% endblock %}
+{% block content %}
 <html>
 <head>
     {% load static %}
@@ -26,7 +34,7 @@
 {{ form.viajeros.management_form }}
 
 <h3> Persona Instance(s)</h3>
-<table width = "1000px"> 
+<table width = "1000px" > 
   <thead>
       <tr>
         <th>nombre</th>
@@ -45,8 +53,9 @@
 
     </tbody>
 </table>
-<input type="submit" name="submit" class="button" value="Save"/>
+<input type="submit" name="submit" class="btn btn-warning" value="Save"/>
 </form>
 
 </body>
 </html>
+{% endblock %}

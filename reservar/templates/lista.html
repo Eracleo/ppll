@@ -3,9 +3,9 @@
     <title></title>
 </head>
 <body>
-<p>Lista de Personas</p>
-{% for d in distribuidor %}
-<p><a href="/reservar/detalle/{{ d.id }}">{{ d.id }}</a></p>
+<p>Lista de Reservas</p>
+{% for d in reserva %}
+<p>Reserva <a href="/reservar/detalle/{{ d.id }}">{{ d.id }}</a></p>
 {% endfor %}
 <p><a href="/reservar/failure/">Agregar</a></p>
 </body>
