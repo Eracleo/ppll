@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^failure/$','reservar.views.Failure', name='Failure'),
     url(r'^detalle/(?P<id>\d+)$','reservar.views.Detalle', name='Detalle1'),
    # url(r'^dato.html$','reservar.views.persona', name='persona'),
-    url(r'^confirmar/$','reservar.views.confircorreo', name='ConfirmarCorreo'),'),
+    url(r'^confirmar/$','reservar.views.confircorreo', name='ConfirmarCorreo'),
 )
