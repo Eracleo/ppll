@@ -121,6 +121,11 @@ def Detalle(request,id):
     reserva = Reserva.objects.get(id=id)
     viajeros = reserva.viajeros.all()
     return render(request,'detalle1.html',{'Reserva':reserva, 'viajeros':viajeros})
+def Failure(request):
+    form = ReservaaForm()
+    form.persona_instances = PersonaFormset()
+    return render(request,'persona.html',{'form':form})
+    
 
 
 def pasajeros(request,id):
