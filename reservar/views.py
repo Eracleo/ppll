@@ -2,8 +2,15 @@ from django.shortcuts import render
 from .forms import PostForm
 from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
+from reservar.forms import PostForm
+from reservar.forms import PersonaForm
+from reservar.forms import PersonaFormset
+from reservar.forms import ReservaaForm
 from reservar.forms import PostForm, ContactoForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 from  django.forms.models  import  modelformset_factory 
 from  django.shortcuts  import  render_to_response 
 from  django.forms.models  import  inlineformset_factory 
@@ -51,27 +58,61 @@ def detalle(request, id):
     else :
         HttpResponseRedirect('/')
 # Creando formulario registro personas con comboBox pais-gfgd
-def persona(request):
-    if request.POST : 
-        cantidad_personas = request.POST.get('cantidad')
-        paquete_id = request.POST.get('paquete_id')
-        fecha_viaje = request.POST.get('fecha')
-        monto_total = request.POST.get('id_monto')
-        AuthorFormSet  =  modelformset_factory ( Persona, extra=int(cantidad_personas) ) 
-        formset  =  AuthorFormSet
-        listapais = Pais.objects.all()
-        context = {
-            'cantidad':cantidad_personas,
-            'paquete_id':paquete_id,
-            'fecha':fecha_viaje,
-            'monto':monto_total,
-            'paises': listapais,
-            'range':range(int(cantidad_personas)),
-            'formset':formset
-        }  
+# Creando formulario registro personas con comboBox pais-gfgd
+def personasa(request):
+    paquete_id =  request.POST.get('paquete_id')
+    paquete = Paquete.objects.get(id=paquete_id)
+    cantidad_personas = request.POST.get('cantidad')
+    fecha_viaje = request.POST.get('fecha')
+    monto = request.POST.get('id_monto')
+    if request.method == 'POST':        
+        form = ReservaaForm(request.POST)
+        form.viajeros_instances = PersonaFormset(request.POST)
+        if form.is_valid():
+            #reserva = Reserva() #model class
+            #reserva.paquete= form.cleaned_data() 
+            paquete=Paquete.objects.get(id=paquete_id)
+            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, precio=monto)
+            reserva.save()
+            if form.viajeros_instances.cleaned_data is not None:
+                for item in form.viajeros_instances.cleaned_data:
+                    persona = Persona() #Product model class
+                    persona.nombre= item['nombre']
+                    persona.apellidos= item['apellidos']
+                    persona.doc_tipo= item['doc_tipo']
+                    persona.doc_nro= item['doc_nro']
+                    persona.pais= item['pais']
+                    persona.email= item['email']
+                    persona.save()
+                    reserva.viajeros.add(persona)
+                
+            return HttpResponseRedirect('/reservar/success')
+        else:
+            form = ReservaaForm()
+            form.viajeros_instances = PersonaFormset()
+
+            context = {
+
+                'paquete_id':paquete_id,
+                'cantidad_personas':cantidad_personas,
+                'fecha_viaje':fecha_viaje,
+                'monto':monto,
+                'form':form          
+            }
         return render(request,'persona.html',context)
-    else :
-        HttpResponseRedirect('/')   
+    else:
+        form = ReservaaForm()
+        form.viajeros_instances = PersonaFormset()
+
+        context = {
+
+            'paquete_id':paquete_id,
+            'cantidad_personas':cantidad_personas,
+            'fecha_viaje':fecha_viaje,
+            'monto':monto,
+            'form':form          
+        }
+        return render(request,'jajaj.html',context)   
 
 
 
