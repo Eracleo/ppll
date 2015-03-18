@@ -1,5 +1,6 @@
 from django import forms
 from pyllik.models import Reserva, Persona
+from django.forms.formsets import formset_factory
 
 class PostForm(forms.Form):
     Paquete_Id = forms.CharField(max_length=256)
