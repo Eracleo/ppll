@@ -113,7 +113,14 @@ def personasa(request):
             'form':form          
         }
         return render(request,'jajaj.html',context)   
-
+        
+def Success(request):
+    reserva = Reserva.objects.all()
+    return render(request,'lista.html',{'reserva':reserva})
+def Detalle(request,id):
+    reserva = Reserva.objects.get(id=id)
+    viajeros = reserva.viajeros.all()
+    return render(request,'detalle1.html',{'Reserva':reserva, 'viajeros':viajeros})
 
 
 def pasajeros(request,id):
