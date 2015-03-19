@@ -13,6 +13,6 @@ class ReservarForm(forms.ModelForm):
         model = Reserva
 
 class ContactoForm(forms.Form):
-	correo = forms.EmailField()
+	correo = forms.EmailField(label=("Email address"))
 	mensaje = forms.CharField(widget=forms.Textarea)
 
