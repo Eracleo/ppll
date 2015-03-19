@@ -1,0 +1,21 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li><a href="#">1. Products</a></li>
+    <li><a href="#">2. Passangers</a></li>
+    <li><a href="#">3. Payments</a></li>
+    <li><a href="#"class="active">4. Confirm</a></li>
+{% endblock %}
+{% block content %}
+<h2>Pago realizado exitosamente</h2>
+<p>TX :{{tx}}</p>
+<p><b>Gracias</b></p>
+<p>Feliz viaje</p>
+<p>Cusco, cusco es tu nombre sagrado</p>
+<script type="text/javascript">
+window.location.hash="no-back-button";
+window.location.hash="Again-No-back-button" //chrome
+window.onhashchange=function(){window.location.hash="no-back-button";}
+</script>
+{% endblock %}
+
+

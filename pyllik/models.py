@@ -72,7 +72,7 @@ class Paquete(models.Model):
         return self.nombre
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
-    cantidad_personas = models.IntegerField(default=0)
+    cantidad_personas = models.IntegerField()
     fecha_viaje = models.DateField()
     precio = models.FloatField(blank=True)
     pre_pago = models.FloatField(blank=True)

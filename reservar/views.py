@@ -11,16 +11,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
-from  django.forms.models  import  modelformset_factory 
-from  django.shortcuts  import  render_to_response 
-from  django.forms.models  import  inlineformset_factory 
+from  django.forms.models  import  modelformset_factory
+from  django.shortcuts  import  render_to_response
+from  django.forms.models  import  inlineformset_factory
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
-from pyllik.models import Reserva, Persona
-
- 
 
 def index(request):
     if request.method == 'GET':
@@ -66,12 +63,12 @@ def pasajeros(request,id):
     reserva = Reserva.objects.get(id=id)
     return render(request,'pasajeros.html',{'reserva':reserva})
 
-def Post(request):    
+def Post(request):
         form = ReservaaForm(request.POST)
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
             #reserva = Reserva() #model class
-            #reserva.paquete= form.cleaned_data() 
+            #reserva.paquete= form.cleaned_data()
             paquete=Paquete.objects.get(id=1)
             reserva = Reserva(paquete=paquete, cantidad_personas="2", fecha_viaje="2014-04-23", precio="1200")
             reserva.save()
@@ -136,21 +133,21 @@ def personasa(request):
 
     class ReservaaForm(forms.Form):
 
-        paquete= forms.CharField(max_length=100)    
+        paquete= forms.CharField(max_length=100)
         viajeros= PersonaFormset()
 
-    
-    if request.method == 'POST':        
+
+    if request.method == 'POST':
         form = ReservaaForm(request.POST)
         #user_id = request.user.id
-        
+
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
             #reserva = Reserva() #model class
-            #reserva.paquete= form.cleaned_data() 
+            #reserva.paquete= form.cleaned_data()
             paquete=Paquete.objects.get(id=paquete_id)
 
-            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, precio=monto,user=request.user)
+            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
             #reserva.user_instances=user_id
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
@@ -164,8 +161,7 @@ def personasa(request):
                     persona.email= item['email']
                     persona.save()
                     reserva.viajeros.add(persona)
-                
-            return HttpResponseRedirect('/reservar/success')
+            return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
         else:
             form = ReservaaForm()
             form.viajeros_instances = PersonaFormset()
@@ -176,7 +172,7 @@ def personasa(request):
                 'cantidad_personas':cantidad_personas,
                 'fecha_viaje':fecha_viaje,
                 'monto':monto,
-                'form':form          
+                'form':form
             }
         return render(request,'persona.html',context)
     else:
@@ -184,11 +180,51 @@ def personasa(request):
         form.viajeros_instances = PersonaFormset()
 
         context = {
-
             'paquete_id':paquete_id,
             'cantidad_personas':cantidad_personas,
             'fecha_viaje':fecha_viaje,
             'monto':monto,
-            'form':form          
+            'form':form
         }
         return render(request,'jajaj.html',context)
+def pagar(request,id):
+    obj = Reserva.objects.get(id=id)
+    # Datos a enviar
+    paypal = {
+        'paypal_url':"https://www.sandbox.paypal.com/cgi-bin/webscr",
+        'paypal_pdt_url':"https://www.sandbox.paypal.com/au/cgi-bin/webscr",
+        'return_url':"http://127.0.0.1:8000/reservar/paypal/",
+        'cancel_url':"http://127.0.0.1:8000/reservar/cancelado/",
+    }
+    acount = {
+        'pdt_token':"2E-ni3FGiArjF6alEy8gu_SQ4BmlhzFYs09slOuer2XOrtnsHsWnIdR7hFO",
+        'business':"eracleo@llika.net",
+        'merchant':"TG484VU34FSW6",
+    }
+    reserve = {
+        'quantity':obj.cantidad_personas,
+        'precio':obj.precio,
+        'amount':obj.pre_pago,
+        'item_name':obj.paquete,
+        'item_number':obj.id,
+        'currency_code':"USD",
+    }
+    context = {
+        'paypal':paypal,
+        'acount':acount,
+        'reserve':reserve,
+    }
+    return render(request,'pagar.html',context)
+def dePaypal(request):
+    tx = request.GET.get('tx')
+    id = request.GET.get('item_number')
+
+    reserva = Reserva.objects.get(id=id)
+    reserva.tx = tx
+    reserva.pago_estado = 'ad'
+    reserva.save()
+    return HttpResponseRedirect('/reservar/confirmado/')
+def confirmado(request):
+    return render(request,'confirmado.html')
+def cancelado(request):
+    return render(request,'cancelado.html')

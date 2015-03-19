@@ -12,15 +12,17 @@
       <tr>
         <th>Nombre</th>
         <th>Precio</th>
+        <th>Adelanto</th>
         <th>Descripción</th>
-        <th>Creado por</th>
+        <th>Creado</th>
         <th>Estado Paquete</th>
         <th>Editar Paquete</th>
     </tr>
 		{% for paquete in objs %}
 			<tr>
       			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
-      			<td>{{paquete.precio}}</td>
+            <td>{{paquete.precio}}</td>
+      			<td>{{paquete.pre_pago}}</td>
       			<td>{{paquete.descripcion}}</td>
       			<td>{{paquete.creado}}</td>
                 {% ifequal paquete.estado True %}

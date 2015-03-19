@@ -16,11 +16,14 @@
     </tr>
     <tr>
         <td><b>Modalidad de pago:</b></td>
-        <td>{{obj.get_modo_pago_display}}</td>
+        <td>
+            {{obj.get_modo_pago_display}}
+            <a href="http://127.0.0.1:8000/reservar/pagar/{{obj.id}}">http://127.0.0.1:8000/reservar/pagar/{{obj.id}}</a>
+        </td>
     </tr>
     <tr>
         <td><b>Estado:</b></td>
-        <td>{{obj.get_pago_estado_display}}</td>
+        <td>{{ obj.get_pago_estado_display }}</td>
     </tr>
     <tr>
         <td><b>creado:</b></td>
