@@ -9,7 +9,12 @@
 {% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
 <script type="text/javascript">
+    
     $(function(){
         $("#id_cantidad").change(function() {
             pre = parseInt($("#id_precio").val());
@@ -18,6 +23,10 @@
         });
     });
 
+    $(function() {
+        $( "#fecha" ).datepicker({ dateFormat: "yy-mm-dd" });
+  });
+  </script>
 </script>
 
 <form action="/reservar/agregara/" method="post">{%csrf_token%}
@@ -33,9 +42,10 @@
 
     <p><b>Monto Total : </b>$<input id="id_monto" name="id_monto" type="text" value="" readonly="readonly"></input></p>
 
-    <p><b>Fecha de viaje: </b><input  name="fecha" type="date" value=""  placeholder="dd/mm/aaaa" required/></p>
+    <p><b>Fecha de viaje: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd" placeholder="aaaa-mm-dd" /
+    required/></p>
 
-
+<!-- pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd"-->
 
     <label>Correo: </label>
     <input type="email" value="" name="correo" placeholder="micorreo@gmail.com">
