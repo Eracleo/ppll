@@ -13,20 +13,28 @@ def index(request):
 # EMPRESA
 @login_required
 def empresaDetail(request):
-    context_instance = RequestContext(request)
+    context_instance = RequestContext(request)    
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)        
-        request.session["empresa"] = empresa.id        
+        request.session["empresa"] = empresa.id               
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
             formAgregar = EmpresaForm(request.POST,instance=usuario)            
             if formAgregar.is_valid():                                
-                formAgregar.save()
-                #AgregarPaquete = Paquete.objects.create(sku='PAR001',nombre='Nombre',descripcion='Descripcion',
-                #precio='0',porcentaje='0',pre_pago='0',empresa=empresa.razon_social,link='',estado=True) 
-                #AgregarPaquete.save()                              
+                empresa = formAgregar.save()                       
+                paquete = Paquete()
+                paquete.sku = empresa.abreviatura + "001"
+                paquete.nombre = "Paquete Prueba"
+                paquete.descripcion = "Este es un paquete inicial de prueba, puede editar su contenido!"
+                paquete.precio = "0"
+                paquete.porcentaje = "0"
+                paquete.pre_pago = "0"
+                paquete.empresa = empresa
+                paquete.link = ""
+                paquete.estado = True 
+                paquete.save()                          
                 return HttpResponseRedirect('/empresa/information')
         else:
             formAgregar = EmpresaForm()
