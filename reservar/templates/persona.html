@@ -23,10 +23,13 @@
                 {  
                     numero=i+1;
                     nombre="valor de: "+f.elements[i].name+"\n";
-                    var res = nombre.substring(17, nombre.length-1);
+                    var Per=nombre.substring(15,16);
+                    Per=parseInt(Per)+1;
+                    var res = " Viajero "+Per+"     "+nombre.substring(17, nombre.length-1);
                     msg += res+"\n";
                     ok = false;                    
                 }
+
             };
                         
             if(ok == false)
@@ -69,17 +72,40 @@
 {{ form.viajeros.management_form }}
 
 <h3> Persona Instance(s)</h3>
-<table width = "1000px" > 
+<table width = "100%"> <tr>
+   
+   <th width="23%">Nombre</th>
+   <th width="15%">Apellidos</th>
+   <th width="15%">Tipo de Documento</th>
+   <th width="18%">Nro Documento</th>
+   <th width="10%">Pais</th>
+   <th width="10%">Telefono</th>
+   <th width="20%">Correo</th>
+</tr> </table>  
+<table  id="dataTable" width="50%" border="3" > 
   <thead>
-      <tr>
-        
-      </tr>
+      
+        {% for f in form.viajeros_instances %}
+        <tr>
+            <td>{{ f.id}}</td>
+            <td>{{ f.nombre}}</td>
+            <td>{{ f.apellidos}}</td>
+            <td>{{ f.doc_tipo}}</td>
+            <td>{{ f.doc_nro}}</td>
+            <td>{{ f.pais}}</td>
+            <td>{{ f.telefono}}</td>
+            <td>{{ f.email}}</td>
+            
+        </tr>
+        {% endfor%}
+      
     </thead>
     <tbody>
-      {% for f in form.viajeros_instances %}
+      <!--{% for f in form.viajeros_instances %}
+
       {{ f.as_p }}
       <hr>
-      {% endfor%}
+      {% endfor%}-->
 
     </tbody>
 </table>
