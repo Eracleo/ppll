@@ -11,10 +11,45 @@
     {% load static %}
     <title></title>
 
-    <script src="{% static 'js/jquery-v1.min.js' %}"></script>
+   <script type="text/javascript">
+        function valida(f) {
+            var ok = true;
+            var msg = "Falta llenar el contenido en los siguientes campos:\n";
+            var numero=0;
+            var nombre="";
+            for (var i = 0; i <= f.elements.length-2; i++) {
+                        
+                if(f.elements[i].value == "")
+                {  
+                    numero=i+1;
+                    nombre="valor de: "+f.elements[i].name+"\n";
+                    var res = nombre.substring(17, nombre.length-1);
+                    msg += res+"\n";
+                    ok = false;                    
+                }
+            };
+                        
+            if(ok == false)
+                            
+                alert(msg);
+            return ok;
+          
+        }
+
+        $(function(){
+        $("#id_paquete").ready(function() {
+            $("#id_paquete").val("1");
+            var campo = document.getElementById('id_paquete');
+            campo.readOnly=true;
+        });
+    }); 
+
+
+    </script>
 </head>
 <body>
-<form action="/reservar/agregara/" method="post" class="">
+<!--<form id="miFormulario" action="/reservar/agregara/" method="post" class="" onsubmit="return valida(this)">-->
+<form id="miFormulario" action="" method="post" onsubmit="return valida(this)">
 {% csrf_token %}
 <h2> Reservar:</h2>
 
@@ -37,12 +72,7 @@
 <table width = "1000px" > 
   <thead>
       <tr>
-        <th>nombre</th>
-        <th>apellidos</th>
-        <th>doc_tipo</th>
-        <th>doc_numero</th>
-        <th>pais</th>
-        <th>email</th>
+        
       </tr>
     </thead>
     <tbody>

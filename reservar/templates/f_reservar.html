@@ -1,8 +1,63 @@
-{% extends "layout/base_pagos.html" %}
-{% block content %}
-<form action='' method='post'>
-{%csrf_token%}
-{{ form.as_p }}
-<input type='submit' value='Submit' />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
+<title>Validación de un formulario con JavaScript</title>
+
+<script type="text/javascript">
+function valida(f) {
+    var ok = true;
+    var msg = "Debes escribir contenido en los campos:\n";
+    var numero=0;
+ /*if(f.elements[0].value == "")
+  {
+    msg += "- Marca 1\n";
+    ok = false;
+  }
+
+  if(f.elements["marca2"].value == "")
+  {
+    msg += "- Marca 2\n";
+    ok = false;
+  }
+
+  if(f.marca3.value == "")
+  {
+    msg += "- Marca 3\n";
+    ok = false;
+  }*/
+	for (var i = 0; i <= f.elements.length-3; i++) {
+	                    
+        if(f.elements[i].value == "")
+	    {  
+            numero=i+1;
+	    	msg += "-Marca"+numero+"\n";
+	        ok = false;
+            
+	    }
+
+	};
+
+	                
+	    if(ok == false)    
+                        
+	       alert(msg);
+
+	    return ok;
+}
+</script>
+</head>
+
+<body lang="es">
+Introduce tus marcas de coches favoritas<br>
+<form id="miFormulario" action="" method="get" onsubmit="return valida(this)">
+<p>
+Marca 1: <input type="text" id="marca1" />
+<br />
+Marca 2: <input type="text" id="marca2" />
+<br />
+Marca 3: <input type="text" id="marca3" />
+<br />
+<input type="submit" value="Enviar" />
+<input type="reset" value="Borrar" />
+</p>
 </form>
-{% endblock %}
+</body>
