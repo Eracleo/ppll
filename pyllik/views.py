@@ -21,7 +21,7 @@ def empresaDetail(request):
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
-            formAgregar = EmpresaForm(request.POST,instance=usuario)            
+            formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)            
             if formAgregar.is_valid():                                
                 empresa = formAgregar.save()                       
                 paquete = Paquete()
