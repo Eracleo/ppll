@@ -50,7 +50,7 @@ class Empresa(models.Model):
     paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
     nro_paquetes = models.IntegerField(default=1)
-    logo = ImageWithThumbsField(upload_to='logos_empresa')
+    logo = ImageWithThumbsField(upload_to='logos_empresa',blank=True)
     user = models.ForeignKey(User)
     abreviatura = models.CharField(max_length=3)
     creado = models.DateField(auto_now_add=True, editable=False)
