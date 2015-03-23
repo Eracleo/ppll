@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from thumbs import ImageWithThumbsField
 DOC_TIPO = (
     ('di','Document Identification'),
     ('ps','Passport'),
@@ -49,7 +50,7 @@ class Empresa(models.Model):
     paypal_email = models.EmailField(max_length=100)
     paypal_code = models.CharField(max_length=50)
     nro_paquetes = models.IntegerField(default=1)
-    logo = models.CharField(max_length=120, blank=True)
+    logo = ImageWithThumbsField(upload_to='logos_empresa')
     user = models.ForeignKey(User)
     abreviatura = models.CharField(max_length=3)
     creado = models.DateField(auto_now_add=True, editable=False)
