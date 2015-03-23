@@ -52,9 +52,17 @@ def empresaEdit(request):
             return HttpResponseRedirect('/empresa/')
     if request.method == 'GET':
         empresa_form = EmpresaForm(initial=
-            {
+            {                
+                'rubro':empresa.rubro,
                 'razon_social':empresa.razon_social,
                 'ruc':empresa.ruc,
+                'razon_social':empresa.razon_social, 
+                'ruc':empresa.ruc, 
+                'direccion':empresa.direccion, 
+                'web':empresa.web, 
+                'paypal_email':empresa.paypal_email, 
+                'paypal_code':empresa.paypal_code, 
+                'abreviatura':empresa.abreviatura,
             })
     ctx = {'empresa_form':empresa_form,'empresa':empresa}
     return render(request,'edit.html', ctx)
