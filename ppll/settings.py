@@ -23,7 +23,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['pagos.com','127.0.0.1']
+ALLOWED_HOSTS = ['negotu.com','23.88.229.57']
 
 
 # Application definition
