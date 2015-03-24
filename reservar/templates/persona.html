@@ -12,6 +12,7 @@
     <title></title>
 
    <script type="text/javascript">
+
         function valida(f) {
             var ok = true;
             var msg = "Falta llenar el contenido en los siguientes campos:\n";
@@ -31,13 +32,13 @@
                 }
 
             };
-                        
+                  
             if(ok == false)
                             
                 alert(msg);
             return ok;
           
-        }
+        };
 
         $(function(){
         $("#id_paquete").ready(function() {
@@ -74,12 +75,12 @@
 <h3> Persona Instance(s)</h3>
 <table width = "100%"> <tr>
    
-   <th width="23%">Nombre</th>
-   <th width="13%">Apellidos</th>
-   <th width="15%">Tipo de Documento</th>
-   <th width="14%">Nro Documento</th>
-   <th width="10%">Pais</th>
-   <th width="14%">Telefono</th>
+   <th width="16%">Nombre</th>
+   <th width="20%">Apellidos</th>
+   <th width="15.2%">Tipo de Documento</th>
+   <th width="11.4%">Nro Documento</th>
+   <th width="9%">Pais</th>
+   <th width="11.8%">Telefono</th>
    <th width="20%">Correo</th>
 </tr> </table>  
 <table  id="dataTable" width="50%" border="3" > 
