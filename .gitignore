@@ -11,3 +11,4 @@ pyllik/migrations/*.py
 
 user/migrations/*.pyc
 user/migrations/*.py
+carga/logos_empresa
