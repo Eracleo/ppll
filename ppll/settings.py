@@ -79,7 +79,7 @@ USE_L10N = True
 USE_TZ = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'carga')
-MEDIA_URL = 'http://127.0.0.1:8000/carga/'
+MEDIA_URL = '/carga/'
 STATIC_ROOT = ''
 
 # Static files (CSS, JavaScript, Images)
@@ -99,7 +99,7 @@ LOGIN_URL = '/user/login'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'luisjfr2309@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = '101030luisito'
 EMAIL_PORT = 587
 
 
