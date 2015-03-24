@@ -31,7 +31,7 @@
 
 <form action="/reservar/agregara/" method="post">{%csrf_token%}
     <!-- campos ocultos -->
-    <input id="id_paquete" name="paquete_id" type="hidden" name="id_paquete" value={{paquete.id}}></input></p>
+    <input id="id_paquete" name="paquete_id" type="hidden" value="{{paquete.id}}"></input></p>
 
     <!-- Todos los campos ocultos para enviar a paypal -->
     <p><b>Paquete: </b> {{ paquete.nombre }}</p>

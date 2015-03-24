@@ -38,8 +38,8 @@ def index(request):
     return render(request, 'f_reservar.html', {
         'form': form,
     })
-def detalle(request, id):
-    paquete = Paquete.objects.get(id=id)
+def detalle(request, sku):
+    paquete = Paquete.objects.get(sku=sku)
     if request.method == 'GET':
     #if request.POST :
         #paquete_nombre =  request.GET.get('paquete_id')
@@ -123,6 +123,7 @@ def personasa(request):
     cantidad_personas = request.POST.get('cantidad')
     fecha_viaje = request.POST.get('fecha')
     monto = request.POST.get('id_monto')
+    email=request.POST.get
 
     class PersonaForm(forms.ModelForm):
         class Meta:
@@ -145,7 +146,7 @@ def personasa(request):
         if form.is_valid():
             #reserva = Reserva() #model class
             #reserva.paquete= form.cleaned_data()
-            paquete=Paquete.objects.get(id=paquete_id)
+            #paquete=Paquete.objects.get(id=paquete_id)
 
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
             #reserva.user_instances=user_id
