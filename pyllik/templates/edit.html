@@ -1,10 +1,10 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}EDITAR DATOS EMPRESA{% endblock %}
 {% block content %}
-<form action="" method="POST">
+<form action="" method="POST" enctype='multipart/form-data'>
     {%csrf_token%}
     {{empresa_form.as_p}}
-    <button type= "submit" class="btn btn-primary"> Guardar</button>
+    <button type= 'submit' class="btn btn-primary"> Guardar</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
 {% endblock%}
