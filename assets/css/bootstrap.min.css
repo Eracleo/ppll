@@ -8,3 +8,6 @@ img.img-responsive{
   height: 200px;
   width: 200px;
 }
+th {
+  text-align: center;
+}
