@@ -39,7 +39,12 @@ Agregar Paquete
 
 <form action="" method="POST">
 	{%csrf_token%}
-    {{formAgregar.as_p}}
+	<table width="40%">
+    	<tbody>
+    		{{formAgregar.as_table}}
+    	</tbody>
+    </table>   
+    <br><br> 
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
