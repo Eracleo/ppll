@@ -15,7 +15,9 @@
 
         function valida(f) {
             var ok = true;
-            var msg = "Falta llenar el contenido en los siguientes campos:\n";
+            var menss="Falta llenar el contenido en los siguientes campos:\n";
+            var msg = "";
+            var mes="";
             var numero=0;
             var nombre="";
             for (var i = 0; i <= f.elements.length-2; i++) {
@@ -30,12 +32,60 @@
                     msg += res+"\n";
                     ok = false;                    
                 }
+                else
+                {
+                    var Es=f.elements[i].name.substring(7,15);
+                    if(Es=="nombre"|| Es=="apellido"){
+                        //if(!isNaN(f.elements[i].value)){  
+                        if( !(/^([a-z ñáéíóú]{3,60})$/i.test(f.elements[i].value)) ) {                   
+                            mes+="Escribir solo letras en "+Es+"\n";
+                            ok=false;
+                        }                    
+                    }
+                    else{
+                        if(Es=="telefono"){
+                           //if(isNaN(f.elements[i].value)){ 
+                            if( !(/^\d{9}$/.test(f.elements[i].value)) ) {    
+                                mes+="Escribir numero de 9 digitos en "+Es+"\n";
+                                ok=false;         
+                            }
+                        }
+                        else
+                        {
+                            if(Es=="doc_nro")
+                            {
+                                var doc_tipoo=f.elements[i-1].value;
+                                if(doc_tipoo=="ps")
+                                {
+                                    if( !(/^[A-Z]\d{6}$/.test(f.elements[i].value)) ) {
+                                        mes+="Escribir una letra y 6 digitos en su Passport "+"\n";
+                                        ok=false;         
+                                    }
+                                }
+                                else
+                                {
+                                    if( !(/^\d{8}$/.test(f.elements[i].value)) ) {
+                                        mes+="Escribir 8 digitos en su Document Identification"+Es+"\n";
+                                        ok=false;         
+                                    }
+                                }
+                            }
+                        }
+                    };
+                    
+                };             
 
             };
+            menss+=msg;
                   
-            if(ok == false)
-                            
-                alert(msg);
+            if(ok == false){
+                                  
+                if(msg=="")
+                    alert(mes);
+                else
+                    alert(menss+"\n"+mes); 
+                
+            }
             return ok;
           
         };
