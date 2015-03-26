@@ -21,13 +21,12 @@
             var numero=0;
             var nombre="";
             for (var i = 0; i <= f.elements.length-2; i++) {
-                        
+                nombre="valor de: "+f.elements[i].name+"\n";
+                var Per=nombre.substring(15,16);
+                Per=parseInt(Per)+1;
                 if(f.elements[i].value == "")
                 {  
-                    numero=i+1;
-                    nombre="valor de: "+f.elements[i].name+"\n";
-                    var Per=nombre.substring(15,16);
-                    Per=parseInt(Per)+1;
+                    numero=i+1;                    
                     var res = " Viajero "+Per+"     "+nombre.substring(17, nombre.length-1);
                     msg += res+"\n";
                     ok = false;                    
@@ -38,7 +37,7 @@
                     if(Es=="nombre"|| Es=="apellido"){
                         //if(!isNaN(f.elements[i].value)){  
                         if( !(/^([a-z ñáéíóú]{3,60})$/i.test(f.elements[i].value)) ) {                   
-                            mes+="Escribir solo letras en "+Es+"\n";
+                            mes+="Escribir solo letras en "+Es+" de Viajero"+Per+"\n";
                             ok=false;
                         }                    
                     }
@@ -46,7 +45,7 @@
                         if(Es=="telefono"){
                            //if(isNaN(f.elements[i].value)){ 
                             if( !(/^\d{9}$/.test(f.elements[i].value)) ) {    
-                                mes+="Escribir numero de 9 digitos en "+Es+"\n";
+                                mes+="Escribir numero de 9 digitos en "+Es+" de Viajero"+Per+"\n";
                                 ok=false;         
                             }
                         }
@@ -58,14 +57,14 @@
                                 if(doc_tipoo=="ps")
                                 {
                                     if( !(/^[A-Z]\d{6}$/.test(f.elements[i].value)) ) {
-                                        mes+="Escribir una letra y 6 digitos en su Passport "+"\n";
+                                        mes+="Escribir una letra y 6 digitos en el Passport "+" de Viajero"+Per+"\n";
                                         ok=false;         
                                     }
                                 }
                                 else
                                 {
                                     if( !(/^\d{8}$/.test(f.elements[i].value)) ) {
-                                        mes+="Escribir 8 digitos en su Document Identification"+Es+"\n";
+                                        mes+="Escribir 8 digitos en el Document Identification"+" de Viajero"+Per+"\n";
                                         ok=false;         
                                     }
                                 }
