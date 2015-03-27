@@ -116,12 +116,12 @@
 <input type="hidden" name="fecha" value="{{fecha_viaje}}" id="cantidad" /> 
 {% for field in form %}
   {{ field.errors }}
-  {{ field.label_tag }}  {{ field }}
+  {{ field }}
 {% endfor %}
-
+<p><b>Paquete:</b> {{paquete}}</p>
 {{ form.viajeros.management_form }}
 
-<h3> Persona Instance(s)</h3>
+<h3> Viajeros ({{ cantidad_personas }}):</h3>
 <table width = "100%"> <tr>
    
    <th width="16%">Nombre</th>

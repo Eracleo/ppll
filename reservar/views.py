@@ -131,7 +131,7 @@ def personasa(request):
 
     class ReservaaForm(forms.Form):
 
-        paquete= forms.CharField(max_length=100)
+        paquete= forms.CharField(widget=forms.HiddenInput(),max_length=10)
         viajeros= PersonaFormset()
 
 
@@ -141,16 +141,11 @@ def personasa(request):
 
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
-            #reserva = Reserva() #model class
-            #reserva.paquete= form.cleaned_data()
-            #paquete=Paquete.objects.get(id=paquete_id)
-
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
-            #reserva.user_instances=user_id
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
-                    persona = Persona() #Product model class
+                    persona = Persona()
                     persona.nombre= item['nombre']
                     persona.apellidos= item['apellidos']
                     persona.doc_tipo= item['doc_tipo']
@@ -165,8 +160,8 @@ def personasa(request):
             form.viajeros_instances = PersonaFormset()
 
             context = {
-
                 'paquete_id':paquete_id,
+                'paquete':paquete,
                 'cantidad_personas':cantidad_personas,
                 'fecha_viaje':fecha_viaje,
                 'monto':monto,
