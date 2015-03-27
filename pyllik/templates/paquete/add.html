@@ -43,7 +43,7 @@ Agregar Paquete
                 nombre=f.elements[i].name+"\n";
                 //var Per=nombre.substring(7,15);
                 //Per=parseInt(Per)+1;
-                if(f.elements[i].value == "")
+                if(f.elements[i].value == "" || f.elements[i].value=="0")
                 {                    
                     var res = nombre;
                     msg += res;
@@ -51,7 +51,10 @@ Agregar Paquete
                 }
             }
             if(ok == false){
-                alert(msg); 
+                alert(msg.toUpperCase()); 
+                //$("#mensaje").val(msg.toUpperCase());
+                //$("myAlert").value(msg);}
+                //$("#myAlert").alert()
                 
             }
             return ok;
@@ -68,6 +71,12 @@ Agregar Paquete
     	</tbody>
     </table>   
     <br><br> 
+
+  <!-- <div class="alert alert-danger" id="myAlert">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> Ocurrio un error al mandar sus datos.
+    </div>
+-->
     <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>

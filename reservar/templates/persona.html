@@ -15,7 +15,7 @@
 
         function valida(f) {
             var ok = true;
-            var menss="Falta llenar el contenido en los siguientes campos:\n";
+            var menss="Falta llenar el contenido en los siguientes campos:\n"+"\n";
             var msg = "";
             var mes="";
             var numero=0;
@@ -80,9 +80,9 @@
             if(ok == false){
                                   
                 if(msg=="")
-                    alert(mes);
+                    alert(mes.toUpperCase());
                 else
-                    alert(menss+"\n"+mes); 
+                    alert(menss.toUpperCase()+"\n"+mes.toUpperCase()); 
                 
             }
             return ok;
