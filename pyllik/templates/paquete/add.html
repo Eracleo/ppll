@@ -35,9 +35,32 @@ Agregar Paquete
 			campo.readOnly=true;
 		});
 	});	
+	function valida(f) {
+            var ok = true;
+            var msg = "Falta llenar el contenido en los siguientes campos:\n"+"\n";
+            var nombre="";
+            for (var i = 0; i <= f.elements.length-2; i++) {
+                nombre=f.elements[i].name+"\n";
+                //var Per=nombre.substring(7,15);
+                //Per=parseInt(Per)+1;
+                if(f.elements[i].value == "")
+                {                    
+                    var res = nombre;
+                    msg += res;
+                    ok = false;                    
+                }
+            }
+            if(ok == false){
+                alert(msg); 
+                
+            }
+            return ok;
+          
+        };
+
 </script>
 
-<form action="" method="POST">
+<form action="" method="POST" onsubmit="return valida(this)">
 	{%csrf_token%}
 	<table width="40%">
     	<tbody>
