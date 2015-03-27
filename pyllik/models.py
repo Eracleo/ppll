@@ -59,7 +59,7 @@ class Empresa(models.Model):
         return self.razon_social
 class Paquete(models.Model):
     sku = models.CharField(max_length=6)
-    nombre = models.CharField(max_length=20)
+    nombre = models.CharField(max_length=40)
     precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
     porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)])
     pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)])

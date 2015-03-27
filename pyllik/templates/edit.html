@@ -6,8 +6,12 @@
     $(function(){
 		$("#id_web").change(function() {
 			valor = $("#id_web").val();
-			var hh = "http://";
-			$("#id_web").val(hh+valor);
+			var valido=valor.substring(0,4);
+			if(valido!="http"){
+				var hh = "http://";
+				$("#id_web").val(hh+valor);
+			}
+			
 		});
 	});
     function valida_envia(f)
