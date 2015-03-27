@@ -10,6 +10,7 @@
 </script>
 	<table class="table table-bordered table-condesed table-hover">
       <tr>
+        <th>SKU</th>
         <th>Nombre</th>
         <th>Precio</th>
         <th>Adelanto</th>
@@ -20,6 +21,7 @@
     </tr>
 		{% for paquete in objs %}
 			<tr>
+            <td><a href="paquete/detail/{{paquete.id}}">{{paquete.sku}}</a></td>
       			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
             <td>{{paquete.precio}}</td>
       			<td>{{paquete.pre_pago}}</td>
