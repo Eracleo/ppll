@@ -1,6 +1,15 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Información de la Empresa{% endblock %}
 {% block content %}
+<script type="text/javascript">	
+	$(function(){
+		$("#id_web").change(function() {
+			valor = $("#id_web").val();
+			var hh = "http://";
+			$("#id_web").val(hh+valor);
+		});
+	});
+</script>
 <form action="" method="POST" enctype='multipart/form-data'>
     {%csrf_token%}
     <table width="40%">

@@ -3,6 +3,13 @@
 {% block content %}
 
     <script type="text/javascript">
+    $(function(){
+		$("#id_web").change(function() {
+			valor = $("#id_web").val();
+			var hh = "http://";
+			$("#id_web").val(hh+valor);
+		});
+	});
     function valida_envia(f)
     {
     	var retorno=true;

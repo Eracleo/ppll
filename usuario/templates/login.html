@@ -1,8 +1,14 @@
-{% extends "layout/base.html" %}
+{% extends 'layout/base_admin.html' %}
 {% block content %}
     {% if form.errors %}
-    {{ form.errors }}
+    
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Su nombre de usuario y la contraseña no coinciden.</strong> Por favor intenta otra vez.
+    </div>
     {% endif %}
+
+
     <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
         {% csrf_token %}
         <table>
