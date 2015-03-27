@@ -1,0 +1,16 @@
+[
+  {
+    "model": "pyllik.rubro",
+    "pk": 1,
+    "fields": {
+      "nombre": "Agencia de Viajes y Turismo"
+    }
+  },
+  {
+    "model": "pyllik.pais",
+    "pk": 2,
+    "fields": {
+      "nombre": "Peru"
+    }
+  }
+]

@@ -23,7 +23,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['negotu.com','23.88.229.57']
+ALLOWED_HOSTS = ['negotu.com']
 
 
 # Application definition
@@ -80,14 +80,14 @@ USE_TZ = True
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'carga')
 MEDIA_URL = '/carga/'
-STATIC_ROOT = ''
+STATIC_ROOT = '/home/juan/negotu/assets/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 STATIC_PATH = os.path.join(BASE_DIR,'assets')
 STATIC_URL = '/assets/'
 STATICFILES_DIRS = (
-    STATIC_PATH,  
+    STATIC_PATH,
 )
 
 # Redirect when login is correct.
