@@ -3,9 +3,6 @@ from .forms import PostForm
 from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
 from reservar.forms import PostForm
-#from reservar.forms import PersonaForm
-#from reservar.forms import PersonaFormset
-#from reservar.forms import ReservaaForm
 from reservar.forms import PostForm, ContactoForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -197,9 +194,11 @@ def pagar(request,id):
         'return_url':"http://127.0.0.1:8000/reservar/paypal/",
         'cancel_url':"http://127.0.0.1:8000/reservar/cancelado/",
     }
+    # Recuperar datos de la agencia
+    agencia = obj.empresa
     acount = {
         'pdt_token':"2E-ni3FGiArjF6alEy8gu_SQ4BmlhzFYs09slOuer2XOrtnsHsWnIdR7hFO",
-        'business':"eracleo@llika.net",
+        'business':agencia.paypal_email,
         'merchant':"TG484VU34FSW6",
     }
     reserve = {
