@@ -9,7 +9,8 @@ DOC_TIPO = (
 PAGO_ESTADO = (
     ('re','En Reserva'),
     ('ad','Con Adelanto'),
-    ('pc','Pago Completado'),
+    ('pc','Completado'),
+    ('pc','Incompletado'),
     ('ca','Cancelado'),
     )
 MODO_PAGO = (
