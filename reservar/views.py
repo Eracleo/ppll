@@ -123,7 +123,10 @@ def personasa(request):
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
             titulo = 'LLIKA EIRL - Negotu.com'
-            contenido = 'Reserva creada correctamente'
+            contenido = 'Reserva creada correctamente' + "\n"
+            contenido +='Paquete: ' + paquete.nombre + "\n" 
+            contenido +='Viajeros:' + cantidad_personas + "\n" 
+            contenido +='Total a pagar: ' + monto 
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
