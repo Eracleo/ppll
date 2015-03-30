@@ -14,7 +14,7 @@ from django.template import RequestContext
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
-
+import paypal
 def index(request):
     if request.method == 'GET':
         form = PostForm()
@@ -201,13 +201,22 @@ def pagar(request,id):
     return render(request,'pagar.html',context)
 def dePaypal(request):
     tx = request.GET.get('tx')
-    id = request.GET.get('item_number')
+    ir = request.GET.get('item_number')
 
-    reserva = Reserva.objects.get(id=id)
-    reserva.tx = tx
-    reserva.pago_estado = 'ad'
-    reserva.save()
-    return HttpResponseRedirect('/reservar/confirmado/')
+    reserva = Reserva.objects.get(id=ir)
+    at = reserva.empresa.paypal_at
+
+    success,pdt = paypal.paypal_check(tx,at)
+    if success :
+        if reserva.id == int(pdt['item_number']):
+            if float(pdt['payment_gross']) >= reserva.cantidad_personas * reserva.pre_pago: 
+                reserva.tx = tx
+                reserva.pago_estado = 'ad'
+            else :
+                reserva.pago_estado = 'in'
+            reserva.save()
+            return HttpResponseRedirect('/reservar/confirmado/')
+    return HttpResponseRedirect('/reservar/cancelado/')
 def confirmado(request):
     return render(request,'confirmado.html')
 def cancelado(request):
