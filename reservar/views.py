@@ -3,7 +3,6 @@ from .forms import PostForm
 from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
 from reservar.forms import PostForm
-from reservar.forms import PostForm, ContactoForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -96,23 +95,6 @@ def Detalle(request,id):
     viajeros = reserva.viajeros.all()
     return render(request,'detalle1.html',{'Reserva':reserva, 'viajeros':viajeros})
 
-#Correo de Confirmacion
-def confircorreo(request):
-    if request.method=='POST':
-        formulario = ContactoForm(request.POST)
-        if formulario.is_valid():
-            titulo = 'Mensaje des pagos en LLIKA EIRL'
-            contenido = formulario.cleaned_data['mensaje'] + "\n"
-            contenido += 'Comunicarse a: ' + formulario.cleaned_data['correo']
-            correo = EmailMessage(titulo, contenido, to=['aridni81@gmail.com'])
-            correo.send()
-            return HttpResponseRedirect('/')
-    else:
-        formulario = ContactoForm()
-    return render_to_response('confirmar.html',{'formulario':formulario}, context_instance=RequestContext(request))
-
-
-
 def personasa(request):
     # Creando formulario registro personas con comboBox pais-gfgd
     paquete_id =  request.POST.get('paquete_id')
@@ -120,7 +102,7 @@ def personasa(request):
     cantidad_personas = request.POST.get('cantidad')
     fecha_viaje = request.POST.get('fecha')
     monto = request.POST.get('id_monto')
-    email=request.POST.get
+    email=request.POST.get('correo')
 
     class PersonaForm(forms.ModelForm):
         class Meta:
@@ -134,13 +116,16 @@ def personasa(request):
         paquete= forms.CharField(widget=forms.HiddenInput(),max_length=10)
         viajeros= PersonaFormset()
 
-
     if request.method == 'POST':
         form = ReservaaForm(request.POST)
         #user_id = request.user.id
 
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
+            titulo = 'LLIKA EIRL - Negotu.com'
+            contenido = 'Reserva creada correctamente'
+            correo = EmailMessage(titulo, contenido, to=[email])
+            correo.send()
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
@@ -165,7 +150,8 @@ def personasa(request):
                 'cantidad_personas':cantidad_personas,
                 'fecha_viaje':fecha_viaje,
                 'monto':monto,
-                'form':form
+                'form':form,
+                'email':email,
             }
         return render(request,'persona.html',context)
     else:

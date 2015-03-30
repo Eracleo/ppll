@@ -15,5 +15,4 @@ urlpatterns = patterns('',
     url(r'^paypal/$','reservar.views.dePaypal', name='dePaypal'),
     url(r'^confirmado/$','reservar.views.confirmado', name='confirmado'),
     url(r'^cancelado/$','reservar.views.cancelado', name='cancelado'),
-    url(r'^confirmar/$','reservar.views.confircorreo', name='ConfirmarCorreo'),
 )

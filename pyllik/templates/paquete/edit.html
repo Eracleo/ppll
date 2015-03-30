@@ -27,7 +27,12 @@
 
 <form action="" method="POST">
     {%csrf_token%}
-    {{paquete_form.as_p}}
+	<table width="40%">
+    	<tbody>
+    		{{paquete_form.as_table}}
+    	</tbody>
+    </table>   
+    <br><br>
     <button type= "submit" class="btn btn-primary"> Guardar</button>
     <button type= "reset" class="btn btn-primary"> Limpiar</button>
 </form>
