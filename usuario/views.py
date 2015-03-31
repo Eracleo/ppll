@@ -60,7 +60,3 @@ def config(request):
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')
-
-@login_required()
-def cambiar(request):
-    return render(request,'cambiarcontra.html', {'user': request.user})
