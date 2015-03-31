@@ -1,8 +1,6 @@
 from django.conf.urls import patterns, include, url
 from reservar import views
 urlpatterns = patterns('',
-    url(r'^$','reservar.views.index', name='index'),
-    url(r'^reservar$','reservar.views.index', name='index'),
     url(r'^paquete/(?P<sku>[^/]+)$','reservar.views.detalle', name='detalle'),
     #url(r'^pasajeros/(?P<id>\d+)$','reservar.views.pasajeros', name='pasajeros'),
    # url(r'^guardar/$','reservar.views.guaradarpasajeros', name='viajeros'),
