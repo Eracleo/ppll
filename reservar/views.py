@@ -102,7 +102,7 @@ def personasa(request):
     cantidad_personas = request.POST.get('cantidad')
     fecha_viaje = request.POST.get('fecha')
     monto = request.POST.get('id_monto')
-    email=request.POST.get('correo')
+    email=request.POST.get('email')
 
     class PersonaForm(forms.ModelForm):
         class Meta:
@@ -129,7 +129,7 @@ def personasa(request):
             contenido +='Total a pagar: ' + monto 
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
-            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje)
+            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
