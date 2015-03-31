@@ -1,13 +1,13 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}RESERVAS{% endblock %}
+{% block title %}Reservas{% endblock %}
 {% block content %}
 	<table class="table table-bordered table-condesed table-hover">
       <tr>
         <th>Nro.</th>
-        <th>Fecha Viaje</th>
+        <th>Fecha de Viaje</th>
         <th>Falta</th>
         <th>Paquete</th>
-        <th>Cantidad Personas</th>
+        <th>Viajeros</th>
         <th>Email</th>
         <th>Creado</th>
         <th>Estado</th>
@@ -16,14 +16,14 @@
 		{% for reserva in objs %}
     <tr>
       <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}</a></td>
-      <td>{{reserva.fecha_viaje}}</td>
+      <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
 			<td>{{reserva.fecha_viaje|timeuntil}}</td>
 			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
-			<td>{{reserva.cantidad_personas}}</td>
+			<td><a href="/empresa/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_personas}}</a></td>
 			<td>{{reserva.email}}</td>
-      <td>{{reserva.creado}}</td>
+      <td>{{reserva.creado|date:"Y-m-d"}}</td>
 			<td>{{reserva.get_pago_estado_display}}</td>
-      <td><a href="http://127.0.0.1:8000/reservar/pagar/{{reserva.id}}">PAGAR</a></td>
+      <td><a href="/reservar/pagar/{{reserva.id}}">PAGAR</a></td>
     </tr>
 		{% endfor %}
 	</table>
