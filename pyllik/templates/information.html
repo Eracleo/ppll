@@ -4,9 +4,11 @@
 <p><b>Rubro:</b> {{obj.rubro }}</p>
 <p><b>RUC: </b>{{obj.ruc}}</p>
 <p><b>Dirección: </b>{{obj.direccion}}</p>
-<p><b>WEB: </b><a href={{ obj.web}} name="Direccion">{{ obj.web}}</a></p>
+<p><b>WEB: </b><a href="{{ obj.web}}">{{ obj.web}}</a></p>
+<hr>
+<p><b>Información de Paypal</b></p>
+<p><b>E-mail: </b>{{ obj.paypal_email}}</a></p>
+<p><b>Identity Token (at): </b>{{ obj.paypal_at}}</a></p>
 <p><img src="{{obj.logo.url}}" class="img-responsive"></p>
 <hr>
-
-<p><b><a href="#" name="datos-paypal">Datos paypal</a></b></p>
 {% endblock %}

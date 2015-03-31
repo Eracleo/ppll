@@ -9,7 +9,8 @@ DOC_TIPO = (
 PAGO_ESTADO = (
     ('re','En Reserva'),
     ('ad','Con Adelanto'),
-    ('pc','Pago Completado'),
+    ('pc','Completado'),
+    ('pc','Incompletado'),
     ('ca','Cancelado'),
     )
 MODO_PAGO = (
@@ -48,8 +49,8 @@ class Empresa(models.Model):
     ruc = models.CharField(max_length=11)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100)
-    paypal_code = models.CharField(max_length=50)
-    nro_paquetes = models.IntegerField(default=1)
+    paypal_at = models.CharField(max_length=64) # IdentityToken
+    nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
     user = models.ForeignKey(User)
     abreviatura = models.CharField(max_length=3)

@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from forms import SignUpForm
 from django.contrib.auth.decorators import login_required
+from django.core.mail import EmailMessage
 
 @login_required()
 def main(request):
@@ -28,10 +29,17 @@ def signup(request):
             # if you want to change other fields.
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
-            user.last_name = last_name
+            user.last_name = last_name            
 
             # Save new user attributes
             user.save()
+            titulo = 'LLIKA EIRL - Negotu.com'
+            contenido = 'Bienvenido...'
+            contenido += first_name
+            contenido += ' gracias por crear su cuenta en Negotu.com' + "\n"
+            contenido +='Usuario: ' + username + "\n" 
+            correo = EmailMessage(titulo, contenido, to=[email])
+            correo.send()
             return HttpResponseRedirect(reverse('main'))
     else:
         form = SignUpForm()
