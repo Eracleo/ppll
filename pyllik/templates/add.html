@@ -13,6 +13,19 @@
 			
 		});
 	});
+	$(function(){
+		$("#id_razon_social").change(function() {
+			valor = $("#id_razon_social").val();
+			var razon = valor.substring(0,3);
+			$("#id_abreviatura").val(razon.toUpperCase());
+		});
+	});
+	$(function(){
+		$("#id_abreviatura").change(function() {
+			valor = $("#id_abreviatura").val();
+			$("#id_abreviatura").val(valor.toUpperCase());
+		});
+	});
 </script>
 <form action="" method="POST" enctype='multipart/form-data'>
     {%csrf_token%}
