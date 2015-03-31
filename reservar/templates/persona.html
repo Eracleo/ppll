@@ -104,7 +104,7 @@
 <!--<form id="miFormulario" action="/reservar/agregara/" method="post" class="" onsubmit="return valida(this)">-->
 <form id="miFormulario" action="" method="post" onsubmit="return valida(this)">
 {% csrf_token %}
-<h2> Reservar:</h2>
+<h2> Reserve:</h2>
 
 <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS" />
 <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" />
@@ -119,19 +119,19 @@
   {{ field.errors }}
   {{ field }}
 {% endfor %}
-<p><b>Paquete:</b> {{paquete}}</p>
+<p><b>Package:</b> {{paquete}}</p>
 {{ form.viajeros.management_form }}
 
-<h3> Viajeros ({{ cantidad_personas }}):</h3>
+<h3> Traveling ({{ cantidad_personas }}):</h3>
 <table width = "100%"> <tr>
    
-   <th width="16%">Nombre</th>
-   <th width="20%">Apellidos</th>
-   <th width="15.2%">Tipo de Documento</th>
-   <th width="11.4%">Nro Documento</th>
-   <th width="9%">Pais</th>
-   <th width="11.8%">Telefono</th>
-   <th width="20%">Correo</th>
+   <th width="16%">Name</th>
+   <th width="20%">Last Name</th>
+   <th width="15.2%">Document Type</th>
+   <th width="11.4%">Document Nro</th>
+   <th width="9%">Country</th>
+   <th width="11.8%">Phone</th>
+   <th width="20%">Mail</th>
 </tr> </table>  
 <table  id="dataTable" width="50%" border="3" > 
   <thead>

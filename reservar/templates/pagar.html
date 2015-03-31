@@ -9,12 +9,12 @@
 <table>
     <tr>
         <td width="400">
-            <p>PAGAR CON PAYPAL</p>
-            <p><b>Paquete:</b> {{ reserve.item_name }}</p>
-            <p><b>Precio(Adelanto):</b> {{ reserve.precio|safe }}</p>
-            <p><b>Precio(Adelanto):</b> {{ reserve.amount|safe }}</p>
-            <p><b>Cantidad:</b> {{ reserve.quantity }}</p>
-            <p><b>Total a pagar:</b> {{ reserve.amount|safe }}</p>
+            <p>PAY WITH PAYPAL</p>
+            <p><b>Package:</b> {{ reserve.item_name }}</p>
+            <p><b>Price(Advancement Package):</b> {{ reserve.precio|safe }}</p>
+            <p><b>Price(Advancement Passengers):</b> {{ reserve.amount|safe }}</p>
+            <p><b>Quantity:</b> {{ reserve.quantity }}</p>
+            <p><b>Total Price:</b> {{ reserve.amount|safe }}</p>
         </td>
         <td>
             <form action="{{ paypal.paypal_url }}" method="post" accept-charset="utf-8">
