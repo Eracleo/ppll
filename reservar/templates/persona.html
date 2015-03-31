@@ -24,12 +24,19 @@
                 nombre="valor de: "+f.elements[i].name+"\n";
                 var Per=nombre.substring(15,16);
                 Per=parseInt(Per)+1;
-                if(f.elements[i].value == "")
+                if(f.elements[i].value == "" )
                 {  
-                    numero=i+1;                    
-                    var res = " Viajero "+Per+"     "+nombre.substring(17, nombre.length-1);
-                    msg += res+"\n";
-                    ok = false;                    
+                    var Es=f.elements[i].name.substring(7,15);
+                    if( Es=="telefono"|| Es=="email")
+                    {}                      
+                    
+                    else{
+                        numero=i+1;                    
+                        var res = " Viajero "+Per+"     "+nombre.substring(17, nombre.length-1);
+                        msg += res+"\n";
+                        ok = false;
+                    }
+                                        
                 }
                 else
                 {
