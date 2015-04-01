@@ -57,8 +57,6 @@ def empresaEdit(request):
             empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
             empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
             #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
-            empresa.logo = empresa_form.cleaned_data['logo']
-            empresa.abreviatura = empresa_form.cleaned_data['abreviatura']
             empresa.save()
             return HttpResponseRedirect('/empresa/information')
     if request.method == 'GET':
@@ -72,9 +70,7 @@ def empresaEdit(request):
                 'direccion':empresa.direccion,
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
-                'paypal_at':empresa.paypal_at,
-                'abreviatura':empresa.abreviatura,
-                'logo':empresa.logo,
+                'paypal_at':empresa.paypal_at,                
             })
     ctx = {'empresa_form':empresa_form,'empresa':empresa}
     return render(request,'edit.html', ctx)
