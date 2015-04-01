@@ -2,16 +2,14 @@
 {% block title %}Crear Cuenta{% endblock %}
 {% block content %}
 {% load bootstrap %}
-    {% if form.errors %}
-        <p>{{ form.errors }}</p>
-    {% endif %}
 <div class="row">
     <div class="col-lg-9">
         <form method="post" action="{% url 'signup' %}">
             {% csrf_token %}
             {{ form|bootstrap_horizontal:'col-lg-4'}}
-            <p><input type="submit" class="btn btn-primary" value="Login"/></p>
+            <p><input type="submit" class="btn btn-primary" value="Crear cuenta"/></p>
         </form>
     </div>
 </div>
+<p><a href="/">Inicio</a> - <a href="/#contactenos">Contactenos</a></p>
 {% endblock %}

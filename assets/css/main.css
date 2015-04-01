@@ -2,5 +2,6 @@ body{
     padding-top: 70px;
 }
 .form-group {
-min-height: 30px;
+display: inline-block;
+width: 100%;
 }
