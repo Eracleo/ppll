@@ -28,21 +28,21 @@
     <input id="id_paquete" name="paquete_id" type="hidden" value="{{paquete.id}}"></input></p>
 
     <!-- Todos los campos ocultos para enviar a paypal -->
-    <p><b>Package: </b> {{ paquete.nombre }}</p>
-    <p><b>Price: </b>$ {{paquete.precio}}<input id="id_precio" type="hidden" value="{{paquete.precio}}" readonly="readonly"></input></p>
+    <p><b>Tour: </b> {{ paquete.nombre }}</p>
+    <p><b>Tour Price: </b>$ {{paquete.precio}}<input id="id_precio" type="hidden" value="{{paquete.precio}}" readonly="readonly"></input></p>
 
-    <p><label for="id_cantidad">Quantity People:</label>
+    <p><label for="id_cantidad">Number Of Passengers:</label>
     <input id="id_cantidad" type="number" name="cantidad" min="1" max="20" value="0"  required/></input></p>
 
-    <p><b>Total Amount: </b>$ <span id="monto" class="monto">0.00</span> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"></input></p>
+    <p><b>Total Tour Price: </b>$ <span id="monto" class="monto">0.00</span> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"></input></p>
 
-    <p><b>Date of trip: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd" placeholder="aaaa-mm-dd" /
+    <p><b>Date Of Travel: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="The date must be in the format: yyyy-mm-dd" placeholder="yyyy-mm-dd" /
     required/></p>
 
 <!-- pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd"-->
 
     <label>E-mail: </label>
-    <input type="text" value="" id="email" name="email" placeholder="micorreo@gmail.com" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="el correo tiene la siguiente forma micorreo@gmail.com"  required/>
+    <input type="text" value="" id="email" name="email" placeholder="micorreo@gmail.com" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="Mail must have the following format: micorreo@gmail.com"  required/>
     <br>
     <input type="submit" value="Next" class="btn btn-warning">
 </form>
