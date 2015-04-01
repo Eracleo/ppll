@@ -76,7 +76,7 @@ def empresaEdit(request):
                 'direccion':empresa.direccion,
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
-                'paypal_code':empresa.paypal_code,
+                'paypal_at':empresa.paypal_at,
                 'abreviatura':empresa.abreviatura,
                 'logo':empresa.logo,
             })
