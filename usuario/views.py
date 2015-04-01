@@ -29,7 +29,7 @@ def signup(request):
             # if you want to change other fields.
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
-            user.last_name = last_name            
+            user.last_name = last_name
 
             # Save new user attributes
             user.save()
@@ -37,7 +37,7 @@ def signup(request):
             contenido = 'Bienvenido...'
             contenido += first_name
             contenido += ' gracias por crear su cuenta en Negotu.com' + "\n"
-            contenido +='Usuario: ' + username + "\n" 
+            contenido +='Usuario: ' + username + "\n"
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
             return HttpResponseRedirect(reverse('main'))
@@ -57,6 +57,7 @@ def config(request):
         empresa = Empresa.objects.get(user_id = id_user)
         request.session["empresa"] = empresa.id
         request.session["abreviatura"] = empresa.abreviatura
+        request.session["razon_social"] = empresa.razon_social
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')
