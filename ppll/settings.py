@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'usuario',
     'reservar',
     'page',
+    'bootstrapform',    
 )
 
 MIDDLEWARE_CLASSES = (

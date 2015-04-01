@@ -79,14 +79,17 @@ Agregar Paquete
 
 </script>
 
-<form action="" method="POST" onsubmit="return valida(this)">
-	{%csrf_token%}
-	<table width="40%">
-    	<tbody>
-    		{{formAgregar.as_table}}
-    	</tbody>
-    </table>
-    <p><button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
-    <button type= "reset" class="btn btn-primary"> Limpiar</button> </p>
-</form>
+{% load bootstrap %}
+<div class="row">
+    <div class="col-lg-8">
+        <form action="" method="POST" onsubmit="return valida(this)">
+	        {%csrf_token%}
+    		{{formAgregar|bootstrap_horizontal}}
+        <p><button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
+        <button type= "reset" class="btn btn-primary"> Limpiar</button> </p>
+        </form>
+    </div>
+</div>
+
 {% endblock%}
+
