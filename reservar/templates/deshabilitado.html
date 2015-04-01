@@ -1,0 +1,14 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li><a href="#">1. Products</a></li>
+    <li><a href="#">2. Passangers</a></li>
+    <li><a href="#">3. Payments</a></li>
+    <li><a href="#">4. Confirm</a></li>
+{% endblock %}
+{% block content %}
+<h2>Paquete deshabilidado</h2>
+<p><b>Pongase en contacto con nosotros</b></p>
+<p>{{empresa.razon_social}}</p>
+<p>{{ empresa.direccion }}</p>
+<p>{{ empresa.telefono }}</p>
+{% endblock %}

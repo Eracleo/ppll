@@ -157,5 +157,3 @@ def reservaDetail(request, id):
 def personaDetail(request, id):
     persona = Persona.objects.get(id=id)
     return render(request,'persona/detail.html',{'obj':persona})
-
-
