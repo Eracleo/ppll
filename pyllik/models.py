@@ -20,7 +20,7 @@ MODO_PAGO = (
     ('pe','Presencial'),
     ('ot','Otros'),
     )
-class Pais(models.Modezl):
+class Pais(models.Model):
     nombre = models.CharField(max_length=30)
     def __unicode__(self):
         return self.nombre
