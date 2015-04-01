@@ -12,10 +12,10 @@
       <tr>
         <th>SKU</th>
         <th>Nombre</th>
-        <th>Precio</th>
-        <th>Adelanto</th>
+        <th>Precio ($)</th>
+        <th>Adelanto de Reserva ($)</th>
         <th>Descripción</th>
-        <th>Creado</th>
+        <th>Fecha de Creación</th>
         <th>Estado Paquete</th>
         <th>Editar Paquete</th>
     </tr>
@@ -34,7 +34,7 @@
                   <td><label style="color:red">Desabilitado</label></td>
                 {% endifequal %}
                 {%if user.is_authenticated%}
-      			<td><a href="paquete/edit/{{paquete.id}}">Editar<a/></td>
+                <td align="center"><a href="paquete/edit/{{paquete.id}}"><img src="/assets/images/pencil_go.png"/><a/></td>
                 {% endif %}
       		</tr>
 		{% endfor %}
