@@ -27,16 +27,17 @@
         });
     });
 </script>
-<form action="" method="POST" enctype='multipart/form-data'>
-    {%csrf_token%}
-    <table width="40%">
-        <tbody>
-            {{formAgregar.as_table}}
-        </tbody>
-    </table>
-    <br><br>
-    <button type='submit' value='Guardar Empresa' class="btn btn-primary">Guardar Empresa</button>
-    <button type= "reset"class="btn btn-primary"> Limpiar</button>
-</form>
+{% load bootstrap %}
+<div class="row">
+    <div class="col-lg-8">
+        <form action="" method="POST" enctype='multipart/form-data'>
+            {%csrf_token%}
+            {{formAgregar|bootstrap_horizontal}}
+            <p>
+            <button type='submit' value='Guardar Empresa' class="btn btn-primary">Guardar Empresa</button>
+            <button type= "reset"class="btn btn-primary"> Limpiar</button></p>
+        </form>
+    </div>
+</div>
 <p><a href="/user/logout">Cerrar Sesión</a></p>
 {% endblock%}
