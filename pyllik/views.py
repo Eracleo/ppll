@@ -55,16 +55,12 @@ def empresaEdit(request):
             empresa.ruc = empresa_form.cleaned_data['ruc']
             empresa.web = empresa_form.cleaned_data['web']
             empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
-            empresa.paypal_code = empresa_form.cleaned_data['paypal_code']
+            empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
             #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
             empresa.logo = empresa_form.cleaned_data['logo']
-            #empresa.user = empresa_form.cleaned_data['user']
             empresa.abreviatura = empresa_form.cleaned_data['abreviatura']
-            #empresa.creado = empresa_form.cleaned_data['creado']
-            #empresa.editado = empresa_form.cleaned_data['editado']
             empresa.save()
             return HttpResponseRedirect('/empresa/information')
-    #Recupera los datos de la BD
     if request.method == 'GET':
         empresa_form = EmpresaForm(initial=
             {
@@ -76,7 +72,7 @@ def empresaEdit(request):
                 'direccion':empresa.direccion,
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
-                'paypal_code':empresa.paypal_code,
+                'paypal_at':empresa.paypal_at,
                 'abreviatura':empresa.abreviatura,
                 'logo':empresa.logo,
             })

@@ -1,5 +1,5 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}EDITAR DATOS EMPRESA{% endblock %}
+{% block title %}Editar datos empresa{% endblock %}
 {% block content %}
 
     <script type="text/javascript">
@@ -11,7 +11,7 @@
 				var hh = "http://";
 				$("#id_web").val(hh+valor);
 			}
-			
+
 		});
 	});
     function valida_envia(f)
@@ -21,39 +21,26 @@
     	var mensaje_cod="";
     	{
 		    ruc = f.elements["ruc"].value;
-		    code = f.elements["paypal_code"].value;
+		    code = f.elements["paypal_at"].value;
 			if(ruc.length!=11)
 			{
-				if (isNaN(ruc)) 
+				if (isNaN(ruc))
 					{
 						mensaje_ruc+="- El ruc debe estar solo en numeros\n";
 						retorno=false;
-					}		
+					}
 				else
 				{
 					mensaje_ruc+="- El ruc debe tener de 11 digitos\n"
 					retorno=false;
 				}
 			}
-			if(code.length!=3)
-			{
-				if (isNaN(code))
-					{
-						mensaje_cod+="- El codigo paypal debe estar solo en numeros\n";
-						retorno=false;
-					}		
-				else
-				{
-					mensaje_cod+="- El codigo paypal solo tiene 3 digitos\n"
-					retorno=false;
-				}
-			}
 		}
 		if(retorno==false){
 			alert(mensaje_ruc+mensaje_cod);
-		
+
 		}
-		return retorno;		
+		return retorno;
 	}
 
     </script>
