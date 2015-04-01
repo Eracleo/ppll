@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     url(r'^paquete/edit/(?P<id>\d+)$','pyllik.views.paqueteEdit', name='paqueteEdit'),
     url(r'^paquete/add/$','pyllik.views.paqueteAdd', name='paqueteAdd'),
     # Empresa
+    url(r'^$','pyllik.views.index', name='index'),
     url(r'^information/$','pyllik.views.empresaDetail', name='empresaDetail'),
     url(r'^edit/$','pyllik.views.empresaEdit', name='empresaEdit'),
     # Reservas

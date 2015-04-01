@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'pyllik',
     'usuario',
     'reservar',
+    'page',
 )
 
 MIDDLEWARE_CLASSES = (

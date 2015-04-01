@@ -1,0 +1,15 @@
+{% extends "layout/base_page.html" %}
+{% block title %}Bienvenido...!{% endblock%}
+<p><strong>{{ message}}</strong></p>
+{% block content %}
+    {% if user.is_authenticated %}
+    <ul>
+        <li><a href="/empresa">Empresa</a></li>
+        <li><a href="/user">Perfil</a></li>
+        <li><a href="/user/logout">Salir</a></li>
+    </ul>
+    {% else %}
+    <li><a href="/user/login">Iniciar sesion</a></li>
+    {% endif %}
+    <h1>Bienvenidos a la pagina de pagos paypal</h1>
+{% endblock %}
