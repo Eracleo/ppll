@@ -1,41 +1,42 @@
-{% extends "layout/base_admin.html" %}
+{% extends "layout/base.html" %}
 {% block title %}Información de la Empresa{% endblock %}
 {% block content %}
-<script type="text/javascript">	
-	$(function(){
-		$("#id_web").change(function() {
-			valor = $("#id_web").val();
-			var valido=valor.substring(0,4);
-			if(valido!="http"){
-				var hh = "http://";
-				$("#id_web").val(hh+valor);
-			}
-			
-		});
-	});
-	$(function(){
-		$("#id_razon_social").change(function() {
-			valor = $("#id_razon_social").val();
-			var razon = valor.substring(0,3);
-			$("#id_abreviatura").val(razon.toUpperCase());
-		});
-	});
-	$(function(){
-		$("#id_abreviatura").change(function() {
-			valor = $("#id_abreviatura").val();
-			$("#id_abreviatura").val(valor.toUpperCase());
-		});
-	});
+
+<script type="text/javascript">
+    $(function(){
+        $("#id_web").change(function() {
+            valor = $("#id_web").val();
+            var valido=valor.substring(0,4);
+            if(valido!="http"){
+                var hh = "http://";
+                $("#id_web").val(hh+valor);
+            }
+        });
+    });
+    $(function(){
+        $("#id_razon_social").change(function() {
+            valor = $("#id_razon_social").val();
+            var razon = valor.substring(0,3);
+            $("#id_abreviatura").val(razon.toUpperCase());
+        });
+    });
+    $(function(){
+        $("#id_abreviatura").change(function() {
+            valor = $("#id_abreviatura").val();
+            $("#id_abreviatura").val(valor.toUpperCase());
+        });
+    });
 </script>
 <form action="" method="POST" enctype='multipart/form-data'>
     {%csrf_token%}
     <table width="40%">
-    	<tbody>
-    		{{formAgregar.as_table}}
-    	</tbody>
-    </table>   
-    <br><br> 
+        <tbody>
+            {{formAgregar.as_table}}
+        </tbody>
+    </table>
+    <br><br>
     <button type='submit' value='Guardar Empresa' class="btn btn-primary">Guardar Empresa</button>
     <button type= "reset"class="btn btn-primary"> Limpiar</button>
 </form>
+<p><a href="/user/logout">Cerrar Sesión</a></p>
 {% endblock%}

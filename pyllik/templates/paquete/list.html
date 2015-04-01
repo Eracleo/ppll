@@ -29,9 +29,9 @@
       			<td>{{paquete.creado}}</td>
                 {% ifequal paquete.estado True %}
 
-                   <td><label style="color:blue">Paquete Habilitado</label> <a href="/reservar/paquete/{{paquete.sku}}">Reservar</a></td>
+                   <td><label style="color:blue">Habilitado</label> <a href="/reservar/paquete/{{paquete.sku}}">Reservar</a></td>
                 {% else %}
-                  <td><label style="color:red">Paquete Desabilitado</label></td>
+                  <td><label style="color:red">Desabilitado</label></td>
                 {% endifequal %}
                 {%if user.is_authenticated%}
       			<td><a href="paquete/edit/{{paquete.id}}">Editar<a/></td>

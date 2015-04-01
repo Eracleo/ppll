@@ -13,28 +13,28 @@ def index(request):
 # EMPRESA
 @login_required
 def empresaDetail(request):
-    context_instance = RequestContext(request)    
+    context_instance = RequestContext(request)
     try:
         id_user = request.user.id
-        empresa = Empresa.objects.get(user_id = id_user)        
-        request.session["empresa"] = empresa.id               
+        empresa = Empresa.objects.get(user_id = id_user)
+        request.session["empresa"] = empresa.id
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
-            formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)            
-            if formAgregar.is_valid():                                
-                empresa = formAgregar.save()                       
+            formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
+            if formAgregar.is_valid():
+                empresa = formAgregar.save()
                 paquete = Paquete()
                 paquete.sku = empresa.abreviatura + "001"
-                paquete.nombre = "Paquete Prueba"
+                paquete.nombre = "Paquete Inicial"
                 paquete.descripcion = "Este es un paquete inicial de prueba, puede editar su contenido!"
                 paquete.precio = "0"
                 paquete.porcentaje = "0"
                 paquete.pre_pago = "0"
                 paquete.empresa = empresa
                 paquete.link = ""
-                paquete.estado = True 
-                paquete.save()                          
+                paquete.estado = False
+                paquete.save()
                 return HttpResponseRedirect('/empresa/information')
         else:
             formAgregar = EmpresaForm()
@@ -67,22 +67,22 @@ def empresaEdit(request):
     #Recupera los datos de la BD
     if request.method == 'GET':
         empresa_form = EmpresaForm(initial=
-            {                
+            {
                 'rubro':empresa.rubro,
                 'razon_social':empresa.razon_social,
                 'ruc':empresa.ruc,
-                'razon_social':empresa.razon_social, 
-                'ruc':empresa.ruc, 
-                'direccion':empresa.direccion, 
-                'web':empresa.web, 
-                'paypal_email':empresa.paypal_email, 
-                'paypal_code':empresa.paypal_code, 
+                'razon_social':empresa.razon_social,
+                'ruc':empresa.ruc,
+                'direccion':empresa.direccion,
+                'web':empresa.web,
+                'paypal_email':empresa.paypal_email,
+                'paypal_code':empresa.paypal_code,
                 'abreviatura':empresa.abreviatura,
                 'logo':empresa.logo,
             })
     ctx = {'empresa_form':empresa_form,'empresa':empresa}
     return render(request,'edit.html', ctx)
-    
+
 @login_required
 def paqueteList(request):
     empresa_id = request.session["empresa"]
@@ -136,8 +136,8 @@ def paqueteAdd(request):
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         formAgregar=PaqueteForm()
-        ctx =   {   'ultimo':ultimo.sku,                    
-                    'formAgregar':formAgregar,                                
+        ctx =   {   'ultimo':ultimo.sku,
+                    'formAgregar':formAgregar,
                 }
     else:
         formAgregar = PaqueteForm()

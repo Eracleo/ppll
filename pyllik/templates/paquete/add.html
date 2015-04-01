@@ -4,7 +4,7 @@ Agregar Paquete
 {% endblock %}
 
 {% block content %}
-<script type="text/javascript">	
+<script type="text/javascript">
 	$(function(){
 		$("#id_precio, #id_porcentaje").change(function() {
 			pre = $("#id_precio").val();
@@ -20,7 +20,7 @@ Agregar Paquete
 		});
 	});
 
-	
+
 	$(function(){
 		$("#id_sku").ready(function() {
 			var str = "{{ultimo}}";
@@ -36,7 +36,7 @@ Agregar Paquete
 			var campo = document.getElementById('id_sku');
 			campo.readOnly=true;
 		});
-	});	
+	});
 	function valida(f) {
             var ok = true;
             var msg = "Falta llenar el contenido en los siguientes campos:\n"+"\n";
@@ -47,10 +47,10 @@ Agregar Paquete
                 //var Per=nombre.substring(7,15);
                 //Per=parseInt(Per)+1;
                 if(f.elements[i].value == "" || f.elements[i].value=="0")
-                {                    
+                {
                     var res = nombre;
                     msg += res;
-                    ok = false;                    
+                    ok = false;
                 }
                 else{
                 	var nom=f.elements[i].name;
@@ -60,21 +60,21 @@ Agregar Paquete
                 			mes="\n"+"Ingrese Correctamente el precio \n Usted puede ingresar 5 digitos enteros y 5 cinco digitos decimales";
                 			ok=false;
                 		}
-     					
+
 
                 	}
-                	
+
                 }
             }
             if(ok == false){
-                alert(msg.toUpperCase()+mes.toUpperCase()); 
+                alert(msg.toUpperCase()+mes.toUpperCase());
                 //$("#mensaje").val(msg.toUpperCase());
                 //$("myAlert").value(msg);}
                 //$("#myAlert").alert()
-                
+
             }
             return ok;
-          
+
         };
 
 </script>
@@ -85,15 +85,8 @@ Agregar Paquete
     	<tbody>
     		{{formAgregar.as_table}}
     	</tbody>
-    </table>   
-    <br><br> 
-
-  <!-- <div class="alert alert-danger" id="myAlert">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <strong>Error!</strong> Ocurrio un error al mandar sus datos.
-    </div>
--->
-    <button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
-    <button type= "reset" class="btn btn-primary"> Limpiar</button>
+    </table>
+    <p><button type= "submit" class="btn btn-primary"> Añadir Paquete</button>
+    <button type= "reset" class="btn btn-primary"> Limpiar</button> </p>
 </form>
 {% endblock%}
