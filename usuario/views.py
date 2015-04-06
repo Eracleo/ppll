@@ -7,12 +7,16 @@ from django.http.response import HttpResponseRedirect
 from forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
+from django.contrib.auth import logout
 
 @login_required()
 def main(request):
     request.session["empresa"]=1
     del request.session["empresa"]
     return render(request,'main.html')
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/user/login')
 def signup(request):
     if request.method == 'POST':  # If the form has been submitted...
         form = SignUpForm(request.POST)  # A form bound to the POST data
