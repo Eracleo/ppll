@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'usuario',
     'reservar',
     'page',
-    'bootstrapform',    
+    'bootstrapform',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,6 +97,8 @@ LOGIN_REDIRECT_URL = "/user/config"
 # Redirect when login is not correct.
 LOGIN_URL = '/user/login'
 
+SESSION_COOKIE_AGE = 600
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 #Configuraciones para enviar mensajes usando gmail
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

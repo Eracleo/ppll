@@ -18,6 +18,7 @@ def empresaDetail(request):
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
         request.session["empresa"] = empresa.id
+        empresa_logo = request.session["logo"]
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
@@ -39,12 +40,13 @@ def empresaDetail(request):
         else:
             formAgregar = EmpresaForm()
         return render(request,'add.html', {'formAgregar':formAgregar})
-    return render(request,'information.html',{'obj':empresa})
+    return render(request,'information.html',{'obj':empresa,'logo':empresa_logo})
 
 @login_required
 def empresaEdit(request):
     user_id = request.user.id
     empresa = Empresa.objects.get(user_id = user_id)
+    empresa_logo = request.session["logo"]
     #Guarda el formulario en la BD
     if request.method == 'POST':
         empresa_form = EmpresaForm(request.POST,request.FILES)
@@ -70,24 +72,27 @@ def empresaEdit(request):
                 'direccion':empresa.direccion,
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
-                'paypal_at':empresa.paypal_at,                
+                'paypal_at':empresa.paypal_at,
             })
-    ctx = {'empresa_form':empresa_form,'empresa':empresa}
+    ctx = {'empresa_form':empresa_form,'empresa':empresa,'logo':empresa_logo}
     return render(request,'edit.html', ctx)
 
 @login_required
 def paqueteList(request):
     empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
     paquetes = Paquete.objects.filter(empresa_id = empresa_id)
-    return render(request,'paquete/list.html',{'objs':paquetes})
+    return render(request,'paquete/list.html',{'objs':paquetes,'logo':empresa_logo})
 @login_required
 def paqueteDetail(request, id):
     empresa_id = request.session["empresa"]
     paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
-    return render(request,'paquete/detail.html',{'obj':paquete})
+    empresa_logo = request.session["logo"]
+    return render(request,'paquete/detail.html',{'obj':paquete,'logo':empresa_logo})
 @login_required
 def paqueteEdit(request, id):
     paquete = Paquete.objects.get(id=id)
+    empresa_logo = request.session["logo"]
     if request.method == 'POST':
         paquete_form = PaqueteForm(request.POST)
         if paquete_form.is_valid():
@@ -113,12 +118,13 @@ def paqueteEdit(request, id):
                 'pre_pago':paquete.pre_pago,
                 'link':paquete.link,
             })
-    ctx = {'paquete_form':paquete_form,'Paquete':paquete}
+    ctx = {'paquete_form':paquete_form,'Paquete':paquete,'logo':empresa_logo}
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):
     context_instance = RequestContext(request)
     empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
     ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')
     nombre_empresa = Paquete(empresa_id=empresa_id)
     if request.method == 'POST':
@@ -128,24 +134,28 @@ def paqueteAdd(request):
             return HttpResponseRedirect('/empresa/paquetes')
     if request.method == 'GET':
         formAgregar=PaqueteForm()
-        ctx =   {   'ultimo':ultimo.sku,
-                    'formAgregar':formAgregar,
-                }
+        ctx = {
+            'ultimo':ultimo.sku,
+            'formAgregar':formAgregar,
+            'logo':empresa_logo,}
     else:
         formAgregar = PaqueteForm()
     return render(request,'paquete/add.html', ctx)
 @login_required
 def reservaList(request):
     empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
     objs = Reserva.objects.filter(empresa_id = empresa_id)
-    return render(request,'reserva/list.html',{'objs':objs})
+    return render(request,'reserva/list.html',{'objs':objs,'logo':empresa_logo})
 @login_required
 def reservaDetail(request, id):
     empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
     reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
-    return render(request,'reserva/detail.html',{'obj':reserva})
+    return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
 # PERSONA
 @login_required
 def personaDetail(request, id):
     persona = Persona.objects.get(id=id)
-    return render(request,'persona/detail.html',{'obj':persona})
+    empresa_logo = request.session["logo"]
+    return render(request,'persona/detail.html',{'obj':persona,'logo':empresa_logo})

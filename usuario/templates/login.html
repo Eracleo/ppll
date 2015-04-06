@@ -38,20 +38,20 @@
 
       <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" {{ form.username }} 
-        <br>  
+        <h2 class="form-signin-heading">Iniciar Sesión</h2>
+        <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" {{ form.username }}
+        <br>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="True" {{ form.password }}
         <div class="checkbox">
-          <label> 
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>  
+          <label>
+            <input type="checkbox" value="remember-me"> Recuerda
+          </label>
         </div>
-        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in"/>
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar"/>
         <input type="hidden" name="next" value="{{ next }}"/>
       </form>
 
     </div> <!-- /container -->
-  
+
 
 {% endblock %}

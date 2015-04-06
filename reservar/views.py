@@ -8,7 +8,6 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from  django.forms.models  import  modelformset_factory
-from  django.shortcuts  import  render_to_response
 from  django.forms.models  import  inlineformset_factory
 from django.template import RequestContext
 from django.forms.formsets import formset_factory
@@ -17,65 +16,20 @@ from django import forms
 import paypal
 def detalle(request, sku):
     paquete = Paquete.objects.get(sku=sku)
+    request.session["logo_pago"] = paquete.empresa.logo.url
+    empresa_logo = request.session["logo_pago"]
     if request.method == 'GET' and paquete.estado:
-    #if request.POST :
-        #paquete_nombre =  request.GET.get('paquete_id')
-        #paquete = Paquete.objects.get(id=paquete_nombre)
-        #cantidad_personas = request.POST.get('Cantidad_Personas')
-        #fecha_viaje = request.POST.get('Fecha')
-        #monto = int(cantidad_personas) * int(paquete.precio)
         context = {
             'paquete':paquete,
-            'range':xrange(1,16)
-            #'cantidad_personas':cantidad_personas,
-            #'fecha_viaje':fecha_viaje,
-            #'monto':monto
+            'range':xrange(1,16),
+            'logo': empresa_logo,
         }
         return render(request,'detalle.html',context)
     else :
         empresa = paquete.empresa
         return render(request,'deshabilitado.html',{'empresa':empresa})
-def pasajeros(request,id):
-    reserva = Reserva.objects.get(id=id)
-    return render(request,'pasajeros.html',{'reserva':reserva})
-
-def Post(request):
-        form = ReservaaForm(request.POST)
-        form.viajeros_instances = PersonaFormset(request.POST)
-        if form.is_valid():
-            #reserva = Reserva() #model class
-            #reserva.paquete= form.cleaned_data()
-            paquete=Paquete.objects.get(id=1)
-            reserva = Reserva(paquete=paquete, cantidad_personas="2", fecha_viaje="2014-04-23", precio="1200")
-            reserva.save()
-            if form.viajeros_instances.cleaned_data is not None:
-                for item in form.viajeros_instances.cleaned_data:
-                    persona = Persona() #Product model class
-                    persona.nombre= item['nombre']
-                    persona.apellidos= item['apellidos']
-                    persona.doc_tipo= item['doc_tipo']
-                    persona.doc_nro= item['doc_nro']
-                    persona.pais= item['pais']
-                    persona.email= item['email']
-                    persona.save()
-                    reserva.viajeros.add(persona)
-
-            return HttpResponseRedirect('/reservar/success')
-        return HttpResponseRedirect('/reservar/failure')
-
-def Failure(request):
-    form = ReservaaForm()
-    form.persona_instances = PersonaFormset()
-    return render(request,'persona.html',{'form':form})
-def Success(request):
-    reserva = Reserva.objects.all()
-    return render(request,'lista.html',{'reserva':reserva})
-def Detalle(request,id):
-    reserva = Reserva.objects.get(id=id)
-    viajeros = reserva.viajeros.all()
-    return render(request,'detalle1.html',{'Reserva':reserva, 'viajeros':viajeros})
-
 def personasa(request):
+    empresa_logo = request.session["logo_pago"]
     # Creando formulario registro personas con comboBox pais-gfgd
     paquete_id =  request.POST.get('paquete_id')
     paquete = Paquete.objects.get(id=paquete_id)
@@ -135,6 +89,7 @@ def personasa(request):
                 'monto':monto,
                 'form':form,
                 'email':email,
+                'logo': empresa_logo,
             }
         return render(request,'persona.html',context)
     else:
@@ -146,11 +101,15 @@ def personasa(request):
             'cantidad_personas':cantidad_personas,
             'fecha_viaje':fecha_viaje,
             'monto':monto,
+            'logo': empresa_logo,
             'form':form
         }
         return render(request,'jajaj.html',context)
 def pagar(request,id):
     obj = Reserva.objects.get(id=id)
+    del request.session["logo_pago"]
+    empresa_logo = obj.empresa.logo.url
+    request.session["logo_pago"] = empresa_logo
     # Datos a enviar
     paypal = {
         'paypal_url':"https://www.sandbox.paypal.com/cgi-bin/webscr",
@@ -177,6 +136,7 @@ def pagar(request,id):
         'paypal':paypal,
         'acount':acount,
         'reserve':reserve,
+        'logo':empresa_logo,
     }
     return render(request,'pagar.html',context)
 def dePaypal(request):
@@ -198,6 +158,10 @@ def dePaypal(request):
             return HttpResponseRedirect('/reservar/confirmado/')
     return HttpResponseRedirect('/reservar/cancelado/')
 def confirmado(request):
-    return render(request,'confirmado.html')
+    empresa_logo = request.session["logo_pago"]
+    del request.session["logo_pago"]
+    return render(request,'confirmado.html',{'logo':empresa_logo})
 def cancelado(request):
-    return render(request,'cancelado.html')
+    empresa_logo = request.session["logo_pago"]
+    del request.session["logo_pago"]
+    return render(request,'cancelado.html',{'logo':empresa_logo})

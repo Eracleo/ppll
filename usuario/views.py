@@ -49,15 +49,18 @@ def signup(request):
     return render(request,'signup.html', data)
 @login_required()
 def home(request):
-    return render(request,'home.html', {'user': request.user})
+    empresa_logo = request.session["logo"]
+    return render(request,'home.html', {'user': request.user,'logo':empresa_logo})
 @login_required()
 def config(request):
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
-        request.session["empresa"] = empresa.id
+        request.session["email"] = request.user.email
+        request.session["empresa"] = request.user.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
+        request.session["logo"] = empresa.logo.url
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')

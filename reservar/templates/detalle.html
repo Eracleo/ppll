@@ -29,14 +29,15 @@
 
     <!-- Todos los campos ocultos para enviar a paypal -->
     <p><b>Tour: </b> {{ paquete.nombre }}</p>
-    <p><b>Tour Price: </b>$ {{paquete.precio}}<input id="id_precio" type="hidden" value="{{paquete.precio}}" readonly="readonly"></input></p>
+    <p><b>Price: </b> {{ paquete.precio }}</p>
+    <p><b>Pre pago : </b>$ {{paquete.pre_pago}}<input id="id_precio" type="hidden" value="{{paquete.pre_pago}}" readonly="readonly"></input></p>
 
-    <p><label for="id_cantidad">Number Of Passengers:</label>
+    <p><label for="id_cantidad">Number of passengers:</label>
     <input id="id_cantidad" type="number" name="cantidad" min="1" max="20" value="0"  required/></input></p>
 
-    <p><b>Total Tour Price: </b>$ <span id="monto" class="monto">0.00</span> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"></input></p>
+    <p><b>Total price: </b>$ <span id="monto" class="monto">0.00</span> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"></input></p>
 
-    <p><b>Date Of Travel: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="The date must be in the format: yyyy-mm-dd" placeholder="yyyy-mm-dd" /
+    <p><b>Date of travel: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="The date must be in the format: yyyy-mm-dd" placeholder="yyyy-mm-dd" /
     required/></p>
 
 <!-- pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd"-->
