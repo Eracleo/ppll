@@ -54,7 +54,7 @@ def signup(request):
 @login_required()
 def home(request):
     empresa_logo = request.session["logo"]
-    return render(request,'home.html', {'user': request.user,'logo':empresa_logo})
+    return render(request,'perfil.html', {'user': request.user,'logo':empresa_logo})
 @login_required()
 def config(request):
     try:
