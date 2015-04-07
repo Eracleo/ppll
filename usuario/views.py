@@ -82,9 +82,10 @@ def login_view(request):
             if user.is_active:
                 login(request, user)
                 return config(request)
-            # else:
-
-        # else:
+            else:
+                return HttpResponseRedirect('/user/login')
+        else:
+            return HttpResponseRedirect('/user/login')
     else:
         next = ''
         if 'next' in request.GET:
