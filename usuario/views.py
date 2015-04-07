@@ -61,7 +61,7 @@ def config(request):
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
         request.session["email"] = request.user.email
-        request.session["empresa"] = request.user.id
+        request.session["empresa"] = request.empresa.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
         request.session["logo"] = empresa.logo.url
