@@ -23,7 +23,13 @@
 			<td>{{reserva.email}}</td>
       <td>{{reserva.creado|date:"Y-m-d"}}</td>
 			<td>{{reserva.get_pago_estado_display}}</td>
-      <td><a href="/reservar/pagar/{{reserva.id}}">PAGAR</a></td>
+      <td>
+      {% ifequal "ad" reserva.pago_estado %}
+      <a href="#"></a>
+      {% else %}
+        <a href="/reservar/pagar/{{reserva.id}}">PAGAR</a>
+      {% endifequal %}
+      </td>
     </tr>
 		{% endfor %}
 	</table>
