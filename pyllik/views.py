@@ -38,7 +38,7 @@ def empresaDetail(request):
                 paquete.link = ""
                 paquete.estado = False
                 paquete.save()
-                return HttpResponseRedirect('/empresa/information')
+                return HttpResponseRedirect('/user/config')
         else:
             formAgregar = EmpresaForm()
         return render(request,'add.html', {'formAgregar':formAgregar})
@@ -48,7 +48,6 @@ def empresaDetail(request):
 def empresaEdit(request):
     user_id = request.user.id
     empresa = Empresa.objects.get(user_id = user_id)
-    empresa_logo = request.session["logo"]
     #Guarda el formulario en la BD
     if request.method == 'POST':
         empresa_form = EmpresaForm(request.POST,request.FILES)
@@ -75,8 +74,10 @@ def empresaEdit(request):
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
                 'paypal_at':empresa.paypal_at,
+                'logo':empresa.logo,
+                'abreviatura':empresa.abreviatura,
             })
-    ctx = {'empresa_form':empresa_form,'empresa':empresa,'logo':empresa_logo}
+    ctx = {'empresa_form':empresa_form,'empresa':empresa,}
     return render(request,'edit.html', ctx)
 
 @login_required

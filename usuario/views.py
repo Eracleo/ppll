@@ -68,6 +68,11 @@ def config(request):
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')
+
+@login_required()
+def cambiar(request):
+    return render(request,'cambiarpass.html', {'user': request.user})
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']

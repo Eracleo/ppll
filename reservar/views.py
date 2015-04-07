@@ -62,7 +62,7 @@ def personasa(request):
             contenido +='Viajeros:' + cantidad_personas + "\n"
             contenido +='Total a pagar: ' + monto
             correo = EmailMessage(titulo, contenido, to=[email])
-            correo.send()
+            #correo.send()
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
@@ -73,6 +73,7 @@ def personasa(request):
                     persona.doc_tipo= item['doc_tipo']
                     persona.doc_nro= item['doc_nro']
                     persona.pais= item['pais']
+                    persona.telefono= item['telefono']
                     persona.email= item['email']
                     persona.save()
                     reserva.viajeros.add(persona)
@@ -162,6 +163,8 @@ def confirmado(request):
     del request.session["logo_pago"]
     return render(request,'confirmado.html',{'logo':empresa_logo})
 def cancelado(request):
+
     empresa_logo = request.session["logo_pago"]
     del request.session["logo_pago"]
     return render(request,'cancelado.html',{'logo':empresa_logo})
+
