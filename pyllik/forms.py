@@ -4,6 +4,9 @@ class PaqueteForm(forms.ModelForm):
     class Meta:
         model = Paquete
         fields = ('sku','nombre', 'precio','porcentaje','pre_pago','descripcion','link','estado')
+        widgets = {
+            'sku': forms.HiddenInput()
+        }
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa

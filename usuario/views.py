@@ -7,7 +7,7 @@ from django.http.response import HttpResponseRedirect
 from forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 
 @login_required()
 def main(request):
@@ -68,3 +68,20 @@ def config(request):
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return config(request)
+            # else:
+
+        # else:
+    else:
+        next = ''
+        if 'next' in request.GET:
+            next = request.GET['next']
+        return render(request,'login.html',{'next':next})

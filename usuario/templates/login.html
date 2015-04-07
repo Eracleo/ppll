@@ -36,12 +36,12 @@
 
     <div class="container">
 
-      <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+      <form class="form-signin" method="post" action="/user/login">
         {% csrf_token %}
         <h2 class="form-signin-heading">Iniciar Sesión</h2>
-        <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" {{ form.username }}
+        <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" name="username">
         <br>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="True" {{ form.password }}
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required="True" >
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Recuerda
