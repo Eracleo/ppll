@@ -5,3 +5,13 @@ body{
 display: inline-block;
 width: 100%;
 }
+span.ayuda {
+position: absolute;
+right: -10px;
+top: 10px;
+font-size: 1em;
+color: #ed9c28
+}
+.help-block{
+    display: none;
+}
