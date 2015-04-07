@@ -16,8 +16,8 @@
         <th>Adelanto de Reserva ($)</th>
         <th>Descripción</th>
         <th>Fecha de Creación</th>
-        <th>Estado Paquete</th>
-        <th>Editar Paquete</th>
+        <th>Estado</th>
+        <th>Editar</th>
     </tr>
 		{% for paquete in objs %}
 			<tr>
@@ -33,10 +33,33 @@
                 {% else %}
                   <td><label style="color:red">Desabilitado</label></td>
                 {% endifequal %}
-                {%if user.is_authenticated%}
                 <td align="center"><a href="paquete/edit/{{paquete.id}}"><img src="/assets/images/pencil_go.png"/><a/></td>
-                {% endif %}
       		</tr>
 		{% endfor %}
 	</table>
+  <nav>
+  <ul class="pagination">
+    {% if objs.has_previous %}
+    <li>
+      <a href="?page={{ objs.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">Anterior</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for item in objs.paginator.page_range %}
+    {% ifequal item objs.number %}
+      <li  class="active"><a href="?page={{ item }}" >{{item }}</a></li>
+    {% else %}
+      <li ><a href="?page={{ item }}" >{{item }}</a></li>
+    {% endifequal %}
+    {% endfor %}
+    {% if objs.has_next %}
+    <li>
+      <a href="?page={{ objs.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">Siguiente</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
 {% endblock%}

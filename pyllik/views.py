@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Count
 from collections import defaultdict
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 @login_required
 def index(request):
     return empresaDetail(request)
@@ -81,7 +83,16 @@ def empresaEdit(request):
 def paqueteList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    paquetes = Paquete.objects.filter(empresa_id = empresa_id)
+    objs_list = Paquete.objects.filter(empresa_id = empresa_id)
+    paginator = Paginator(objs_list, 10)
+    page = request.GET.get('page')
+    try:
+        paquetes = paginator.page(page)
+    except PageNotAnInteger:
+        paquetes = paginator.page(1)
+    except EmptyPage:
+        paquetes = paginator.page(paginator.num_pages)
+
     return render(request,'paquete/list.html',{'objs':paquetes,'logo':empresa_logo})
 @login_required
 def paqueteDetail(request, id):
@@ -145,7 +156,15 @@ def paqueteAdd(request):
 def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs = Reserva.objects.filter(empresa_id = empresa_id)
+    objs_list = Reserva.objects.filter(empresa_id = empresa_id)
+    paginator = Paginator(objs_list, 10)
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        objs = paginator.page(1)
+    except EmptyPage:
+        objs = paginator.page(paginator.num_pages)
     return render(request,'reserva/list.html',{'objs':objs,'logo':empresa_logo})
 @login_required
 def reservaDetail(request, id):
