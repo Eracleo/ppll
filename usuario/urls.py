@@ -9,5 +9,5 @@ urlpatterns = patterns('',
     url(r'^cambiar$', 'usuario.views.cambiar', name="cambiar"),
     url(r'^login$', 'usuario.views.login_view', name='login_view'),
     url(r'^logout$', 'usuario.views.logout_view', name='logout_view'),
-    url(r'^config$', 'usuario.views.config', name='config'),
+    url(r'^edit$', 'usuario.views.edit', name='edit'),
 )

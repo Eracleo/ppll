@@ -91,3 +91,5 @@ def login_view(request):
         if 'next' in request.GET:
             next = request.GET['next']
         return render(request,'login.html',{'next':next})
+def edit(request):
+    return HttpResponseRedirect('/user')
