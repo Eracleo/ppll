@@ -7,12 +7,16 @@ from django.http.response import HttpResponseRedirect
 from forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
+from django.contrib.auth import logout, authenticate, login
 
 @login_required()
 def main(request):
     request.session["empresa"]=1
     del request.session["empresa"]
     return render(request,'main.html')
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/user/login')
 def signup(request):
     if request.method == 'POST':  # If the form has been submitted...
         form = SignUpForm(request.POST)  # A form bound to the POST data
@@ -49,15 +53,18 @@ def signup(request):
     return render(request,'signup.html', data)
 @login_required()
 def home(request):
-    return render(request,'home.html', {'user': request.user})
+    empresa_logo = request.session["logo"]
+    return render(request,'home.html', {'user': request.user,'logo':empresa_logo})
 @login_required()
 def config(request):
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
-        request.session["empresa"] = empresa.id
+        request.session["email"] = request.user.email
+        request.session["empresa"] = request.user.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
+        request.session["logo"] = empresa.logo.url
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
         return HttpResponseRedirect('/empresa/information')
@@ -65,3 +72,21 @@ def config(request):
 @login_required()
 def cambiar(request):
     return render(request,'cambiarpass.html', {'user': request.user})
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return config(request)
+            # else:
+
+        # else:
+    else:
+        next = ''
+        if 'next' in request.GET:
+            next = request.GET['next']
+        return render(request,'login.html',{'next':next})

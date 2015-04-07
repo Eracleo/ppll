@@ -1,3 +1,7 @@
 body{
     padding-top: 70px;
 }
+.form-group {
+display: inline-block;
+width: 100%;
+}

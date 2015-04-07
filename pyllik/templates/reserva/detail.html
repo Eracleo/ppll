@@ -1,13 +1,9 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}DETALLE RESERVA{% endblock %}
+{% block title %}Reserva - {{obj.paquete}}{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <tr>
-        <td width="160"><b>ID:</b></td>
-        <td>{{obj.id}}</td>
-    </tr>
-    <tr>
-        <td><b>Precio(s):</b></td>
+        <td width="180"><b>Precio(s):</b></td>
         <td><b>Original:</b> {{obj.precio}} <b>Adelanto:</b> {{obj.pre_pago}}</td>
     </tr>
     <tr>

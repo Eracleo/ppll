@@ -9,12 +9,11 @@
 <table>
     <tr>
         <td width="400">
-            <p>PAY WITH PAYPAL</p>
             <p><b>Tour:</b> {{ reserve.item_name }}</p>
-            <p><b>Total Tour Price:</b> {{ reserve.precio|safe }}</p>
-            <p><b>Price To Book:</b> {{ reserve.amount|safe }}</p>
-            <p><b>Number Of Passengers:</b> {{ reserve.quantity }}</p>
-            <p><b>Price To Pay:</b> {{ reserve.amount|safe }}</p>
+            <p><b>Total tour price:</b> {{ reserve.precio|safe }}</p>
+            <p><b>Price to book:</b> {{ reserve.amount|safe }}</p>
+            <p><b>Number of passengers:</b> {{ reserve.quantity }}</p>
+            <p><b>Price to pay:</b> {{ reserve.amount|safe }}</p>
         </td>
         <td>
             <form action="{{ paypal.paypal_url }}" method="post" accept-charset="utf-8">
