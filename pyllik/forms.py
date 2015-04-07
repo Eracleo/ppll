@@ -10,4 +10,4 @@ class PaqueteForm(forms.ModelForm):
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
-        exclude = ('user','nro_paquetes','logo','abreviatura')
+        exclude = ('user','nro_paquetes')
