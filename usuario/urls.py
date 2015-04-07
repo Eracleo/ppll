@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^signup$', 'usuario.views.signup', name='signup'),
     url(r'^login$', 'usuario.views.login_view', name='login_view'),
     url(r'^logout$', 'usuario.views.logout_view', name='logout_view'),
-
+    url(r'^config$', 'usuario.views.config', name='config'),
 )
