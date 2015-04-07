@@ -1,0 +1,72 @@
+[
+  { "model": "auth.user",
+    "pk": 10,
+    "fields": {
+      "username": "user1",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 11,
+    "fields": {
+      "username": "user2",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 12,
+    "fields": {
+      "username": "user3",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 13,
+    "fields": {
+      "username": "user4",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 14,
+    "fields": {
+      "username": "user5",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 15,
+    "fields": {
+      "username": "user6",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 16,
+    "fields": {
+      "username": "user7",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 17,
+    "fields": {
+      "username": "user8",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  {
+    "model": "pyllik.rubro",
+    "pk": 1,
+    "fields": {
+      "nombre": "Agencia de Viajes y Turismo"
+    }
+  },
+  {
+    "model": "pyllik.pais",
+    "pk": 2,
+    "fields": {
+      "nombre": "Peru"
+    }
+  }
+]
