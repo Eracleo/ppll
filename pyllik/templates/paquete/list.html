@@ -12,8 +12,8 @@
       <tr>
         <th>SKU</th>
         <th>Nombre</th>
-        <th>Precio ($)</th>
-        <th>Adelanto de Reserva ($)</th>
+        <th>Precio (Dolares)</th>
+        <th>Adelanto de Reserva (Dolares)</th>
         <th>Descripción</th>
         <th>Fecha de Creación</th>
         <th>Estado</th>
@@ -23,8 +23,8 @@
 			<tr>
             <td><a href="paquete/detail/{{paquete.id}}">{{paquete.sku}}</a></td>
       			<td><a href="paquete/detail/{{paquete.id}}">{{paquete.nombre}}</a></td>
-            <td>{{paquete.precio}}</td>
-      			<td>{{paquete.pre_pago}}</td>
+            <td>USD <b>{{paquete.precio}}</b></td>
+      			<td>USD <b>{{paquete.pre_pago}}</b></td>
       			<td>{{paquete.descripcion}}</td>
       			<td>{{paquete.creado}}</td>
                 {% ifequal paquete.estado True %}
