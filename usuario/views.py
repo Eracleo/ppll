@@ -72,21 +72,19 @@ def config(request):
 
 @login_required()
 def cambiar(request):
-    if request.method == 'POST':        
+    if request.method == 'POST':
         name = request.POST['username']
         user = User.objects.get(username=name)
         passa = request.POST['password']
         newpass=request.POST['next']
         success = user.check_password(passa)
-        if success : 
+        if success :
             # do your email changing magic
             user.set_password(newpass)
             user.save()
-            return HttpResponseRedirect('/empresa/information')
+            return HttpResponseRedirect('/user')
         else:
             return render(request,'cambiarpass.html', {'user': request.user,'mensaje':'si'})
-            #cambiar(request, user)
-            # or more appropriately your template with errors:
     else:
         return render(request,'cambiarpass.html', {'user': request.user})
 
