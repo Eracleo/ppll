@@ -47,6 +47,7 @@ class Empresa(models.Model):
     rubro = models.ForeignKey(Rubro)
     razon_social = models.CharField(max_length=100)
     direccion = models.CharField(max_length=120)
+    telefono = models.CharField(max_length=120, blank=True)
     ruc = models.CharField(max_length=11)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100)
