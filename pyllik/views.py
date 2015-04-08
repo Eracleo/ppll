@@ -85,7 +85,7 @@ def paqueteList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     objs_list = Paquete.objects.filter(empresa_id = empresa_id)
-    paginator = Paginator(objs_list, 10)
+    paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
         paquetes = paginator.page(page)
@@ -158,7 +158,7 @@ def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     objs_list = Reserva.objects.filter(empresa_id = empresa_id)
-    paginator = Paginator(objs_list, 10)
+    paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)
