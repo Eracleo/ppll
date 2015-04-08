@@ -85,6 +85,7 @@ class Reserva(models.Model):
     tx = models.CharField(max_length=64, blank=True)
     viajeros = models.ManyToManyField(Persona, blank=True)
     email = models.EmailField(max_length=100,blank=True)
+    ip = models.GenericIPAddressField(null=True,blank=True)
     empresa = models.ForeignKey(Empresa)
     pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
     creado = models.DateTimeField(auto_now_add=True, editable=False)
