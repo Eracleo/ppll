@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout, authenticate, login
 
+
 @login_required()
 def main(request):
     request.session["empresa"]=1
@@ -71,7 +72,23 @@ def config(request):
 
 @login_required()
 def cambiar(request):
-    return render(request,'cambiarpass.html', {'user': request.user})
+    if request.method == 'POST':        
+        name = request.POST['username']
+        user = User.objects.get(username=name)
+        passa = request.POST['password']
+        newpass=request.POST['next']
+        success = user.check_password(passa)
+        if success : 
+            # do your email changing magic
+            user.set_password(newpass)
+            user.save()
+            return HttpResponseRedirect('/empresa/information')
+        else:
+            return render(request,'cambiarpass.html', {'user': request.user,'mensaje':'si'})
+            #cambiar(request, user)
+            # or more appropriately your template with errors:
+    else:
+        return render(request,'cambiarpass.html', {'user': request.user})
 
 def login_view(request):
     if request.method == 'POST':
