@@ -1,0 +1,56 @@
+{% extends 'layout/base_admin.html' %}
+{% block title %}Cambio de Contraseña{% endblock %}
+ {% block content %}
+<script type="text/javascript">
+	function valida_envia(f)
+    {
+    	var retorno=true;
+    	  	
+    	{
+		    pass1 = f.elements["newpassword1"].value;
+		    pass2 = f.elements["newpassword2"].value;
+			if(pass1 == pass2)
+			{
+				$("#next").val(pass1);		
+			}
+			else{
+				alert("Las contraseñas no coinciden");
+				$("#next").val(pass1)
+				retorno=false;
+			}
+		}
+		return retorno;
+	}
+</script>
+
+ 
+    {% if mensaje %}
+
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Ingrese Correctamente su contraseña.</strong> Por favor intenta otra vez.
+    </div>
+    {% endif %}
+
+    <div class="container">
+
+      <form class="form-signin" method="post" action="" onsubmit="return valida_envia(this)">
+        {% csrf_token %}
+        <input type="text" id="username" class="form-control" name="username" value="{{user.username}}" readonly="readonly">
+        <h2 class="form-signin-heading">Ingrese su Contraseña Actual</h2>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña Actual" name="password"  >
+        <h2 class="form-signin-heading">Ingrese su Nueva Contraseña</h2>
+        <input type="password" id="inputPassword1" class="form-control" placeholder="Ingrese Contraseña" name="newpassword1" required="True" >
+        <br>
+        <input type="password" id="inputPassword2" class="form-control" placeholder="Repita Contraseña" name="newpassword2" required="True" >
+        <br>
+        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar"/>
+        <input type="hidden" id="next" name="next" />
+        <input type="hidden" id="mensaje" name="mensaje" value="{{mensaje}}" />
+        <input type="hidden" id="mensaje2" name="mensaje2"  />
+      </form>
+
+    </div> <!-- /container -->
+
+
+{% endblock %}
