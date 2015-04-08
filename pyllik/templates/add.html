@@ -12,10 +12,14 @@
                 $("#id_web").val(hh+valor);
             }
         });
+        $('#id_paypal_email, #id_paypal_at').after('<span class="ayuda glyphicon glyphicon-question-sign "> </span>');
+        $('.ayuda').hover(function(){
+            $(this).next('.help-block').toggle("linear");
+        })
     });
     $(function(){
         $("#id_razon_social").change(function() {
-            valor = $("#id_razon_social").val();            
+            valor = $("#id_razon_social").val();
             var abres = $("#abres").val();
             if(abres!="si"){
                 var razon = valor.substring(0,3);
@@ -27,7 +31,7 @@
                 var caracter = valor.charAt(nro);
                 var razon2 = valor.substring(0,2)+ caracter;
                 $("#id_abreviatura").val(razon2.toUpperCase());
-            }                      
+            }
         });
     });
     $(function(){
@@ -38,13 +42,13 @@
     });
     $(function(){
         $("#id_abreviatura").ready(function() {
-            valor = $("#id_razon_social").val();   
-            var nro = $("#nro").val();         
+            valor = $("#id_razon_social").val();
+            var nro = $("#nro").val();
             var abres = $("#abres").val();
             if(abres=="si"){
                 var caracter = valor.charAt(nro);
                 var razon2 = valor.substring(0,2)+ caracter;
-                $("#id_abreviatura").val(razon2.toUpperCase());                
+                $("#id_abreviatura").val(razon2.toUpperCase());
             }
         });
     });

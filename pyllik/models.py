@@ -50,8 +50,8 @@ class Empresa(models.Model):
     telefono = models.CharField(max_length=120, blank=True)
     ruc = models.CharField(max_length=11)
     web = models.URLField(max_length=64, blank=True)
-    paypal_email = models.EmailField(max_length=100)
-    paypal_at = models.CharField(max_length=64) # IdentityToken
+    paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
+    paypal_at = models.CharField(max_length=64,help_text="Codigo de identicacion en paypal") # IdentityToken
     nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
     user = models.ForeignKey(User)
