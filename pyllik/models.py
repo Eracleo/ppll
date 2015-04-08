@@ -59,6 +59,7 @@ class Empresa(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
+BOOL_CHOICES = ((True, 'Habitilido'), (False, 'Deshabilitado'))
 class Paquete(models.Model):
     sku = models.CharField(max_length=6)
     nombre = models.CharField(max_length=40,help_text="Coloque el nombre del paquete, tal como aparece en su sitio web.")
@@ -68,7 +69,7 @@ class Paquete(models.Model):
     descripcion = models.TextField(max_length=500,help_text="Este es una pequeña descripción del paquete que está Ud. vendiendo. Debe concordar con lo que aparece en su página web.")
     empresa = models.ForeignKey(Empresa)
     link = models.URLField(max_length=120, blank=True, help_text="Coloque el link del Paquete que aparece en su página web. Verifique que sea el link correcto.")
-    estado = models.BooleanField(default=True, help_text="Active el Estado si desea que este paquete este activo, si quita el check el paquete se desactivará y no podrá userse.")
+    estado = models.BooleanField(default=True,choices=BOOL_CHOICES, help_text="Active el Estado si desea que este paquete este activo, si quita el check el paquete se desactivará y no podrá userse.")
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):

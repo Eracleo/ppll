@@ -9,42 +9,39 @@ body {
 /*Inicio : estilo para el menu*/
 #menu {
 	margin-left: 3%;
+	width: 100%;
+	height: 26px;
 }
 
-.nav {
+#menu ul{
 	list-style:none;
 	margin:0;
 	padding:0;
 }
-.nav li {
+#menu li {
 	margin:0px 2px;
 	padding:0;
 	float:left;
 	position: relative;
 }
 
-.nav li a {
-	display:block; //Convertimos el vínculo en un bloque.
+#menu li a {
+	display:block;
 	width:150px;
 	text-decoration:none;
 	text-align:center;
 	font-size:15px;
 	color:#FFFFFF;
-	background-color:rgb(72,72,72);
+	background-color:#000;
 	border:1px solid black;
+	border-bottom: 0px;
 	padding: 4px 20px 4px 20px;
 	font-family: sans-serif;
 	font-weight: bolder;
 }
-.nav li a.active {
+#menu li a.active {
 	color:black;
 	background-color: white;
-	border-top:1px solid black;
-	border-right:1px solid black;
-	border-bottom:1px solid white;
-	border-left:1px solid black;
-
-
 }
 .logoizq {position: absolute;margin-top: 2%}
 .logoder {position: relative;margin-left: 80%}
