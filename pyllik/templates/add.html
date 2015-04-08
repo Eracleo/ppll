@@ -15,9 +15,19 @@
     });
     $(function(){
         $("#id_razon_social").change(function() {
-            valor = $("#id_razon_social").val();
-            var razon = valor.substring(0,3);
-            $("#id_abreviatura").val(razon.toUpperCase());
+            valor = $("#id_razon_social").val();            
+            var abres = $("#abres").val();
+            if(abres!="si"){
+                var razon = valor.substring(0,3);
+                $("#id_abreviatura").val(razon.toUpperCase());
+                $("#nro").val("2");
+            }
+            else
+            {
+                var caracter = valor.charAt(nro);
+                var razon2 = valor.substring(0,2)+ caracter;
+                $("#id_abreviatura").val(razon2.toUpperCase());
+            }                      
         });
     });
     $(function(){
@@ -26,14 +36,34 @@
             $("#id_abreviatura").val(valor.toUpperCase());
         });
     });
+    $(function(){
+        $("#id_abreviatura").ready(function() {
+            valor = $("#id_razon_social").val();   
+            var nro = $("#nro").val();         
+            var abres = $("#abres").val();
+            if(abres=="si"){
+                var caracter = valor.charAt(nro);
+                var razon2 = valor.substring(0,2)+ caracter;
+                $("#id_abreviatura").val(razon2.toUpperCase());                
+            }
+        });
+    });
 </script>
 {% load bootstrap %}
+{% if abres %}
+     <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Abreviatura ya existe...</strong> Por favor intenta otra vez.
+    </div>
+{% endif %}
 <div class="row">
     <div class="col-lg-8">
         <form action="" method="POST" enctype='multipart/form-data'>
             {%csrf_token%}
             {{formAgregar|bootstrap_horizontal}}
             <p>
+            <input type="hidden" value="{{abres}}" id="abres">
+            <input type="hidden" id="nro" value="{{nro}}" name="nro">
             <button type='submit' value='Guardar Empresa' class="btn btn-primary">Guardar Empresa</button>
             <button type= "reset"class="btn btn-primary"> Limpiar</button></p>
         </form>

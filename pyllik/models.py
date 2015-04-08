@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -58,16 +59,17 @@ class Empresa(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
+BOOL_CHOICES = ((True, 'Habitilido'), (False, 'Deshabilitado'))
 class Paquete(models.Model):
     sku = models.CharField(max_length=6)
-    nombre = models.CharField(max_length=40)
-    precio = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)])
-    pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    descripcion = models.TextField(max_length=500)
+    nombre = models.CharField(max_length=40,help_text="Coloque el nombre del paquete, tal como aparece en su sitio web.")
+    precio = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el precio del paquete, tal como aparece en su sitio web. Los precios son en Dólares Americanos (USD $)")
+    porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)],help_text="Coloque el porcentaje del Pre pago que el sistema va a cobrar por pasajero, el monto en USD $ se actualiza automáticamente.")
+    pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el monto en USD $ del Pre pago que el sistema va a cobrar por pasajero, el monto en % se acutaliza automáticamente")
+    descripcion = models.TextField(max_length=500,help_text="Este es una pequeña descripción del paquete que está Ud. vendiendo. Debe concordar con lo que aparece en su página web.")
     empresa = models.ForeignKey(Empresa)
-    link = models.URLField(max_length=120, blank=True)
-    estado = models.BooleanField(default=True)
+    link = models.URLField(max_length=120, blank=True, help_text="Coloque el link del Paquete que aparece en su página web. Verifique que sea el link correcto.")
+    estado = models.BooleanField(default=True,choices=BOOL_CHOICES, help_text="Active el Estado si desea que este paquete este activo, si quita el check el paquete se desactivará y no podrá userse.")
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):

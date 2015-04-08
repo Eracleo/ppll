@@ -55,14 +55,14 @@ def signup(request):
 @login_required()
 def home(request):
     empresa_logo = request.session["logo"]
-    return render(request,'home.html', {'user': request.user,'logo':empresa_logo})
+    return render(request,'perfil.html', {'user': request.user,'logo':empresa_logo})
 @login_required()
 def config(request):
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
         request.session["email"] = request.user.email
-        request.session["empresa"] = request.user.id
+        request.session["empresa"] = empresa.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
         request.session["logo"] = empresa.logo.url
@@ -108,3 +108,5 @@ def login_view(request):
         if 'next' in request.GET:
             next = request.GET['next']
         return render(request,'login.html',{'next':next})
+def edit(request):
+    return HttpResponseRedirect('/user')

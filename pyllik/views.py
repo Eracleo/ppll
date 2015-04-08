@@ -24,21 +24,28 @@ def empresaDetail(request):
     except Empresa.DoesNotExist:
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
-            formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
-            if formAgregar.is_valid():
-                empresa = formAgregar.save()
-                paquete = Paquete()
-                paquete.sku = empresa.abreviatura + "001"
-                paquete.nombre = "Paquete Inicial"
-                paquete.descripcion = "Este es un paquete inicial de prueba, puede editar su contenido!"
-                paquete.precio = "0"
-                paquete.porcentaje = "0"
-                paquete.pre_pago = "0"
-                paquete.empresa = empresa
-                paquete.link = ""
-                paquete.estado = False
-                paquete.save()
-                return HttpResponseRedirect('/user/config')
+            abrev = request.POST['abreviatura']
+            nro = request.POST['nro']   
+            if Empresa.objects.filter(abreviatura=abrev):
+                formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
+                return render(request,'add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
+            else: 
+                formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
+                if formAgregar.is_valid():
+                    empresa = formAgregar.save()
+                    paquete = Paquete()
+                    paquete.sku = empresa.abreviatura + "001"
+                    paquete.nombre = "Paquete Inicial"
+                    paquete.descripcion = "Este es un paquete inicial de prueba, puede editar su contenido!"
+                    paquete.precio = "0"
+                    paquete.porcentaje = "0"
+                    paquete.pre_pago = "0"
+                    paquete.empresa = empresa
+                    paquete.link = ""
+                    paquete.estado = False
+                    paquete.save()
+                    return HttpResponseRedirect('/user/config')                 
+                                           
         else:
             formAgregar = EmpresaForm()
         return render(request,'add.html', {'formAgregar':formAgregar})
@@ -85,7 +92,7 @@ def paqueteList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     objs_list = Paquete.objects.filter(empresa_id = empresa_id)
-    paginator = Paginator(objs_list, 10)
+    paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
         paquetes = paginator.page(page)
@@ -158,7 +165,7 @@ def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     objs_list = Reserva.objects.filter(empresa_id = empresa_id)
-    paginator = Paginator(objs_list, 10)
+    paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
         objs = paginator.page(page)

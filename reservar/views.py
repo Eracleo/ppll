@@ -108,7 +108,7 @@ def personasa(request):
         return render(request,'jajaj.html',context)
 def pagar(request,id):
     obj = Reserva.objects.get(id=id)
-    del request.session["logo_pago"]
+    request.session["logo_pago"] = ''
     empresa_logo = obj.empresa.logo.url
     request.session["logo_pago"] = empresa_logo
     # Datos a enviar

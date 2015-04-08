@@ -11,11 +11,10 @@
         <th>Email</th>
         <th>Creado</th>
         <th>Estado</th>
-        <th>Pagar</th>
     </tr>
 		{% for reserva in objs %}
     <tr>
-      <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{forloop.counter}}</a></td>
+      <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}</a></td>
       <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
 			<td>{{reserva.fecha_viaje|timeuntil}}</td>
 			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
@@ -23,7 +22,6 @@
 			<td>{{reserva.email}}</td>
       <td>{{reserva.creado|date:"Y-m-d"}}</td>
 			<td>{{reserva.get_pago_estado_display}}</td>
-      <td><a href="/reservar/pagar/{{reserva.id}}">PAGAR</a></td>
     </tr>
 		{% endfor %}
 	</table>
