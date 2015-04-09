@@ -151,15 +151,22 @@ def paqueteAdd(request):
         if formAgregar.is_valid():
             formAgregar.save()
             return HttpResponseRedirect('/empresa/paquetes')
-    if request.method == 'GET':
+        else:
+            ctx = {
+            'ultimo':ultimo.sku,
+            'formAgregar':formAgregar,
+            'logo':empresa_logo,}
+            return render(request,'paquete/add.html', ctx)
+    else:
+    #if request.method == 'GET':
         formAgregar=PaqueteForm()
         ctx = {
             'ultimo':ultimo.sku,
             'formAgregar':formAgregar,
             'logo':empresa_logo,}
-    else:
-        formAgregar = PaqueteForm()
-    return render(request,'paquete/add.html', ctx)
+    
+        #formAgregar = PaqueteForm()
+        return render(request,'paquete/add.html', ctx)
 @login_required
 def reservaList(request):
     empresa_id = request.session["empresa"]

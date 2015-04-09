@@ -5,6 +5,16 @@ Agregar Paquete
 
 {% block content %}
 <script type="text/javascript">
+    $(function(){
+        $("#id_link").change(function() {
+            valor = $("#id_link").val();
+            var valido=valor.substring(0,4);
+            if(valido!="http"){
+                var hh = "http://";
+                $("#id_link").val(hh+valor);
+            }
+        });
+    });
 	$(function(){
 		$("#id_precio, #id_porcentaje").change(function() {
 			pre = $("#id_precio").val();
@@ -90,8 +100,17 @@ Agregar Paquete
 </script>
 
 {% load bootstrap %}
+{% if form.errors %}
+
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Ingrese Correctamente su contraseña.</strong> Por favor intenta otra vez.
+    </div>
+{% endif %}
+
 <div class="row">
     <div class="col-lg-8">
+
         <form action="" method="POST" onsubmit="return valida(this)">
 	        {%csrf_token%}
     		{{formAgregar|bootstrap_horizontal}}

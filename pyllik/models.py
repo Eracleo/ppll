@@ -68,7 +68,7 @@ class Paquete(models.Model):
     precio = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el precio del paquete, tal como aparece en su sitio web. Los precios son en Dólares Americanos (USD $)")
     porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)],help_text="Coloque el porcentaje del Pre pago que el sistema va a cobrar por pasajero, el monto en USD $ se actualiza automáticamente.")
     pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el monto en USD $ del Pre pago que el sistema va a cobrar por pasajero, el monto en % se acutaliza automáticamente")
-    descripcion = models.TextField(max_length=500,help_text="Este es una pequeña descripción del paquete que está Ud. vendiendo. Debe concordar con lo que aparece en su página web.")
+    descripcion = models.TextField(max_length=500, blank=True, help_text="Este es una pequeña descripción del paquete que está Ud. vendiendo. Debe concordar con lo que aparece en su página web.")
     empresa = models.ForeignKey(Empresa)
     link = models.URLField(max_length=120, blank=True, help_text="Coloque el link del Paquete que aparece en su página web. Verifique que sea el link correcto.")
     estado = models.BooleanField(default=True,choices=BOOL_CHOICES, help_text="Active el Estado si desea que este paquete este activo, si quita el check el paquete se desactivará y no podrá userse.")
