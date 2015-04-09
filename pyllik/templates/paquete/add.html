@@ -53,9 +53,14 @@ Agregar Paquete
                 //Per=parseInt(Per)+1;
                 if(f.elements[i].value == "" || f.elements[i].value=="0")
                 {
-                    var res = nombre;
-                    msg += res;
-                    ok = false;
+                    if (f.elements[i].name=="descripcion"||f.elements[i].name=="link")
+                    {}
+                    else{
+                        var res = nombre;
+                        msg += res;
+                        ok = false;
+                    }
+                    
                 }
                 else{
                 	var nom=f.elements[i].name;
