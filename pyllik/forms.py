@@ -11,3 +11,8 @@ class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         exclude = ('user','nro_paquetes')
+
+class EmpresaFormEdit(forms.ModelForm):
+    class Meta:
+        model = Empresa
+        exclude = ('user','nro_paquetes','logo','abreviatura')
