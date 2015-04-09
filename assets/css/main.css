@@ -23,3 +23,9 @@ padding: 10px;
 width: 200px;
 top: 20px;
 }
+.has-error .help-block {
+display: block;
+position: static;
+width: initial;
+background: rgb(255, 219, 219);
+}

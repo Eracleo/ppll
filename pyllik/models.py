@@ -54,6 +54,7 @@ class Empresa(models.Model):
     paypal_at = models.CharField(max_length=64,help_text="Codigo de identicacion en paypal") # IdentityToken
     nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
+    terminos_condiciones = models.URLField(max_length=120, blank=True, help_text="URL Terminos y condiciones.")
     user = models.ForeignKey(User)
     abreviatura = models.CharField(max_length=3)
     creado = models.DateField(auto_now_add=True, editable=False)
