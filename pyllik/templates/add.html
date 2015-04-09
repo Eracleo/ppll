@@ -12,10 +12,18 @@
                 $("#id_web").val(hh+valor);
             }
         });
+        $("#id_terminos_condiciones").change(function() {
+            valor = $("#id_terminos_condiciones").val();
+            var valido=valor.substring(0,4);
+            if(valido!="http"){
+                var hh = "http://";
+                $("#id_terminos_condiciones").val(hh+valor);
+            }
+        });
         $('#id_paypal_email, #id_paypal_at').after('<span class="ayuda glyphicon glyphicon-question-sign "> </span>');
         $('.ayuda').hover(function(){
             $(this).next('.help-block').toggle("linear");
-        })
+        })  
     });
     $(function(){
         $("#id_razon_social").change(function() {
