@@ -1,14 +1,27 @@
 {% extends "layout/base_admin.html"%}
 {% block title %}{{ obj.razon_social }}{% endblock %}
 {% block content %}
-<p><b>Rubro:</b> {{obj.rubro }}</p>
-<p><b>RUC: </b>{{obj.ruc}}</p>
-<p><b>Dirección: </b>{{obj.direccion}}</p>
-<p><b>WEB: </b><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></p>
 <hr>
-<p><b>Información de Paypal</b> (<a href="#">editar</a>)</p>
-<p><b>Abreviatura:</b> {{obj.abreviatura }}</p>
-<p><b>E-mail: </b>{{ obj.paypal_email}}</a></p>
-<p><b>Identity Token (at): </b>{{ obj.paypal_at}}</a></p>
+<dl class="dl-horizontal">
+	<dt>Rubro:</dt> 
+	<dd>{{obj.rubro }}</dd>
+	<dt>RUC: </dt>
+	<dd>{{obj.ruc}}</dd>
+	<dt>Dirección: </dt>
+	<dd>{{obj.direccion}}</dd>
+	<dt>WEB: </dt>
+	<dd><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></dd>
+</dl>
+<hr>
+<dl class="dl-horizontal">
+	<dt>Información de Paypal</dt> 
+	<dd>(<a href="#">editar</a>)</dd>
+	<dt>Abreviatura:</dt> 
+	<dd>{{obj.abreviatura }}</dd>
+	<dt>E-mail: </dt>
+	<dd>{{ obj.paypal_email}}</a></dd>
+	<dt>Identity Token (at): </dt>
+	<dd>{{ obj.paypal_at}}</a></dd>
+</dl>
 <hr>
 {% endblock %}
