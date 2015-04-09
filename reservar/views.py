@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
 from reservar.forms import PostForm
 from django.http import HttpResponseRedirect
+from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
@@ -14,6 +15,13 @@ from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
 import paypal
+def get_ip(request):
+    ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
+    if ip:
+        ip = ip.split(", ")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR", "")
+    return ip
 def detalle(request, sku):
     paquete = Paquete.objects.get(sku=sku)
     request.session["logo_pago"] = paquete.empresa.logo.url
@@ -37,6 +45,7 @@ def personasa(request):
     fecha_viaje = request.POST.get('fecha')
     monto = request.POST.get('id_monto')
     email=request.POST.get('email')
+    ip=get_ip(request)
 
     class PersonaForm(forms.ModelForm):
         class Meta:
@@ -63,7 +72,7 @@ def personasa(request):
             contenido +='Total a pagar: ' + monto
             correo = EmailMessage(titulo, contenido, to=[email])
             #correo.send()
-            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email)
+            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email,ip=ip)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
