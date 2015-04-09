@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import RequestContext, loader
 from .models import Paquete, Empresa, Reserva, Persona
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, EmpresaForm
+from forms import PaqueteForm, EmpresaForm, EmpresaFormEdit
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -57,7 +57,7 @@ def empresaEdit(request):
     empresa = Empresa.objects.get(user_id = user_id)
     #Guarda el formulario en la BD
     if request.method == 'POST':
-        empresa_form = EmpresaForm(request.POST,request.FILES)
+        empresa_form = EmpresaFormEdit(request.POST,request.FILES)
         if empresa_form.is_valid():
             empresa.razon_social = empresa_form.cleaned_data['razon_social']
             empresa.rubro = empresa_form.cleaned_data['rubro']
@@ -66,11 +66,13 @@ def empresaEdit(request):
             empresa.web = empresa_form.cleaned_data['web']
             empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
             empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
+            empresa.telefono = empresa_form.cleaned_data['telefono']
+            empresa.terminos_condiciones = empresa_form.cleaned_data['terminos_condiciones']
             #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
             empresa.save()
             return HttpResponseRedirect('/empresa/information')
     if request.method == 'GET':
-        empresa_form = EmpresaForm(initial=
+        empresa_form = EmpresaFormEdit(initial=
             {
                 'rubro':empresa.rubro,
                 'razon_social':empresa.razon_social,
@@ -81,8 +83,8 @@ def empresaEdit(request):
                 'web':empresa.web,
                 'paypal_email':empresa.paypal_email,
                 'paypal_at':empresa.paypal_at,
-                'logo':empresa.logo,
-                'abreviatura':empresa.abreviatura,
+                'telefono':empresa.telefono,
+                'terminos_condiciones':empresa.terminos_condiciones,
             })
     ctx = {'empresa_form':empresa_form,'empresa':empresa,}
     return render(request,'edit.html', ctx)
