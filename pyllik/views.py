@@ -25,11 +25,11 @@ def empresaDetail(request):
         if request.method == 'POST':
             usuario = Empresa(user=request.user)
             abrev = request.POST['abreviatura']
-            nro = request.POST['nro']   
+            nro = request.POST['nro']
             if Empresa.objects.filter(abreviatura=abrev):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 return render(request,'add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
-            else: 
+            else:
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 if formAgregar.is_valid():
                     empresa = formAgregar.save()
@@ -44,8 +44,8 @@ def empresaDetail(request):
                     paquete.link = ""
                     paquete.estado = False
                     paquete.save()
-                    return HttpResponseRedirect('/user/config')                 
-                                           
+                    return HttpResponseRedirect('/user/config')
+
         else:
             formAgregar = EmpresaForm()
         return render(request,'add.html', {'formAgregar':formAgregar})
@@ -195,3 +195,9 @@ def personaDetail(request, id):
     persona = Persona.objects.get(id=id)
     empresa_logo = request.session["logo"]
     return render(request,'persona/detail.html',{'obj':persona,'logo':empresa_logo})
+def error404(request):
+    return render(request,'errors/404.html')
+def error403(request):
+    return render(request,'errors/403.html')
+def error500(request):
+    return render(request,'errors/500.html')
