@@ -46,8 +46,8 @@
                 else{
                     if(Es=="telefono"){
                        //if(isNaN(f.elements[i].value)){
-                        if( !(/^\d{9}$/.test(f.elements[i].value)) ) {
-                            mes+="Escribir numero de 9 digitos en "+Es+" de Viajero"+Per+"\n";
+                        if( !(/^\+\d{2,3}\s\d{0,16}$/.test(f.elements[i].value)) ) {
+                            mes+="Escribir numero correcto en "+Es+" de Viajero"+Per+"\n";
                             ok=false;
                         }
                     }
@@ -65,8 +65,8 @@
                             }
                             else
                             {
-                                if( !(/^\d{8}$/.test(f.elements[i].value)) ) {
-                                    mes+="Escribir 8 digitos en el Document Identification"+" de Viajero"+Per+"\n";
+                                if( !(/^\d{10}$/.test(f.elements[i].value)) ) {
+                                    mes+="Escriba Correctamente su numero de Identificación"+" de Viajero"+Per+"\n";
                                     ok=false;
                                 }
                             }
@@ -112,6 +112,9 @@
 <input type="hidden" name="cantidad" value="{{cantidad_personas}}" id="cantidad" />
 <input type="hidden" name="fecha" value="{{fecha_viaje}}" id="cantidad" />
 <input type="hidden" name="email" value="{{email}}" id="email" />
+<div class="caja"><a href="URL_ENLACE"><img src="/carga/logos_empresa/help.svg" /><span class="info"> Escriba el Siguiente formato: 
++(Codigo de Pais) (Telefono)</span></a></div>
+
 {% for field in form %}
   {{ field.errors }}
   {{ field }}

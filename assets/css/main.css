@@ -29,3 +29,51 @@ position: static;
 width: initial;
 background: rgb(255, 219, 219);
 }
+span.ayuda1{
+	position: absolute;
+	right: 200px;
+	top: 150px;
+	font-size: 1em;
+	color: #ed9c28;
+	cursor: pointer;
+	display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.caja {
+position: absolute;
+top: 306px;
+right: 340px;
+
+ /*Para poder ubicar la info dentro de la caja*/
+margin: 10px auto;
+}
+.caja img {
+/*border:2px solid black;*/
+  width: 15px;
+  background: orangered;
+}
+.info {
+width: 200px;
+height: -10px;
+position: absolute; /*Info sobre la imagen*/
+top: 5%;
+left: 10%; /*Desplazamos a partir de la esquina superior izquierda*/
+zoom: 1;
+filter: alpha(opacity=0); /*Opacidad Para IE */
+opacity: 0; /*Inicialmente transparente */
+padding: 5px;
+color: white;
+background: black;
+-moz-transition:all ease .8s; /*Aplicamos una ligera transición*/
+-webkit-transition:all ease .8s ;
+transition:all ease .8s;
+}
+.caja:hover .info {
+filter: alpha(opacity=80);
+opacity: .8; /*Al hacer hover sobre la caja hacemos visible los datos*/
+}

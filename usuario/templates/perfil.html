@@ -1,6 +1,7 @@
 {% extends 'layout/base_admin.html' %}
 {% block title %}Perfil{% endblock %}
 {% block content %}
+{% load bootstrap %}
 <p><b>Username: </b>{{ user.username }}</p>
 <p><b>email: </b>{{ user.email }}</p>
 <p><b>Nombres y Apellidos: </b>{{ user.first_name }} {{ user.last_name }}</p>

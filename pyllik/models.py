@@ -32,7 +32,7 @@ class Persona(models.Model):
     doc_nro = models.CharField(max_length=10)
     email = models.EmailField(max_length=60,blank=True)
     cod_telefono = models.CharField(max_length=5, blank=True)
-    telefono = models.CharField(max_length=50, blank=True)
+    telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
     pais = models.ForeignKey(Pais, null=True, blank=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
