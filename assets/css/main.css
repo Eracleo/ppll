@@ -46,9 +46,8 @@ span.ayuda1{
 
 .caja {
 position: absolute;
-top: 306px;
-right: 340px;
-
+top: 244px;
+right: 339px;
  /*Para poder ubicar la info dentro de la caja*/
 margin: 10px auto;
 }
