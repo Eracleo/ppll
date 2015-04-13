@@ -1,11 +1,20 @@
 {% extends 'layout/base_admin.html' %}
 {% block title %}Perfil{% endblock %}
 {% block content %}
-{% load bootstrap %}
-<p><b>Username: </b>{{ user.username }}</p>
-<p><b>email: </b>{{ user.email }}</p>
-<p><b>Nombres y Apellidos: </b>{{ user.first_name }} {{ user.last_name }}</p>
-<p><b>Ultima ingreso: </b>{{ user.last_login }}</p>
-<p><b>Miembro desde: </b>{{ user.date_joined }}</p>
-<p><a href="/user/cambiar">Cambiar Contraseña</a> | <a href="/user/edit">Editar Informacón de usuario</a> | <a href="/empresa/information">Información de la empresa</a> | <a href="/user/logout">Salir</a> </p>
+
+<hr>
+<dl class="dl-horizontal">
+	<dt>Username: </dt>
+	<dd>{{ user.username }}</dd>
+	<dt>Email: </dt>
+	<dd>{{ user.email }}</dd>
+	<dt>Nombres y Apellidos: </dt>
+	<dd>{{ user.first_name }} {{ user.last_name }}</dd>
+	<dt>Ultima ingreso: </dt>
+	<dd>{{ user.last_login }}</dd>
+	<dt>Miembro desde: </dt>
+	<dd>{{ user.date_joined }}</dd>
+	<p><a href="/user/cambiar">Cambiar Contraseña</a> | <a href="/user/edit">Editar Informacón de usuario</a> | <a href="/empresa/information">Información de la empresa</a> | <a href="/user/logout">Salir</a> </p>
+</dl>
+
 {% endblock %}

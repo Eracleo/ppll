@@ -34,8 +34,6 @@ Agregar Paquete
 			$("#id_porcentaje").val(por*100/pre);
 		});
 	});
-
-
 	$(function(){
 		$("#id_sku").ready(function() {
 			var str = "{{ultimo}}";
@@ -69,8 +67,7 @@ Agregar Paquete
                         var res = nombre;
                         msg += res;
                         ok = false;
-                    }
-                    
+                    }                    
                 }
                 else{
                 	var nom=f.elements[i].name;
@@ -80,10 +77,7 @@ Agregar Paquete
                 			mes="\n"+"Ingrese Correctamente el precio \n Usted puede ingresar 5 digitos enteros y 5 cinco digitos decimales";
                 			ok=false;
                 		}
-
-
                 	}
-
                 }
             }
             if(ok == false){
@@ -94,9 +88,7 @@ Agregar Paquete
 
             }
             return ok;
-
         };
-
 </script>
 
 {% load bootstrap %}
