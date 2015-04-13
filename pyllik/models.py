@@ -11,7 +11,7 @@ PAGO_ESTADO = (
     ('re','En Reserva'),
     ('ad','Con Adelanto'),
     ('pc','Completado'),
-    ('pc','Incompletado'),
+    ('pc','Incompleto'),
     ('ca','Cancelado'),
     )
 MODO_PAGO = (
