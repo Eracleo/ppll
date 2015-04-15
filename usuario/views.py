@@ -30,9 +30,6 @@ def signup(request):
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
 
-            # At this point, user is a User object that has already been saved
-            # to the database. You can continue to change its attributes
-            # if you want to change other fields.
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
@@ -42,14 +39,14 @@ def signup(request):
             titulo = 'Cuenta Creada Negotu'
             contenido = 'Estimado(a) '
             contenido += first_name
-            contenido += "\nGracias por su interes Negotu.com\nTu cuenta fue creado.\n"
-            contenido += "Su Cuenta:\nURL: https://quipu.negotu.com/user/\nUsuario: " + username +"\nPassword: "+ password +"\nika Inversiones E.I.R.L\n www.llika.com\nTelefono: 051 084 232460"
+            contenido += "\n\nGracias por su interes en Negotu.com\n\n\nTu cuenta fue creado.\n"
+            contenido += "\n\nSu Cuenta:\nURL: https://quipu.negotu.com/user/\nUsuario: " + username +"\nPassword: "+ password +"\n\n\nLlika Inversiones E.I.R.L\n www.llika.com\nhttp://www.negotu.com\nTelefono: 051 084 232460"
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
             messages.success(request, 'Cuenta creada con exito. Revise su correo')
             return HttpResponseRedirect(reverse('main'))
         else:
-            messages.info(request, 'Cuenta no existe.')
+            messages.warning(request, 'Verifique su Información.')
     else:
         form = SignUpForm()
     data = {

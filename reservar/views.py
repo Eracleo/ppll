@@ -50,8 +50,8 @@ def personasa(request):
     class PersonaForm(forms.ModelForm):
         class Meta:
             model = Persona
+            exclude = ('editado','creado','logo','abreviatura')
 
-    #PersonaFormset= formset_factory(PersonaForm,extra=2,max_num=3)
     PersonaFormset= formset_factory(PersonaForm, extra=int(cantidad_personas), max_num=int(cantidad_personas))
 
     class ReservaaForm(forms.Form):
