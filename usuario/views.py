@@ -38,11 +38,13 @@ def signup(request):
 
             # Save new user attributes
             user.save()
-            titulo = 'LLIKA EIRL - Negotu.com'
-            contenido = 'Bienvenido...'
+            titulo = 'Cuenta Creada Negotu'
+            contenido = 'Estimado(a) '
             contenido += first_name
-            contenido += ' gracias por crear su cuenta en Negotu.com' + "\n"
-            contenido +='Usuario: ' + username + "\n"
+            contenido += "\nGracias por su interes Negotu.com\nTu cuenta fue creado.\n"
+            contenido += "Su Cuenta:\n- URL: https://quipu.negotu.com/user/\nUsuario: " + username
+            + "\nPassword: "+ password
+            "\nLlika Inversiones E.I.R.L\n www.llika.com\nTelefono: 051 084 232460"
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
             return HttpResponseRedirect(reverse('main'))
