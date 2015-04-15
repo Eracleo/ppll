@@ -124,15 +124,13 @@ def pagar(request,id):
     paypal = {
         'paypal_url':"https://www.sandbox.paypal.com/cgi-bin/webscr",
         'paypal_pdt_url':"https://www.sandbox.paypal.com/au/cgi-bin/webscr",
-        'return_url':"http://127.0.0.1:8000/reservar/paypal/",
-        'cancel_url':"http://127.0.0.1:8000/reservar/cancelado/",
+        'return_url':"https://quipu.negotu.com/reservar/paypal/",
+        'cancel_url':"https://quipu.negotu.com/reservar/cancelado/",
     }
     # Recuperar datos de la agencia
     agencia = obj.empresa
     acount = {
-        'pdt_token':"2E-ni3FGiArjF6alEy8gu_SQ4BmlhzFYs09slOuer2XOrtnsHsWnIdR7hFO",
         'business':agencia.paypal_email,
-        'merchant':"TG484VU34FSW6",
     }
     reserve = {
         'quantity':obj.cantidad_personas,
