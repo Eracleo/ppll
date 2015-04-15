@@ -38,7 +38,6 @@ INSTALLED_APPS = (
     'pyllik',
     'usuario',
     'reservar',
-    'page',
     'bootstrapform',
 )
 
@@ -102,8 +101,8 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 #Configuraciones para enviar mensajes usando gmail
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'luisjfr2309@gmail.com'
-EMAIL_HOST_PASSWORD = 'contra'
+EMAIL_HOST_USER = 'juan@llika.net'
+EMAIL_HOST_PASSWORD = 'juaneco2012'
 EMAIL_PORT = 587
 
 

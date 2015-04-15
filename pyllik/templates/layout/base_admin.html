@@ -61,7 +61,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ user.email }}<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"> </span>  {{ user.email }}<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="/user">Perfil</a></li>
                 <li><a href="/user/cambiar">Cambiar contraseña</a></li>
@@ -80,6 +80,13 @@
     <div class="container">
       <!-- Main component -->
       <h1>{% block title %}{% endblock%}</h1>
+      {% if messages %}
+        <div class="messages">
+            {% for msg in messages %}
+                <div class="alert alert-{{msg.level_tag}}" role="alert">{{msg.message}}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
       {% block content %} {% endblock%}
     </div> <!-- /container -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

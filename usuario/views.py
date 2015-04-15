@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.template.context import RequestContext
 from pyllik.models import Empresa
@@ -8,7 +9,7 @@ from forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout, authenticate, login
-
+from django.contrib import messages
 
 @login_required()
 def main(request):
@@ -42,17 +43,19 @@ def signup(request):
             contenido = 'Estimado(a) '
             contenido += first_name
             contenido += "\nGracias por su interes Negotu.com\nTu cuenta fue creado.\n"
-            contenido += "Su Cuenta:\n- URL: https://quipu.negotu.com/user/\nUsuario: " + username
-            + "\nPassword: "+ password
-            "\nLlika Inversiones E.I.R.L\n www.llika.com\nTelefono: 051 084 232460"
+            contenido += "Su Cuenta:\nURL: https://quipu.negotu.com/user/\nUsuario: " + username +"\nPassword: "+ password +"\nika Inversiones E.I.R.L\n www.llika.com\nTelefono: 051 084 232460"
             correo = EmailMessage(titulo, contenido, to=[email])
             correo.send()
+            messages.success(request, 'Cuenta creada con exito. Revise su correo')
             return HttpResponseRedirect(reverse('main'))
+        else:
+            messages.info(request, 'Cuenta no existe.')
     else:
         form = SignUpForm()
     data = {
         'form': form,
     }
+
     return render(request,'signup.html', data)
 @login_required()
 def home(request):
@@ -70,6 +73,7 @@ def config(request):
         request.session["logo"] = empresa.logo.url
         return HttpResponseRedirect('/user')
     except Empresa.DoesNotExist:
+        messages.info(request, 'Informacion de empresa falta crear')
         return HttpResponseRedirect('/empresa/information')
 
 @login_required()
@@ -84,6 +88,7 @@ def cambiar(request):
             # do your email changing magic
             user.set_password(newpass)
             user.save()
+            messages.success(request, 'Su contraseña se ha cambiado satisfactoriamente.')
             return HttpResponseRedirect('/user')
         else:
             return render(request,'cambiarpass.html', {'user': request.user,'mensaje':'si'})
@@ -98,10 +103,13 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                messages.success(request, 'Bienvenido.')
                 return config(request)
             else:
+                messages.warning(request, 'Su cuenta no esta activado')
                 return HttpResponseRedirect('/user/login')
         else:
+            messages.warning(request, 'Cuenta no existe')
             return HttpResponseRedirect('/user/login')
     else:
         next = ''

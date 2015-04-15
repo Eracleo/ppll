@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from page import views
+from pyllik import views
 from django.conf import settings
 
 handler404 = 'pyllik.views.error404'

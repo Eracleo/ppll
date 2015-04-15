@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.template import RequestContext, loader
 from .models import Paquete, Empresa, Reserva, Persona
@@ -8,6 +9,7 @@ from django.contrib.auth.models import User
 from django.db.models import Count
 from collections import defaultdict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -28,6 +30,7 @@ def empresaDetail(request):
             nro = request.POST['nro']
             if Empresa.objects.filter(abreviatura=abrev):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
+                messages.success(request, 'Información de empresa creado.')
                 return render(request,'add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
             else:
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
@@ -70,6 +73,7 @@ def empresaEdit(request):
             empresa.terminos_condiciones = empresa_form.cleaned_data['terminos_condiciones']
             #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
             empresa.save()
+            messages.success(request, 'Información de empresa actualizado.')
             return HttpResponseRedirect('/empresa/information')
     if request.method == 'GET':
         empresa_form = EmpresaFormEdit(initial=
@@ -152,22 +156,21 @@ def paqueteAdd(request):
         formAgregar = PaqueteForm(request.POST,instance=nombre_empresa)
         if formAgregar.is_valid():
             formAgregar.save()
+            messages.success(request, 'Paquete creado.')
             return HttpResponseRedirect('/empresa/paquetes')
         else:
+            messages.warning(request, 'Verefique los campos.')
             ctx = {
             'ultimo':ultimo.sku,
             'formAgregar':formAgregar,
             'logo':empresa_logo,}
             return render(request,'paquete/add.html', ctx)
     else:
-    #if request.method == 'GET':
         formAgregar=PaqueteForm()
         ctx = {
             'ultimo':ultimo.sku,
             'formAgregar':formAgregar,
             'logo':empresa_logo,}
-    
-        #formAgregar = PaqueteForm()
         return render(request,'paquete/add.html', ctx)
 @login_required
 def reservaList(request):
