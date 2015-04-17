@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'usuario',
     'reservar',
     'bootstrapform',
+    'suit_ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
