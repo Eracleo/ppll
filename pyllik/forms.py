@@ -3,9 +3,7 @@ from django import forms
 from .models import Paquete, Empresa
 from suit_ckeditor.widgets import CKEditorWidget
 class PaqueteForm(forms.ModelForm):
-    descripcion = forms.Textarea()
     precio = forms.FloatField(label="Precio($)")
-    estado = forms.RadioSelect()
     class Meta:
         model = Paquete
         fields = ('sku','nombre', 'precio','porcentaje','pre_pago','descripcion','link','estado')

@@ -50,20 +50,20 @@ class Empresa(models.Model):
     ruc = models.CharField(max_length=11)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
-    paypal_at = models.CharField(max_length=64,help_text="Codigo de identicacion en paypal") # IdentityToken
+    paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
     nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
     terminos_condiciones = models.URLField(max_length=120, blank=True, help_text="URL Terminos y condiciones.")
     user = models.ForeignKey(User)
-    abreviatura = models.CharField(max_length=3)
+    abreviatura = models.CharField(max_length=3,unique=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
 BOOL_CHOICES = ((True, 'Habitilido'), (False, 'Deshabilitado'))
 class Paquete(models.Model):
-    sku = models.CharField(max_length=6)
-    nombre = models.CharField(max_length=40,help_text="Coloque el nombre del paquete, tal como aparece en su sitio web.")
+    sku = models.CharField(max_length=6,unique=True)
+    nombre = models.CharField(max_length=60,help_text="Coloque el nombre del paquete, tal como aparece en su sitio web.")
     precio = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el precio del paquete, tal como aparece en su sitio web. Los precios son en Dólares Americanos (USD $)")
     porcentaje = models.FloatField(default=100, validators=[MinValueValidator(0),MaxValueValidator(100)],help_text="Coloque el porcentaje del Pre pago que el sistema va a cobrar por pasajero, el monto en USD $ se actualiza automáticamente.")
     pre_pago = models.FloatField(default=0, validators=[MinValueValidator(0)],help_text="Coloque el monto en USD $ del Pre pago que el sistema va a cobrar por pasajero, el monto en % se acutaliza automáticamente")
