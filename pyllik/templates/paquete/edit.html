@@ -2,6 +2,7 @@
 {% block title %}Editar Paquetes{% endblock %}
 
 {% block content %}
+<script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script type="text/javascript">
 	function valida(f) {
             var ok = true;
@@ -21,7 +22,7 @@
                         msg += res;
                         ok = false;
                     }
-                    
+
                 }
                 else{
                 	var nom=f.elements[i].name;
@@ -41,7 +42,7 @@
                 alert(msg.toUpperCase()+mes.toUpperCase());
                 //$("#mensaje").val(msg.toUpperCase());
                 //$("myAlert").value(msg);}
-                //$("#myAlert").alert(})          
+                //$("#myAlert").alert(})
 
             }
             return ok;
