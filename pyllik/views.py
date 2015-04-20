@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template import RequestContext, loader
 from .models import Paquete, Empresa, Reserva, Persona
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, EmpresaForm, EmpresaFormEdit
+from forms import PaqueteForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -31,7 +31,7 @@ def empresaDetail(request):
             if Empresa.objects.filter(abreviatura=abrev):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 messages.success(request, 'Información de empresa creado.')
-                return render(request,'add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
+                return render(request,'empresa/add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
             else:
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 if formAgregar.is_valid():
@@ -51,8 +51,8 @@ def empresaDetail(request):
 
         else:
             formAgregar = EmpresaForm()
-        return render(request,'add.html', {'formAgregar':formAgregar})
-    return render(request,'information.html',{'obj':empresa,'logo':empresa_logo})
+        return render(request,'empresa/add.html', {'formAgregar':formAgregar})
+    return render(request,'empresa/detail.html',{'obj':empresa,'logo':empresa_logo})
 
 @login_required
 def empresaEdit(request):
@@ -91,7 +91,28 @@ def empresaEdit(request):
                 'terminos_condiciones':empresa.terminos_condiciones,
             })
     ctx = {'empresa_form':empresa_form,'empresa':empresa,}
-    return render(request,'edit.html', ctx)
+    return render(request,'empresa/edit.html', ctx)
+@login_required
+def paypal_account(request):
+    user_id = request.user.id
+    empresa = Empresa.objects.get(user_id = user_id)
+    #Guarda el formulario en la BD
+    if request.method == 'POST':
+        empresa_form = PaypalAccountForm(request.POST,request.FILES)
+        if empresa_form.is_valid():
+            empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
+            empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
+            empresa.save()
+            messages.success(request, 'Información de empresa actualizado.')
+            return HttpResponseRedirect('/empresa/information')
+    if request.method == 'GET':
+        empresa_form = PaypalAccountForm(initial=
+            {
+                'paypal_email':empresa.paypal_email,
+                'paypal_at':empresa.paypal_at,
+            })
+    ctx = {'empresa_form':empresa_form,'empresa':empresa,'titulo':"Editar"}
+    return render(request,'form.html', ctx)
 
 @login_required
 def paqueteList(request):

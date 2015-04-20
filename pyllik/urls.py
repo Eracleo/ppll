@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^$','pyllik.views.index', name='index'),
     url(r'^information/$','pyllik.views.empresaDetail', name='empresaDetail'),
     url(r'^edit/$','pyllik.views.empresaEdit', name='empresaEdit'),
+    url(r'^edit/paypal_account$','pyllik.views.paypal_account', name='paypal_account'),
     # Reservas
     url(r'^reservas$','pyllik.views.reservaList', name='reservaList'),
     url(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetail', name='reservaDetail'),

@@ -20,6 +20,3 @@ class EditForm(ModelForm):
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name']
-        widgets = {
-            'password':forms.PasswordInput(),
-        }

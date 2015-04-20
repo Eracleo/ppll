@@ -25,7 +25,13 @@ class EmpresaFormEdit(forms.ModelForm):
     direccion = forms.CharField(max_length=40)
     telefono = forms.CharField(max_length=30)
     ruc = forms.CharField(min_length=11)
-    abreviatura = forms.CharField(min_length=3)
     class Meta:
         model = Empresa
-        exclude = ('user','nro_paquetes','logo','abreviatura')
+        exclude = ('user','nro_paquetes','paypal_email','paypal_at','abreviatura')
+
+class PaypalAccountForm(forms.ModelForm):
+    paypal_email = forms.CharField(max_length=40)
+    paypal_at = forms.CharField(max_length=40)
+    class Meta:
+        model = Empresa
+        exclude = ('user','nro_paquetes','direccion','razon_social','telefono','rubro','ruc','web','logo','terminos_condiciones','abreviatura')
