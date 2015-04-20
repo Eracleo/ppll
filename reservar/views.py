@@ -77,6 +77,7 @@ def personasa(request):
                     persona.pais= item['pais']
                     persona.telefono= item['telefono']
                     persona.email= item['email']
+                    persona.empresa = reserva.empresa
                     persona.save()
                     reserva.viajeros.add(persona)
 

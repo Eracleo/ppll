@@ -1,15 +1,21 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Listar Viajeros{% endblock %}
+{% block title %}Viajeros{% endblock %}
 {% block content %}
 	<table class="table table-striped table-bordered table-hover table-condensed">
     <thead>
       <tr>
-        <th>Nombre</th>
+        <th>Apellidos y Nombre(s) </th>
+        <th>Documento</th>
+        <th>E-mail</th>
+        <th>Pais</th>
       </tr>
     </thead>
 		{% for obj in objs %}
 			<tr>
-        <td>{{obj.nombre}}</td>
+        <td><a href="/empresa/persona/detail/{{obj.id}}"><b>{{obj.apellidos}} </b> {{obj.nombre}}</a></td>
+        <td>{{obj.get_doc_tipo_display}} <b>{{obj.doc_nro}}</b></td>
+        <td>{{obj.email}}</td>
+        <td>{{obj.pais}}</td>
       </tr>
 		{% endfor %}
 	</table>

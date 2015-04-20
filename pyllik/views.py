@@ -97,7 +97,7 @@ def empresaEdit(request):
 def paqueteList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Paquete.objects.filter(empresa_id = empresa_id)
+    objs_list = Paquete.objects.filter(empresa_id = empresa_id).order_by('-id')
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
@@ -176,7 +176,7 @@ def paqueteAdd(request):
 def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Reserva.objects.filter(empresa_id = empresa_id)
+    objs_list = Reserva.objects.filter(empresa_id = empresa_id).order_by('-id')
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
