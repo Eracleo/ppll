@@ -5,7 +5,7 @@ from pyllik.models import Empresa
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from forms import SignUpForm
+from forms import SignUpForm, EditForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout, authenticate, login
@@ -15,15 +15,14 @@ from django.contrib import messages
 def main(request):
     request.session["empresa"]=1
     del request.session["empresa"]
-    return render(request,'main.html')
+    return render(request,'user/main.html')
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/user/login')
 def signup(request):
-    if request.method == 'POST':  # If the form has been submitted...
-        form = SignUpForm(request.POST)  # A form bound to the POST data
-        if form.is_valid():  # All validation rules pass
-            # Process the data in form.cleaned_data
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
             email = form.cleaned_data["email"]
@@ -33,9 +32,8 @@ def signup(request):
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
-
-            # Save new user attributes
             user.save()
+
             titulo = 'Cuenta Creada Negotu'
             contenido = 'Estimado(a) '
             contenido += first_name
@@ -52,12 +50,11 @@ def signup(request):
     data = {
         'form': form,
     }
-
-    return render(request,'signup.html', data)
+    return render(request,'user/signup.html', data)
 @login_required()
 def home(request):
     empresa_logo = request.session["logo"]
-    return render(request,'perfil.html', {'user': request.user,'logo':empresa_logo})
+    return render(request,'user/perfil.html', {'user': request.user,'logo':empresa_logo})
 @login_required()
 def config(request):
     try:
@@ -76,8 +73,7 @@ def config(request):
 @login_required()
 def cambiar(request):
     if request.method == 'POST':
-        name = request.POST['username']
-        user = User.objects.get(username=name)
+        user = request.user
         passa = request.POST['password']
         newpass=request.POST['next']
         success = user.check_password(passa)
@@ -88,9 +84,10 @@ def cambiar(request):
             messages.success(request, 'Su contraseña se ha cambiado satisfactoriamente.')
             return HttpResponseRedirect('/user')
         else:
-            return render(request,'cambiarpass.html', {'user': request.user,'mensaje':'si'})
+            messages.warning(request, 'Ingrese Correctamente su contraseña. Por favor intenta otra vez..')
+            return render(request,'user/cambiarpass.html', {'user': request.user})
     else:
-        return render(request,'cambiarpass.html', {'user': request.user})
+        return render(request,'user/cambiarpass.html', {'user': request.user})
 
 def login_view(request):
     if request.method == 'POST':
@@ -112,6 +109,26 @@ def login_view(request):
         next = ''
         if 'next' in request.GET:
             next = request.GET['next']
-        return render(request,'login.html',{'next':next})
+        return render(request,'user/login.html',{'next':next})
+@login_required()
 def edit(request):
-    return HttpResponseRedirect('/user')
+    user = request.user
+    empresa_logo = request.session["logo"]
+    if request.method == 'POST':
+        frm = EditForm(request.POST)
+        if frm.is_valid():
+            user.email = frm.cleaned_data['email']
+            user.first_name = frm.cleaned_data['first_name']
+            user.last_name = frm.cleaned_data['last_name']
+            user.save()
+            messages.success(request, 'Datos Actualizados')
+            return HttpResponseRedirect('/user')
+    if request.method == 'GET':
+        form = EditForm(initial=
+            {
+            'email':user.email,
+            'first_name':user.first_name,
+            'last_name':user.last_name,
+            })
+    ctx = {'form':form,'logo':empresa_logo}
+    return render(request,'user/edit.html',ctx)

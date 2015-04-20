@@ -22,13 +22,6 @@
 		return retorno;
 	}
 </script>
-    {% if mensaje %}
-    <div class="alert alert-danger alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Ingrese Correctamente su contraseña.</strong> Por favor intenta otra vez.
-    </div>
-    {% endif %}
-
     <div class="container">
         <div class="col-lg-4">
           <form class="form-signin" method="post" action="" onsubmit="return valida_envia(this)">

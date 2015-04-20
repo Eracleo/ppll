@@ -1,0 +1,15 @@
+{% extends 'layout/base_admin.html' %}
+{% block title %}{{ user.username }}<small>(edit)</small>{% endblock %}
+{% block content %}
+{% load bootstrap %}
+<div class="row">
+    <div class="col-lg-8">
+        <form action="" method="POST" onsubmit="return valida(this)">
+            {%csrf_token%}
+            {{form|bootstrap_horizontal}}
+            <p><button type= "submit" class="btn btn-primary"> Guardar</button>
+            <button type= "reset" class="btn btn-primary"> Limpiar</button></p>
+        </form>
+    </div>
+</div>
+{% endblock %}
