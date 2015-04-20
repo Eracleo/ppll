@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     #rl(r'^reserva/add$','pyllik.views.reservaAdd', name='reservaAdd'),
     # Persona
     url(r'^persona/detail/(?P<id>\d+)$','pyllik.views.personaDetail', name='personaDetail'),
+    url(r'^personas$','pyllik.views.personas', name='personas'),
 )

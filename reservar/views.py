@@ -50,7 +50,7 @@ def personasa(request):
     class PersonaForm(forms.ModelForm):
         class Meta:
             model = Persona
-            exclude = ('editado','creado','logo','abreviatura')
+            exclude = ('editado','creado')
 
     PersonaFormset= formset_factory(PersonaForm, extra=int(cantidad_personas), max_num=int(cantidad_personas))
 
@@ -65,13 +65,6 @@ def personasa(request):
 
         form.viajeros_instances = PersonaFormset(request.POST)
         if form.is_valid():
-            titulo = 'LLIKA EIRL - Negotu.com'
-            contenido = 'Reserva creada correctamente' + "\n"
-            contenido +='Paquete: ' + paquete.nombre + "\n"
-            contenido +='Viajeros:' + cantidad_personas + "\n"
-            contenido +='Total a pagar: ' + monto
-            correo = EmailMessage(titulo, contenido, to=[email])
-            #correo.send()
             reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email,ip=ip)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
@@ -86,6 +79,15 @@ def personasa(request):
                     persona.email= item['email']
                     persona.save()
                     reserva.viajeros.add(persona)
+
+            titulo = 'LLIKA EIRL - Negotu.com'
+            contenido = 'Reserva creada correctamente' + "\n"
+            contenido +='Paquete: ' + paquete.nombre + "\n"
+            contenido +='Viajeros:' + cantidad_personas + "\n"
+            contenido +='Total a pagar: ' + monto
+            correo = EmailMessage(titulo, contenido, to=[email])
+            # correo.send()
+
             return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
         else:
             form = ReservaaForm()

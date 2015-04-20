@@ -25,19 +25,6 @@ class Pais(models.Model):
     nombre = models.CharField(max_length=30)
     def __unicode__(self):
         return self.nombre
-class Persona(models.Model):
-    nombre = models.CharField(max_length=30)
-    apellidos = models.CharField(max_length=60)
-    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
-    doc_nro = models.CharField(max_length=10)
-    email = models.EmailField(max_length=60,blank=True)
-    telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
-    pais = models.ForeignKey(Pais, null=True, blank=True)
-    creado = models.DateField(auto_now_add=True, editable=False)
-    editado = models.DateTimeField(auto_now=True, editable=False)
-    def __unicode__(self):
-        return self.nombre
-
 class Rubro(models.Model):
     nombre = models.CharField(max_length=120)
     def __unicode__(self):
@@ -60,6 +47,19 @@ class Empresa(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
+class Persona(models.Model):
+    nombre = models.CharField(max_length=30)
+    apellidos = models.CharField(max_length=60)
+    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
+    doc_nro = models.CharField(max_length=10)
+    email = models.EmailField(max_length=60,blank=True)
+    telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
+    pais = models.ForeignKey(Pais, null=True, blank=True)
+
+    creado = models.DateField(auto_now_add=True, editable=False)
+    editado = models.DateTimeField(auto_now=True, editable=False)
+    def __unicode__(self):
+        return self.nombre
 BOOL_CHOICES = ((True, 'Habitilido'), (False, 'Deshabilitado'))
 class Paquete(models.Model):
     sku = models.CharField(max_length=6,unique=True)

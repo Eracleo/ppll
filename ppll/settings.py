@@ -23,7 +23,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['negotu.com']
+ALLOWED_HOSTS = ['quipu.negotu.com']
 
 
 # Application definition

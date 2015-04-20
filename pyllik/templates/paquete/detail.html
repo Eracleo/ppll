@@ -36,7 +36,7 @@
     </tr>
     <tr>
         <td><b>detalle:</b></td>
-        <td>{{obj.descripcion}}</td>
+        <td>{{obj.descripcion|safe }}</td>
     </tr>
 </table>
 <p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-primary">Editar</a> </p>

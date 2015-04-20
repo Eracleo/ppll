@@ -198,6 +198,20 @@ def personaDetail(request, id):
     persona = Persona.objects.get(id=id)
     empresa_logo = request.session["logo"]
     return render(request,'persona/detail.html',{'obj':persona,'logo':empresa_logo})
+@login_required
+def personas(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    objs_list = Persona.objects.filter(empresa_id = empresa_id)
+    paginator = Paginator(objs_list, 30)
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        objs = paginator.page(1)
+    except EmptyPage:
+        objs = paginator.page(paginator.num_pages)
+    return render(request,'persona/list.html',{'objs':objs,'logo':empresa_logo})
 def error404(request):
     return render(request,'errors/404.html')
 def error403(request):
