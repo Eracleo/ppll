@@ -87,7 +87,7 @@ def personasa(request):
             contenido +='Viajeros:' + cantidad_personas + "\n"
             contenido +='Total a pagar: ' + monto
             correo = EmailMessage(titulo, contenido, to=[email])
-            # correo.send()
+            correo.send()
 
             return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
         else:
