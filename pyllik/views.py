@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.template import RequestContext, loader
 from .models import Paquete, Empresa, Reserva, Persona
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -140,9 +140,8 @@ def paqueteEdit(request, id):
     paquete = Paquete.objects.get(id=id)
     empresa_logo = request.session["logo"]
     if request.method == 'POST':
-        paquete_form = PaqueteForm(request.POST)
+        paquete_form = PaqueteEditForm(request.POST)
         if paquete_form.is_valid():
-            paquete.sku = paquete_form.cleaned_data['sku']
             paquete.nombre = paquete_form.cleaned_data['nombre']
             paquete.precio = paquete_form.cleaned_data['precio']
             paquete.porcentaje = paquete_form.cleaned_data['porcentaje']
@@ -152,6 +151,8 @@ def paqueteEdit(request, id):
             paquete.link = paquete_form.cleaned_data['link']
             paquete.save()
             return HttpResponseRedirect('/empresa/paquetes')
+        else:
+            messages.warning(request, 'Datod no validos')
     if request.method == 'GET':
         paquete_form = PaqueteForm(initial=
             {
@@ -164,7 +165,7 @@ def paqueteEdit(request, id):
                 'pre_pago':paquete.pre_pago,
                 'link':paquete.link,
             })
-    ctx = {'paquete_form':paquete_form,'Paquete':paquete,'logo':empresa_logo}
+    ctx = {'form':paquete_form,'Paquete':paquete,'logo':empresa_logo}
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):
@@ -190,7 +191,7 @@ def paqueteAdd(request):
         formAgregar=PaqueteForm()
         ctx = {
             'ultimo':ultimo.sku,
-            'formAgregar':formAgregar,
+            'form':formAgregar,
             'logo':empresa_logo,}
         return render(request,'paquete/add.html', ctx)
 @login_required

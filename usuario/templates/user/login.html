@@ -22,12 +22,12 @@
     <script src="{% static 'js/jquery-v1.min.js' %}"></script>
     <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
-
+    <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
   </head>
-
   {% block content %}
     <div class="container">
-      <form class="form-signin" method="post" action="/user/login">
+      <form class="form-signin" method="post" action="/user/login" id="form">
         {% if messages %}
         <div class="messages">
             {% for msg in messages %}
@@ -39,19 +39,43 @@
         {% endif %}
         {% csrf_token %}
         <h2 class="form-signin-heading">Iniciar Sesión</h2>
-        <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" name="username">
-        <br>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required="True" >
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Recuerda
-          </label>
+        <div class="form-group">
+            <input type="text" id="inputEmail" class="form-control" placeholder="User" required="True" name="username">
         </div>
+        <br>
+        <div class="form-group">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required="True" >
+        </div>
+
         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar"/>
         <input type="hidden" name="next" value="{{ next }}"/>
       </form>
 
     </div> <!-- /container -->
-
-
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      username: {
+        minlength: 2,
+        required: true
+      },
+      password: {
+          required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock %}

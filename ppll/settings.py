@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'reservar',
     'bootstrapform',
     'suit_ckeditor',
+    'parsley',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -4,50 +4,6 @@
 {% block content %}
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script type="text/javascript">
-	function valida(f) {
-            var ok = true;
-            var msg = "Falta llenar el contenido en los siguientes campos:\n"+"\n";
-            var mes="";
-            var nombre="";
-            for (var i = 0; i <= f.elements.length-3; i++) {
-                nombre=f.elements[i].name+"\n";
-                //var Per=nombre.substring(7,15);
-                //Per=parseInt(Per)+1;
-                if(f.elements[i].value == "" || f.elements[i].value=="0"||  f.elements[i].value=="0.0")
-                {
-                    if (f.elements[i].name=="descripcion"||f.elements[i].name=="link")
-                    {}
-                    else{
-                        var res = nombre;
-                        msg += res;
-                        ok = false;
-                    }
-
-                }
-                else{
-                	var nom=f.elements[i].name;
-                	if(nom=="precio")
-                	{
-                		if (!/^([0-9]){1,5}.?([0-9]{0,5})$/.test(f.elements[i].value)){
-                			mes="\n"+"Ingrese Correctamente el precio \n Usted puede ingresar 5 digitos enteros y 5 cinco digitos decimales";
-                			ok=false;
-                		}
-
-
-                	}
-
-                }
-            }
-            if(ok == false){
-                alert(msg.toUpperCase()+mes.toUpperCase());
-                //$("#mensaje").val(msg.toUpperCase());
-                //$("myAlert").value(msg);}
-                //$("#myAlert").alert(})
-
-            }
-            return ok;
-
-        };
 	$(function(){
 		$("#id_precio, #id_porcentaje").change(function() {
 			pre = $("#id_precio").val();
@@ -73,12 +29,47 @@
 {% load bootstrap %}
 <div class="row">
     <div class="col-lg-8">
-        <form action="" method="POST">
+        <form action="" method="POST" id="form">
             {%csrf_token%}
-            {{paquete_form|bootstrap_horizontal}}
+            {{form|bootstrap_horizontal}}
             <p><button type= "submit" class="btn btn-primary"> Guardar</button>
             <button type= "reset" class="btn btn-primary"> Limpiar</button></p>
         </form>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      nombre: {
+        minlength: 2,
+          required: true
+      },
+      precio: {
+          required: true
+      },
+      porcentaje: {
+          required: true
+      },
+      pre_pago: {
+          required: true
+      },
+      descripcion: {
+          required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock%}
