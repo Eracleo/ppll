@@ -137,7 +137,8 @@ def paqueteDetail(request, id):
     return render(request,'paquete/detail.html',{'obj':paquete,'logo':empresa_logo})
 @login_required
 def paqueteEdit(request, id):
-    paquete = Paquete.objects.get(id=id)
+    empresa_id = request.session["empresa"]
+    paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
     if request.method == 'POST':
         paquete_form = PaqueteEditForm(request.POST)
@@ -217,7 +218,8 @@ def reservaDetail(request, id):
 # PERSONA
 @login_required
 def personaDetail(request, id):
-    persona = Persona.objects.get(id=id)
+    empresa_id = request.session["empresa"]
+    persona = Persona.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
     return render(request,'persona/detail.html',{'obj':persona,'logo':empresa_logo})
 @login_required

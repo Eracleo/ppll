@@ -4,7 +4,7 @@
 {% load bootstrap %}
 <div class="row">
     <div class="col-lg-8">
-        <form action="" method="POST" onsubmit="return valida(this)">
+        <form action="" method="POST" id="form">
             {%csrf_token%}
             {{form|bootstrap_horizontal}}
             <p><button type= "submit" class="btn btn-primary"> Guardar</button>
@@ -12,4 +12,33 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      email: {
+        email: true,
+          required: true
+      },
+      first_name: {
+          required: true
+      },
+      last_name: {
+          required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock %}

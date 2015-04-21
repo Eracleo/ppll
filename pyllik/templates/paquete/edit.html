@@ -10,15 +10,18 @@
 			por = $("#id_porcentaje").val();
 			$("#id_pre_pago").val(pre*por/100);
 		});
-	});
-	$(function(){
+
 		$("#id_pre_pago").change(function() {
 			pre = $("#id_precio").val();
 			por = $("#id_pre_pago").val();
 			$("#id_porcentaje").val(por*100/pre);
 		});
-	});
-	$(function(){
+
+    $('#id_nombre, #id_precio, #id_porcentaje, #id_pre_pago, #id_descripcion, #id_link, #id_estado').after('<span class="ayuda glyphicon glyphicon-question-sign "> </span>');
+    $('.ayuda').hover(function(){
+        $(this).next('.help-block').toggle("linear");
+    })
+
 		$("#id_sku").ready(function() {
 		var campo = document.getElementById('id_sku');
 			campo.readOnly=true;

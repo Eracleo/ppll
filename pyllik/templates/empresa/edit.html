@@ -2,59 +2,70 @@
 {% block title %}Editar datos empresa{% endblock %}
 {% block content %}
 
-    <script type="text/javascript">
-    $(function(){
-		$("#id_web").change(function() {
-			valor = $("#id_web").val();
-			var valido=valor.substring(0,4);
-			if(valido!="http"){
-				var hh = "http://";
-				$("#id_web").val(hh+valor);
-			}
+<script type="text/javascript">
+$(function(){
+	$("#id_web").change(function() {
+		valor = $("#id_web").val();
+		var valido=valor.substring(0,4);
+		if(valido!="http"){
+			var hh = "http://";
+			$("#id_web").val(hh+valor);
+		}
 
-		});
 	});
-    function valida_envia(f)
-    {
-    	var retorno=true;
-    	var mensaje_ruc="";
-    	var mensaje_cod="";
-    	{
-		    ruc = f.elements["ruc"].value;
-		    code = f.elements["paypal_at"].value;
-			if(ruc.length!=11)
-			{
-				if (isNaN(ruc))
-					{
-						mensaje_ruc+="- El ruc debe estar solo en numeros\n";
-						retorno=false;
-					}
-				else
-				{
-					mensaje_ruc+="- El ruc debe tener de 11 digitos\n"
-					retorno=false;
-				}
-			}
-		}
-		if(retorno==false){
-			alert(mensaje_ruc+mensaje_cod);
-
-		}
-		return retorno;
-	}	
-    </script>
-
+});
+ </script>
 {% load bootstrap %}
 <div class="row">
 	<div class="col-lg-8">
-		<form id="enviar" action="" method="POST" enctype='multipart/form-data' onsubmit="return valida_envia(this)">
+		<form action="" method="POST" enctype='multipart/form-data' id="form">
 		    {%csrf_token%}
 		    {{empresa_form|bootstrap_horizontal}}
 		    <button id="enviar" type= 'submit' class="btn btn-primary"> Guardar</button>
-		    <button type= "reset" class="btn btn-primary"> Limpiar</button>
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      rubro: {
+      	required: true
+      },
+      razon_social: {
+      	required: true
+      },
+      direccion: {
+      	required: true
+      },
+      telefono: {
+      	required: true
+      },
+      ruc: {
+      	required: true,
+      	digite: true
+      },
+      web: {
+      	required: true
+      },
+      terminos_condiciones: {
+      	required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock%}
 
 

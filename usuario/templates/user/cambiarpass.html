@@ -1,39 +1,21 @@
 {% extends 'layout/base_admin.html' %}
 {% block title %}Cambiar de Contraseña{% endblock %}
  {% block content %}
-<script type="text/javascript">
-	function valida_envia(f)
-    {
-    	var retorno=true;
-
-    	{
-		    pass1 = f.elements["newpassword1"].value;
-		    pass2 = f.elements["newpassword2"].value;
-			if(pass1 == pass2)
-			{
-				$("#next").val(pass1);
-			}
-			else{
-				alert("Las contraseñas no coinciden");
-				$("#next").val(pass1)
-				retorno=false;
-			}
-		}
-		return retorno;
-	}
-</script>
     <div class="container">
         <div class="col-lg-4">
-          <form class="form-signin" method="post" action="" onsubmit="return valida_envia(this)">
+          <form class="form-signin" method="post" action="" id="form">
             {% csrf_token %}
             <input type="hidden" id="username" class="form-control" name="username" value="{{user.username}}" readonly="readonly">
             <h2 class="form-signin-heading">Contraseña actual</h2>
+            <div class="form-group">
             <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña Actual" name="password"  >
+            </div>
             <h2 class="form-signin-heading">Nueva contraseña</h2>
-            <input type="password" id="inputPassword1" class="form-control" placeholder="Ingrese Contraseña" name="newpassword1" required="True" >
-            <br>
+            <div class="form-group">
+            <input type="password" id="inputPassword1" class="form-control" placeholder="Ingrese Contraseña" name="newpassword1" required="True" ></div>
+            <div class="form-group">
             <input type="password" id="inputPassword2" class="form-control" placeholder="Repita Contraseña" name="newpassword2" required="True" >
-            <br>
+            </div>
             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar"/>
             <input type="hidden" id="next" name="next" />
             <input type="hidden" id="mensaje" name="mensaje" value="{{mensaje}}" />
@@ -41,6 +23,35 @@
           </form>
         </div>
     </div> <!-- /container -->
-
-
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+    password: {
+        required: true
+    },
+    newpassword1: {
+        required: true,
+        minlength: 5
+    },
+    newpassword2: {
+        required: true,
+        minlength: 5,
+        equalTo: "#inputPassword1"
+    }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock %}
