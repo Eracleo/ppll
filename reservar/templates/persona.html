@@ -44,34 +44,7 @@
                     }
                 }
                 else{
-                    if(Es=="telefono"){
-                       //if(isNaN(f.elements[i].value)){
-                        if( !(/^\+\d{2,3}\s\d{0,16}$/.test(f.elements[i].value)) ) {
-                            mes+="Escribir numero correcto en "+Es+" de Viajero"+Per+"\n";
-                            ok=false;
-                        }
-                    }
-                    else
-                    {
-                        if(Es=="doc_nro")
-                        {
-                            var doc_tipoo=f.elements[i-1].value;
-                            if(doc_tipoo=="ps")
-                            {
-                                if( !(/^[A-Z]\d{6}$/.test(f.elements[i].value)) ) {
-                                    mes+="Escribir una letra y 6 digitos en el Passport "+" de Viajero"+Per+"\n";
-                                    ok=false;
-                                }
-                            }
-                            else
-                            {
-                                if( !(/^\d{10}$/.test(f.elements[i].value)) ) {
-                                    mes+="Escriba Correctamente su numero de Identificación"+" de Viajero"+Per+"\n";
-                                    ok=false;
-                                }
-                            }
-                        }
-                    }
+
                 };
 
             };
@@ -112,7 +85,7 @@
 <input type="hidden" name="cantidad" value="{{cantidad_personas}}" id="cantidad" />
 <input type="hidden" name="fecha" value="{{fecha_viaje}}" id="cantidad" />
 <input type="hidden" name="email" value="{{email}}" id="email" />
-<div class="caja"><img src="/carga/logos_empresa/help.svg" /><span class="info"> Escriba el Siguiente formato: 
+<div class="caja"><img src="/carga/logos_empresa/help.svg" /><span class="info"> Escriba el Siguiente formato:
 +(Codigo de Pais) (Telefono)</span></a></div>
 
 {% for field in form %}

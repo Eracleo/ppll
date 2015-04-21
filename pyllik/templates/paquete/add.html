@@ -101,8 +101,7 @@
 
 <div class="row">
     <div class="col-lg-8">
-
-        <form action="" method="POST" onsubmit="return valida(this)">
+        <form action="" method="POST">
 	        {%csrf_token%}
     		{{formAgregar|bootstrap_horizontal}}
         <p><button type= "submit" class="btn btn-info"> Añadir Paquete</button>
