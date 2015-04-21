@@ -1,6 +1,7 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Reservas{% endblock %}
 {% block content %}
+{% if objs %}
 	<table class="table table-bordered table-condesed table-hover">
       <tr>
         <th>ID</th>
@@ -50,4 +51,9 @@
     {% endif %}
   </ul>
 </nav>
+{%else%}
+<div class="alert alert-danger">
+  Usted aun no tiene ninguna reserva.
+</div>
+{% endif %}
 {% endblock%}
