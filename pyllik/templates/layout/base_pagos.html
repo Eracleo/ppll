@@ -12,55 +12,45 @@
     <meta name="googlebot" content="noindex">
     <meta name="robots" content="noindex">
     <link rel="icon" href="/favicon.ico">
-    <title>{% block page_title %}Pago con Paypal{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+    <title>{% block page_title %}Pago con Paypal{% endblock %} | Negotu.com</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pago.css' %}">
     <script src="{% static 'js/jquery-v1.min.js' %}"></script>
-    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
-    <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
-    <script type="text/javascript">
-    if(history.forward(1))
-    {
-        location.replace(history.forward(0))
-    }
-    </script>
     </head>
-
     <body>
-      <div id="page">
+    <div class="container" id="pago">
         <div id="header">
-            <div class="logoizq"><img src="{{ logo }}" height="60px"></div>
-            <div class="logoder"><a href="/"><IMG SRC="{% static 'images/power.png' %}"></a></div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{{ logo }}" height="60px">
+                </div>
+                <div class="col-sm-6 zone-right">
+                    <img src="{% static 'images/negotu.jpg' %}">
+                </div>
+            </div>
         </div>
-        <div id="wrapper">
-          <div id="menu">
-            <ul>
-                {% block menu %}
-                <li><a href="#">1. Products</a></li>
-                <li><a href="#">2. Passangers</a></li>
-                <li><a href="#">3. Payments</a></li>
-                <li><a href="#">4. Confirm</a></li>
-                {%endblock%}
-            </ul>
-          </div>
-          <div id="contenido">
+        <div id="menu">
+            <ul>{% block menu %}{%endblock%}</ul>
+        </div>
+        <div id="content">
             {% if messages %}
             <div class="messages">
               {% for msg in messages %}
-                  <div class="alert alert-{{msg.level_tag}}" role="alert">{{msg.message}}</div>
+                <div class="alert alert-{{msg.level_tag}}" role="alert">{{msg.message}}</div>
               {% endfor %}
             </div>
             {% endif %}
             {% block content %}
             <p>Aqui contenido</p>
             {% endblock %}
-          </div>
         </div>
-        <div id="footer"><!-- Aquí vendría el código del pié --></div>
-      </div>
+
+
+    </div>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>
+    <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
     </body>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

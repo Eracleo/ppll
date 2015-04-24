@@ -1,8 +1,9 @@
 from django import forms
-from pyllik.models import Reserva, Persona
+from pyllik.models import Persona
 from django.forms.formsets import formset_factory
 
-class PostForm(forms.Form):
-    Paquete_Id = forms.CharField(max_length=256)
-    Cantidad_Personas = forms.CharField(max_length=256)
-    Fecha = forms.DateTimeField()
+class PersonaForm(forms.ModelForm):
+    nombre = forms.CharField(required=True,max_length=15)
+    class Meta:
+        model = Persona
+        exclude = ('editado','creado')

@@ -1,0 +1,141 @@
+body{
+	font-family: verdana,arial;
+}
+#pago
+{
+	font-size: 20px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.zone-right
+{
+	text-align: right;
+}
+#menu
+{
+	height: 32px;
+	margin-left: 3%;
+	width: 100%;
+}
+#menu ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#menu li
+{
+	background-color: #484848;
+	border: 1px solid #484848;
+	border-bottom: 0px;
+	color: #FFFFFF;
+	display: block;
+	float: left;
+	font-size: 17px;
+	margin: 0px 2px;
+	padding: 4px 20px 4px 20px;
+	text-align: center;
+	width: 150px;
+}
+#menu ul li.active
+{
+	background-color: white;
+	color: #484848;
+}
+#content
+{
+	border: 1px solid #484848;
+	padding: 1.0em 1.5em;
+}
+#content .texto-titulo
+{
+	color: #979797;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+.linea
+{
+	border-bottom: 1px solid #bcbcbc;
+	margin-bottom: 20px;
+	padding: 5px;
+}
+.producto
+{
+	color: #1a1a1a;
+}
+.precio
+{
+	color: #1a1a1a;
+	font-size: 34px;
+}
+.tr
+{
+	text-align: right;
+}
+.passanger
+{
+	color: #979797;
+	font-size: 20px;
+	text-transform: uppercase;
+}
+.nro
+{
+	color: #8c8c8c;
+	font-size: 30px;
+	padding-top: 60px;
+	text-align: center;
+}
+.datos
+{
+	background: #bbbbbb;
+	min-height: 100px;
+	padding: 10px;
+}
+.datos label
+{
+	color: #5d5d5d;
+	font-size: 14px;
+	margin-left: 8px;
+}
+#passanger .form-control
+{
+	border: 0px;
+	border-radius: 0px;
+}
+#content .form-control:focus
+{
+	border-color: rgba(210, 127, 0,1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(210, 127, 0,.6);
+	outline: 0;
+	webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(210, 127, 0,.6);
+}
+#passanger
+{
+	margin: 15px 0px;
+	width: 98%;
+}
+.btn-negotu
+{
+	background: #484848;
+	border-radius: 0px;
+	color: #FFFFFF;
+	font-size: 25px;
+	text-transform: uppercase;
+}
+span.nombre
+{
+	display: inline-block;
+	margin-right: 10px;
+	width: 320px;
+}
+.has-error span.error {
+color: red;
+font-size: 12px;
+padding: 5px;
+display: block;
+position: static;
+width: initial;
+background: rgb(255, 219, 219);
+margin-top: 5px;
+color: red;
+}

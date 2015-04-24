@@ -1,0 +1,24 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li>1. Products</li>
+    <li>2. Passangers</li>
+    <li>3. Payments</li>
+    <li class="active">4. Confirm</li>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 texto-titulo">CONFIRMATION</div>
+        <div class="col-sm-6 tr texto-titulo"></div>
+    </div>
+    <div class="linea"></div>
+    <p>Thanks for your purchase. The ID number is: -- We send an email to your  account with the details.</p>
+    <br>
+    <p>Also you can download and print the receipe <a href="#">HERE</a></p>
+<script type="text/javascript">
+window.location.hash="no-back-button";
+window.location.hash="Again-No-back-button" //chrome
+window.onhashchange=function(){window.location.hash="no-back-button";}
+</script>
+{% endblock %}
+
+

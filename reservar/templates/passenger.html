@@ -1,0 +1,214 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li>1. Products</li>
+    <li class="active">2. Passangers</li>
+    <li>3. Payments</li>
+    <li>4. Confirm</li>
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+    function valida(f) {
+        var ok = true;
+        var menss="Falta llenar el contenido en los siguientes campos:\n"+"\n";
+        var msg = "";
+        var mes="";
+        var numero=0;
+        var nombre="";
+        for (var i = 0; i <= f.elements.length-2; i++) {
+            nombre="valor de: "+f.elements[i].name+"\n";
+            var Per=nombre.substring(15,16);
+            Per=parseInt(Per)+1;
+            if(f.elements[i].value == "" )
+            {
+                var Es=f.elements[i].name.substring(7,15);
+                if( Es=="telefono"|| Es=="email")
+                {}
+
+                else{
+                    numero=i+1;
+                    var res = " Viajero "+Per+"     "+nombre.substring(17, nombre.length-1);
+                    msg += res+"\n";
+                    ok = false;
+                }
+
+            }
+            else
+            {
+                var Es=f.elements[i].name.substring(7,15);
+                if(Es=="nombre"|| Es=="apellido"){
+                    //if(!isNaN(f.elements[i].value)){
+                    if( !(/^([a-z ñáéíóú]{3,60})$/i.test(f.elements[i].value)) ) {
+                        mes+="Escribir solo letras en "+Es+" de Viajero"+Per+"\n";
+                        ok=false;
+                    }
+                }
+                else{
+
+                };
+
+            };
+
+        };
+        menss+=msg;
+
+        if(ok == false){
+
+            if(msg=="")
+                alert(mes.toUpperCase());
+            else
+                alert(menss.toUpperCase()+"\n"+mes.toUpperCase());
+
+        }
+        return ok;
+
+    };
+
+    $(function(){
+    $("#id_paquete").ready(function() {
+        $("#id_paquete").val("1");
+        var campo = document.getElementById('id_paquete');
+        campo.readOnly=true;
+    });
+});
+
+
+</script>
+<form id="form" action="" method="post" >
+  {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-6 texto-titulo">Producto</div>
+      <div class="col-sm-6 tr texto-titulo">TOTAL PRICE</div>
+    </div>
+    <div class="linea"></div>
+    <div class="row">
+      <div class="col-sm-6 producto">{{paquete}}</div>
+      <div class="col-sm-6 precio tr">US$ {{monto}}*{{cantidad_personas}}</div>
+    </div>
+    <p class="passanger">Passager(s)</p>
+
+    {% for persona in form.viajeros_instances %}
+    <div id="passanger">
+      <div class="row">
+        <div class="col-sm-1 nro">{{ forloop.counter }}</div>
+        <div class="col-sm-11 datos" >
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Nombre</label>
+                    <input id="id_form-{{ forloop.counter0 }}-nombre" maxlength="15" name="form-{{ forloop.counter0 }}-nombre" type="text" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Document Type</label>
+                    {{ persona.doc_tipo}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Apellidos</label>
+                    <input id="id_form-{{ forloop.counter0 }}-apellidos" maxlength="60" name="form-{{ forloop.counter0 }}-apellidos" type="text" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Number Of Document</label>
+                    <input id="id_form-{{ forloop.counter0 }}-doc_nro" maxlength="10" name="form-{{ forloop.counter0 }}-doc_nro" type="text" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input id="id_form-{{ forloop.counter0 }}-email" maxlength="60" name="form-{{ forloop.counter0 }}-email" type="email" class="form-control" required >
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Pais</label>
+                    {{ persona.pais}}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label class="control-label">Telefono</label>
+                    <input id="id_form-{{ forloop.counter0 }}-telefono" maxlength="50" name="form-{{ forloop.counter0 }}-telefono" type="text" class="form-control" required >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor%}
+    <div class="tr">
+      <button type="submit" class="btn btn-default btn-negotu">Next</button>
+    </div>
+
+<input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS" />
+<input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" />
+<input type="hidden" name="form-MAX_NUM_FORMS" value="3" id="id_form-MAX_NUM_FORMS" />
+
+<input type="hidden" name="paquete_id" value="{{paquete_id}}" id="paquete_id" />
+<input type="hidden" name="id_monto" value="{{monto}}" id="monto" />
+<input type="hidden" name="cantidad" value="{{cantidad_personas}}" id="cantidad" />
+<input type="hidden" name="fecha" value="{{fecha_viaje}}" id="cantidad" />
+<input type="hidden" name="email" value="{{email}}" id="email" />
+{% for field in form %}
+  {{ field.errors }}
+  {{ field }}
+{% endfor %}
+{{ form.viajeros.management_form }}
+</form>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      'form-0-nombre': {
+        minlength: 2,
+        required: true
+      },
+      'form-0-apellidos': {
+          required: true
+      },
+      'form-0-doc_tipo': {
+          required: true
+      },
+      'form-0-doc_nro': {
+          required: true
+      },
+      'form-0-pais': {
+          required: true
+      },
+      'form-1-nombre': {
+        minlength: 2,
+        required: true
+      },
+      'form-1-apellidos': {
+          required: true
+      },
+      'form-1-doc_tipo': {
+          required: true
+      },
+      'form-1-doc_nro': {
+          required: true
+      },
+      'form-1-pais': {
+          required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
+{% endblock %}

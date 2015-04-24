@@ -1,0 +1,46 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li>1. Products</li>
+    <li>2. Passangers</li>
+    <li class="active">3. Payments</li>
+    <li>4. Confirm</li>
+{% endblock %}
+{% block content %}
+    <form action="{{ paypal.paypal_url }}" method="post" accept-charset="utf-8">
+    <div class="row">
+        <div class="col-sm-6 texto-titulo">Producto</div>
+        <div class="col-sm-6 tr texto-titulo">TOTAL PRICE</div>
+    </div>
+    <div class="linea"></div>
+    <div class="row">
+        <div class="col-sm-6 producto">{{ reserve.item_name }}</div>
+        <div class="col-sm-6 precio tr">US$ {{ reserve.total|safe}}</div>
+    </div>
+    <p class="passanger">Passanger</p>
+    <ol>
+        {% for persona in reserve.viajeros.all %}
+            <li><span class="nombre">{{persona.nombre}} {{persona.apellidos}}</span>{{persona.get_doc_tipo_display}} {{persona.doc_nro}}</li>
+        {% endfor %}
+    </ol>
+    <p class="passanger">date</p>
+    <p>{{ reserve.fecha|date:"M-d-Y" }}</p>
+    <!--p class="tr"> <input type="checkbox" name="aceptar" class="aceptar"> I accept the <a href="#">Terms & Conditions</a></p-->
+    <div class="tr">
+        <button type="submit" class="btn btn-default btn-negotu">Pay</button>
+    </div>
+    <p class="tr notificacion">You will redirect to Paypal to do a <br>Safe Payment.</p>
+
+                {%csrf_token%}
+                <input type="hidden" name="cmd" value="_xclick" />
+                <input type="hidden" name="charset" value="utf-8" />
+                <input type="hidden" name="business" value="{{ acount.business }}" />
+                <input type="hidden" name="item_name" value="{{ reserve.item_name }}" />
+                <input type="hidden" name="item_number" value="{{ reserve.item_number }}" />
+                <input type="hidden" name="quantity" value="{{ reserve.quantity }}" />
+                <input type="hidden" name="amount" value="{{ reserve.amount|safe }}" />
+                <input type="hidden" name="currency_code" value="{{ reserve.currency_code }}" />
+                <input type="hidden" name="return" value="{{ paypal.return_url }}" />
+                <input type="hidden" name="cancel_return" value="{{ paypal.cancel_url }}" />
+                <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_paynowCC_LG.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" />
+    </form>
+{% endblock %}
