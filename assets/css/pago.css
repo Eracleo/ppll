@@ -3,7 +3,7 @@ body{
 }
 #pago
 {
-	font-size: 20px;
+	font-size: 15px;
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
@@ -35,7 +35,7 @@ body{
 	margin: 0px 2px;
 	padding: 4px 20px 4px 20px;
 	text-align: center;
-	width: 150px;
+	width: 190px;
 }
 #menu ul li.active
 {
@@ -75,7 +75,7 @@ body{
 .passanger
 {
 	color: #979797;
-	font-size: 20px;
+	font-size: 16px;
 	text-transform: uppercase;
 }
 .nro
