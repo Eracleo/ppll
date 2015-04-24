@@ -26,24 +26,38 @@
 <form action="/reservar/agregara/" method="post">{%csrf_token%}
     <!-- campos ocultos -->
     <input id="id_paquete" name="paquete_id" type="hidden" value="{{paquete.id}}"></input>
-    <!-- Todos los campos ocultos para enviar a paypal -->
-    <p><b>Tour: </b> {{ paquete.nombre }}</p>
-    <p><b>Price: </b> {{ paquete.precio }}</p>
-    <p><b>Pre pago : </b>$ {{paquete.pre_pago}}<input id="id_precio" type="hidden" value="{{paquete.pre_pago}}" readonly="readonly"></input></p>
+    <input id="id_precio" type="hidden" value="{{paquete.pre_pago}}" readonly="readonly"></input>
 
-    <p><label for="id_cantidad">Number of passengers:</label>
-    <input id="id_cantidad" type="number" name="cantidad" min="1" max="20" value="0"  required class="form-control"/></input></p>
 
-    <p><b>Total price: </b>$ <span id="monto" class="monto">0.00</span> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"class="form-control"></input></p>
+    <div class="row">
+        <div class="col-sm-4">
+            <label>E-mail: </label>
+            <input type="text" value="" id="email" name="email" placeholder="micorreo@gmail.com" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="Mail must have the following format: micorreo@gmail.com"  required class="form-control"/>
+        </div>
+        <div class="col-sm-4"> </div>
+        <div class="col-sm-2">
+            <p><b>Date of travel: </b></p>
+            <input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="The date must be in the format: yyyy-mm-dd" placeholder="yyyy-mm-dd" /
+    required class="form-control"/>
+        </div>
+        <div class="col-sm-2">
+            <p><label for="id_cantidad">N° Passengers:</label></p>
+            <input id="id_cantidad" type="number" name="cantidad" min="1" max="20" value="0"  required class="form-control"/></input>
+        </div>
+    </div><br>
+        <div class="linea"></div>
+    <div class="row">
+          <div class="col-sm-6 texto-titulo">Producto</div>
+          <div class="col-sm-3 tr texto-titulo">Pre Pago</div>
+          <div class="col-sm-3 tr texto-titulo">Total price</div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 producto">{{paquete.nombre}}</div>
+          <div class="col-sm-3 precio tr">US$ {{ paquete.precio }}</div>
+          <div class="col-sm-3 precio tr">US$ <span id="monto" class="monto">0.00</span></div>
+        </div>
+    <p> <input id="id_monto" name="id_monto" type="hidden" value="" readonly="readonly"class="form-control"></input></p>
 
-    <p><b>Date of travel: </b><input id="fecha" name="fecha" type="text" value="" pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="The date must be in the format: yyyy-mm-dd" placeholder="yyyy-mm-dd" /
-    required class="form-control"/></p>
-
-<!-- pattern="(19|20)\d\d[- -.](0[1-9]|1[012])[- -.](0[1-9]|[12][0-9]|3[01])" title="La fecha ha de tener el siguiente formato: aaaa-mm-dd"-->
-
-    <label>E-mail: </label>
-    <input type="text" value="" id="email" name="email" placeholder="micorreo@gmail.com" pattern="[a-zA-Z0-9.+_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9.-]+" title="Mail must have the following format: micorreo@gmail.com"  required class="form-control"/>
-    <br>
     <div class="tr">
     <button type="submit" class="btn btn-default btn-negotu">Next</button>
     </div>
