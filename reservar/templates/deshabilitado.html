@@ -1,14 +1,15 @@
 {% extends "layout/base_pagos.html" %}
 {% block menu %}
-    <li><a href="#">1. Products</a></li>
-    <li><a href="#">2. Passangers</a></li>
-    <li><a href="#">3. Payments</a></li>
-    <li><a href="#">4. Confirm</a></li>
+    <li class="active">1. Products</li>
+    <li>2. Passangers</li>
+    <li>3. Payments</li>
+    <li>4. Confirm</li>
 {% endblock %}
 {% block content %}
-<h2>Paquete deshabilidado</h2>
+<p class="texto-titulo">Paquete deshabilidado</p>
+<div class="linea"></div>
 <p><b>Pongase en contacto con nosotros</b></p>
-<p>{{empresa.razon_social}}</p>
-<p>{{ empresa.direccion }}</p>
-<p>{{ empresa.telefono }}</p>
+<p class="passanger">{{empresa.razon_social}}</p>
+<p><b>Address:</b> {{ empresa.direccion }}</p>
+<p><b>Photo:</b> {{ empresa.telefono }}</p>
 {% endblock %}

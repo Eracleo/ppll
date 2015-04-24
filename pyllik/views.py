@@ -48,7 +48,6 @@ def empresaDetail(request):
                     paquete.estado = False
                     paquete.save()
                     return HttpResponseRedirect('/user/config')
-
         else:
             formAgregar = EmpresaForm()
         return render(request,'empresa/add.html', {'formAgregar':formAgregar})
@@ -67,8 +66,6 @@ def empresaEdit(request):
             empresa.direccion = empresa_form.cleaned_data['direccion']
             empresa.ruc = empresa_form.cleaned_data['ruc']
             empresa.web = empresa_form.cleaned_data['web']
-            empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
-            empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
             empresa.telefono = empresa_form.cleaned_data['telefono']
             empresa.terminos_condiciones = empresa_form.cleaned_data['terminos_condiciones']
             #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
@@ -85,8 +82,6 @@ def empresaEdit(request):
                 'ruc':empresa.ruc,
                 'direccion':empresa.direccion,
                 'web':empresa.web,
-                'paypal_email':empresa.paypal_email,
-                'paypal_at':empresa.paypal_at,
                 'telefono':empresa.telefono,
                 'terminos_condiciones':empresa.terminos_condiciones,
             })

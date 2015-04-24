@@ -11,20 +11,33 @@ body{
 {
 	text-align: right;
 }
-#menu
-{
-	height: 32px;
-	margin-left: 3%;
-	width: 100%;
-}
-#menu ul
-{
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
 #menu li
 {
+	padding: 5px;
+}
+
+#menu ul li.active
+{
+	background-color: white;
+	color: #484848;
+}
+@media (max-width: 768px) {
+	#pago{
+		margin-top: 0px;
+	}
+}
+@media (min-width: 768px) {
+
+	#menu {
+	height: 33px;
+	margin: 0px;
+	width: 100%;
+	border: 0px;
+	background: #FFF;
+	min-height: 34px;
+	}
+	#menu li
+	{
 	background-color: #484848;
 	border: 1px solid #484848;
 	border-bottom: 0px;
@@ -33,19 +46,22 @@ body{
 	float: left;
 	font-size: 17px;
 	margin: 0px 2px;
-	padding: 4px 20px 4px 20px;
 	text-align: center;
-	width: 190px;
+	width: 160px;
+	}
 }
-#menu ul li.active
-{
-	background-color: white;
-	color: #484848;
+
+@media (min-width: 980px) {
+
+	#menu li
+	{
+	width: 180px;
+	}
 }
 #content
 {
 	border: 1px solid #484848;
-	padding: 1.0em 1.5em;
+	padding: 1.5em;
 }
 #content .texto-titulo
 {
@@ -57,11 +73,11 @@ body{
 {
 	border-bottom: 1px solid #bcbcbc;
 	margin-bottom: 20px;
-	padding: 5px;
 }
 .producto
 {
 	color: #1a1a1a;
+	font-size: 18px;
 }
 .precio
 {

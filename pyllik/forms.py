@@ -37,7 +37,7 @@ class EmpresaFormEdit(forms.ModelForm):
     ruc = forms.CharField(min_length=11)
     class Meta:
         model = Empresa
-        exclude = ('user','nro_paquetes','paypal_email','paypal_at','abreviatura')
+        exclude = ('user','logo','nro_paquetes','paypal_email','paypal_at','abreviatura')
 
 class PaypalAccountForm(forms.ModelForm):
     paypal_email = forms.CharField(required=True,max_length=60)
