@@ -11,6 +11,6 @@ pyllik/migrations/*.py
 
 user/migrations/*.pyc
 user/migrations/*.py
-*.jpg
-*.jpeg
-*.png
+carga/*.jpg
+carga/*.jpeg
+carga/*.png
