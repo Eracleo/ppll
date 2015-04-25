@@ -50,5 +50,8 @@
     </tr>
 {% endfor %}
 </table>
-<p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-primary">Editar</a> </p>
+<p>
+    <a href="/pdf/books/{{obj.id}}-reserve-{{obj.fecha_viaje|date:"Y-m-d"}}.pdf" class="btn btn-default">  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> PDF</a>
+    <a href="javascript:print()" class="btn btn-default" ><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>
+    <a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-default">  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a> </p>
 {% endblock%}

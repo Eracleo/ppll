@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from reservar import views
 urlpatterns = patterns('',
     url(r'^paquete/(?P<sku>[^/]+)$','reservar.views.detalle', name='detalle'),

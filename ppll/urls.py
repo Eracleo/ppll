@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^empresa/', include('pyllik.urls')),
     url(r'^logos/', include('pyllik.urls')),
     url(r'^reservar/', include('reservar.urls')),
+    url(r'^pdf/', include('page.urls')),
     url(r'^carga/(?P<path>.*)$', 'django.views.static.serve',
        {'document_root': settings.MEDIA_ROOT, } ),
 )
