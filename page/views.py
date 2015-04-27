@@ -34,16 +34,16 @@ def reserva(request,id):
     p.drawString(480,y,str(obj.pre_pago))
     y=y-20
     p.drawString(280,y,'Number of passenger') # 650
-    p.drawString(480,y,str(obj.cantidad_personas))
+    p.drawString(480,y,str(obj.cantidad_pasajeros))
     y = y - 20
     p.drawString(280,y,'Total Price USD$') # 630
-    p.drawString(480,y,str(obj.cantidad_personas*obj.pre_pago))
+    p.drawString(480,y,str(obj.cantidad_pasajeros*obj.pre_pago))
     y = y - 20
     p.drawString(280,y,'Travel Date') # 610
     p.drawString(480,y,str(obj.fecha_viaje))
 
     p.drawString(50,550,'Reserve by:')
-    p.drawString(130,550,obj.email)
+    p.drawString(130,550,obj.cliente.email)
     p.drawString(50,530,'Date:')
     p.drawString(130,530,str(obj.creado))
     p.line(50,500,560,500)
@@ -59,7 +59,6 @@ def reserve(request,id,tx):
     # response['Content-Disposition'] = 'attachment; filename="reserva.pdf"'
     response = HttpResponse(content_type='application/pdf')
     obj = Reserva.objects.get(id=id,tx=tx)
-
     y = 730
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
@@ -78,16 +77,16 @@ def reserve(request,id,tx):
     p.drawString(480,y,str(obj.pre_pago))
     y=y-20
     p.drawString(280,y,'Number of passenger') # 650
-    p.drawString(480,y,str(obj.cantidad_personas))
+    p.drawString(480,y,str(obj.cantidad_pasajeros))
     y = y - 20
     p.drawString(280,y,'Total Price USD$') # 630
-    p.drawString(480,y,str(obj.cantidad_personas*obj.pre_pago))
+    p.drawString(480,y,str(obj.cantidad_pasajeros*obj.pre_pago))
     y = y - 20
     p.drawString(280,y,'Travel Date') # 610
     p.drawString(480,y,str(obj.fecha_viaje))
 
     p.drawString(50,550,'Reserve by:')
-    p.drawString(130,550,obj.email)
+    p.drawString(130,550,obj.cliente.email)
     p.drawString(50,530,'Date:')
     p.drawString(130,530,str(obj.creado))
     p.line(50,500,560,500)

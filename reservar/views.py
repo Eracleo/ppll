@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .forms import PersonaForm
-from pyllik.models import Paquete, Pais, Reserva,Persona
+from .forms import PasajeroForm
+from pyllik.models import Paquete, Pais, Reserva,Pasajero, Cliente
 from django.http import HttpResponseRedirect
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
@@ -27,49 +27,50 @@ def detalle(request, sku):
     else :
         empresa = paquete.empresa
         return render(request,'deshabilitado.html',{'empresa':empresa})
-def personas(request):
+def pasajeros(request):
     empresa_logo = request.session["logo_pago"]
-    # Creando formulario registro personas con comboBox pais-gfgd
     paquete_id =  request.POST.get('paquete_id')
     paquete = Paquete.objects.get(id=paquete_id)
 
-    cantidad_personas = request.POST.get('cantidad')
+    cantidad_pasajeros = request.POST.get('cantidad')
     fecha_viaje = request.POST.get('fecha')
     monto = request.POST.get('id_monto')
     email=request.POST.get('email')
     ip=get_ip(request)
 
-    PersonaFormset= formset_factory(PersonaForm, extra=int(cantidad_personas), max_num=int(cantidad_personas))
+    PasajeroFormset= formset_factory(PasajeroForm, extra=int(cantidad_pasajeros), max_num=int(cantidad_pasajeros))
 
     class ReservarForm(forms.Form):
         paquete= forms.CharField(widget=forms.HiddenInput(),max_length=10)
-        viajeros= PersonaFormset()
+        viajeros= PasajeroFormset()
 
     if request.method == 'POST':
         form = ReservarForm(request.POST)
-        form.viajeros_instances = PersonaFormset(request.POST)
+        form.viajeros_instances = PasajeroFormset(request.POST)
         if form.is_valid():
-            reserva = Reserva(paquete=paquete, cantidad_personas=cantidad_personas, fecha_viaje=fecha_viaje, email=email,ip=ip)
+            cliente = Cliente()
+            cliente.email = email
+            cliente.save()
+            reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
-                    persona = Persona()
-                    persona.nombre= item['nombre']
-                    persona.apellidos= item['apellidos']
-                    persona.doc_tipo= item['doc_tipo']
-                    persona.doc_nro= item['doc_nro']
-                    persona.pais= item['pais']
-                    persona.telefono= item['telefono']
-                    persona.email= item['email']
-                    persona.empresa = reserva.empresa
-                    persona.save()
-                    reserva.viajeros.add(persona)
-
+                    pasajero = Pasajero()
+                    pasajero.nombre= item['nombre']
+                    pasajero.apellidos= item['apellidos']
+                    pasajero.doc_tipo= item['doc_tipo']
+                    pasajero.doc_nro= item['doc_nro']
+                    pasajero.pais= item['pais']
+                    pasajero.telefono= item['telefono']
+                    pasajero.email= item['email']
+                    pasajero.empresa = reserva.empresa
+                    pasajero.save()
+                    reserva.pasajeros.add(pasajero)
             # Send message
             title = 'LLIKA EIRL - Negotu.com'
             body = 'Reserva creada correctamente' + "\n"
             body +='Paquete: ' + paquete.nombre + "\n"
-            body +='Viajeros:' + cantidad_personas + "\n"
+            body +='Viajeros:' + cantidad_pasajeros + "\n"
             body +='Total a pagar: ' + monto
             correo = EmailMessage(title, body, to=[email])
             correo.send()
@@ -77,19 +78,19 @@ def personas(request):
             return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
         else:
             form = ReservarForm()
-            form.viajeros_instances = PersonaFormset()
+            form.viajeros_instances = PasajeroFormset()
 
             context = {
                 'paquete_id':paquete_id,
                 'paquete':paquete,
-                'cantidad_personas':cantidad_personas,
+                'cantidad_pasajeros':cantidad_pasajeros,
                 'fecha_viaje':fecha_viaje,
                 'monto':monto,
                 'form':form,
                 'email':email,
                 'logo': empresa_logo,
-                'precio_total': int(cantidad_personas) * paquete.precio,
-                'precio_total_pre': int(cantidad_personas) * paquete.pre_pago,
+                'precio_total': int(cantidad_pasajeros) * paquete.precio,
+                'precio_total_pre': int(cantidad_pasajeros) * paquete.pre_pago,
             }
         return render(request,'passenger.html',context)
     else:
@@ -112,12 +113,12 @@ def pagar(request,id):
         'business':agencia.paypal_email,
     }
     reserve = {
-        'quantity':obj.cantidad_personas,
+        'quantity':obj.cantidad_pasajeros,
         'precio':obj.precio,
         'amount':obj.pre_pago,
-        'total':obj.pre_pago*obj.cantidad_personas,
+        'total':obj.pre_pago*obj.cantidad_pasajeros,
         'fecha':obj.fecha_viaje,
-        'viajeros':obj.viajeros,
+        'pasajeros':obj.pasajeros,
         'item_name':obj.paquete,
         'item_number':obj.id,
         'currency_code':"USD",
@@ -139,7 +140,7 @@ def dePaypal(request):
     success,pdt = paypal.paypal_check(tx,at)
     if success :
         if reserva.id == int(pdt['item_number']):
-            if float(pdt['payment_gross']) >= reserva.cantidad_personas * reserva.pre_pago:
+            if float(pdt['payment_gross']) >= reserva.cantidad_pasajeros * reserva.pre_pago:
                 reserva.tx = tx
                 reserva.pago_estado = 'ad'
             else :
@@ -149,7 +150,7 @@ def dePaypal(request):
             title = "Negotu.com"
             body = "Detalles de pago de su reserva\n"
             body +="Paquete: " + str(reserva.paquete) + "\n"
-            body +="Viajeros: " + str(reserva.cantidad_personas) + "\n"
+            body +="Viajeros: " + str(reserva.cantidad_pasajeros) + "\n"
             body +="Detalles de tus reserva: https://quipu.negotu.com/pdf/books/"+str(reserva.id)+"-"+reserva.tx+"-reserve-"+str(reserva.fecha_viaje.year)+"-"+str(reserva.fecha_viaje.month)+"-"+str(reserva.fecha_viaje.day)+".pdf\n"
             body +="Total a pagar: " + str(reserva.pre_pago)
             correo = EmailMessage(title, body, to=[reserva.email])

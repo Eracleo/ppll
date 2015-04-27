@@ -59,7 +59,7 @@ def home(request):
 def config(request):
     try:
         id_user = request.user.id
-        empresa = Empresa.objects.get(user_id = id_user)
+        empresa = Empresa.objects.get(owner = id_user)
         request.session["email"] = request.user.email
         request.session["empresa"] = empresa.id
         request.session["abreviatura"] = empresa.abreviatura

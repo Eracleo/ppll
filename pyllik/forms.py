@@ -28,7 +28,7 @@ class EmpresaForm(forms.ModelForm):
     abreviatura = forms.CharField(min_length=3)
     class Meta:
         model = Empresa
-        exclude = ('user','nro_paquetes','paypal_email','paypal_at')
+        exclude = ('owner','nro_paquetes','paypal_email','paypal_at','email','web','telefono','trabajadores','movistar','claro','terminos_condiciones')
 
 class EmpresaFormEdit(forms.ModelForm):
     razon_social = forms.CharField(max_length=40)
@@ -37,11 +37,11 @@ class EmpresaFormEdit(forms.ModelForm):
     ruc = forms.CharField(min_length=11)
     class Meta:
         model = Empresa
-        exclude = ('user','logo','nro_paquetes','paypal_email','paypal_at','abreviatura')
+        exclude = ('owner','trabajadores','logo','nro_paquetes','paypal_email','paypal_at','abreviatura')
 
 class PaypalAccountForm(forms.ModelForm):
     paypal_email = forms.CharField(required=True,max_length=60)
     paypal_at = forms.CharField(required=True,max_length=64)
     class Meta:
         model = Empresa
-        exclude = ('user','nro_paquetes','direccion','razon_social','telefono','rubro','ruc','web','logo','terminos_condiciones','abreviatura')
+        exclude = ('owner','nro_paquetes','direccion','razon_social','rubro','ruc','web','logo','terminos_condiciones','abreviatura','trabajadores','email','movistar','claro')

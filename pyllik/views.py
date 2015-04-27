@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from .models import Paquete, Empresa, Reserva, Persona
+from .models import Paquete, Empresa, Reserva, Pasajero
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
 from django.http import HttpResponseRedirect
@@ -18,12 +18,12 @@ def index(request):
 def empresaDetail(request):
     try:
         id_user = request.user.id
-        empresa = Empresa.objects.get(user_id = id_user)
+        empresa = Empresa.objects.get(owner = id_user)
         request.session["empresa"] = empresa.id
         empresa_logo = request.session["logo"]
     except Empresa.DoesNotExist:
         if request.method == 'POST':
-            usuario = Empresa(user=request.user)
+            usuario = Empresa(owner=request.user)
             abrev = request.POST['abreviatura']
             nro = request.POST['nro']
             if Empresa.objects.filter(abreviatura=abrev):
@@ -54,7 +54,7 @@ def empresaDetail(request):
 @login_required
 def empresaEdit(request):
     user_id = request.user.id
-    empresa = Empresa.objects.get(user_id = user_id)
+    empresa = Empresa.objects.get(owner = user_id)
     #Guarda el formulario en la BD
     if request.method == 'POST':
         empresa_form = EmpresaFormEdit(request.POST,request.FILES)
@@ -88,7 +88,7 @@ def empresaEdit(request):
 @login_required
 def paypal_account(request):
     user_id = request.user.id
-    empresa = Empresa.objects.get(user_id = user_id)
+    empresa = Empresa.objects.get(owner = user_id)
     #Guarda el formulario en la BD
     if request.method == 'POST':
         empresa_form = PaypalAccountForm(request.POST,request.FILES)
@@ -207,18 +207,18 @@ def reservaDetail(request, id):
     empresa_logo = request.session["logo"]
     reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
-# PERSONA
+# Pasajero
 @login_required
-def personaDetail(request, id):
+def pasajeroDetail(request, id):
     empresa_id = request.session["empresa"]
-    persona = Persona.objects.get(id=id,empresa_id = empresa_id)
+    obj = Pasajero.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
-    return render(request,'persona/detail.html',{'obj':persona,'logo':empresa_logo})
+    return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
 @login_required
-def personas(request):
+def pasajeros(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Persona.objects.filter(empresa_id = empresa_id)
+    objs_list = Pasajero.objects.filter(empresa_id = empresa_id)
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
@@ -227,7 +227,7 @@ def personas(request):
         objs = paginator.page(1)
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
-    return render(request,'persona/list.html',{'objs':objs,'logo':empresa_logo})
+    return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo})
 def error404(request):
     return render(request,'errors/404.html')
 def error403(request):

@@ -18,7 +18,7 @@
     </div>
     <p class="passanger">Passanger</p>
     <ol>
-        {% for persona in reserve.viajeros.all %}
+        {% for persona in reserve.pasajeros.all %}
             <li><span class="nombre">{{persona.nombre}} {{persona.apellidos}}</span>{{persona.get_doc_tipo_display}} {{persona.doc_nro}}</li>
         {% endfor %}
     </ol>

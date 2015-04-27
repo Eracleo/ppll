@@ -1,9 +1,9 @@
 from django import forms
-from pyllik.models import Persona
+from pyllik.models import Pasajero
 from django.forms.formsets import formset_factory
 
-class PersonaForm(forms.ModelForm):
+class PasajeroForm(forms.ModelForm):
     nombre = forms.CharField(required=True,max_length=15)
     class Meta:
-        model = Persona
+        model = Pasajero
         exclude = ('editado','creado')

@@ -31,7 +31,7 @@
     </tr>
 </table>
 <a name="viajeros"></a>
-<h2>Viajeros</h2>
+<h2>Pasajeros</h2>
 <table class="table">
     <tr>
         <th>Nro</th>
@@ -40,13 +40,13 @@
         <th>E-mail</th>
         <th>Pais</th>
     </tr>
-{% for persona in obj.viajeros.all %}
+{% for pasajero in obj.pasajeros.all %}
     <tr>
         <td>{{ forloop.counter }}</td>
-        <td><a href="/empresa/persona/detail/{{persona.id}}"><b>{{persona.apellidos}} </b> {{persona.nombre}}</a></td>
-        <td>{{persona.get_doc_tipo_display}} <b>{{persona.doc_nro}}</b></td>
-        <td>{{persona.email}}</td>
-        <td>{{persona.pais}}</td>
+        <td><a href="/empresa/pasajero/detail/{{pasajero.id}}"><b>{{persona.apellidos}} </b> {{pasajero.nombre}}</a></td>
+        <td>{{pasajero.get_doc_tipo_display}} <b>{{pasajero.doc_nro}}</b></td>
+        <td>{{pasajero.email}}</td>
+        <td>{{pasajero.pais}}</td>
     </tr>
 {% endfor %}
 </table>

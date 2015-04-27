@@ -23,7 +23,7 @@
   });
 </script>
 
-<form action="/reservar/agregara/" method="post">{%csrf_token%}
+<form action="/reservar/pasajeros/" method="post">{%csrf_token%}
     <!-- campos ocultos -->
     <input id="id_paquete" name="paquete_id" type="hidden" value="{{paquete.id}}"></input>
     <input id="id_precio" type="hidden" value="{{paquete.pre_pago}}" readonly="readonly"></input>

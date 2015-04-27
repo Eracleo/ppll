@@ -35,22 +35,29 @@ class Empresa(models.Model):
     ruc = models.CharField(max_length=11)
     direccion = models.CharField(max_length=120)
     telefono = models.CharField(max_length=120, blank=True)
-    #claro = models.CharField(max_length=20, blank=True)
-    #movistar = models.CharField(max_length=20, blank=True)
-    #email = models.EmailField(max_length=64, blank=True)
+    claro = models.CharField(max_length=20, blank=True)
+    movistar = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(max_length=64, blank=True)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
     paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
     nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
     terminos_condiciones = models.URLField(max_length=120, blank=True, help_text="URL Terminos y condiciones.")
-    user = models.ForeignKey(User)
+    owner = models.ForeignKey(User,related_name='owner')
+    trabajadores = models.ManyToManyField(User)
     abreviatura = models.CharField(max_length=3,unique=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
-class Persona(models.Model):
+class Trabajador(models.Model):
+    direccion = models.CharField(max_length=60)
+    user = models.ForeignKey(User)
+    empresa = models.ForeignKey(Empresa)
+    def __unicode__(self):
+        return self.user
+class Pasajero(models.Model):
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=60)
     doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
@@ -78,25 +85,37 @@ class Paquete(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.nombre
-    def precioTotal(self,cantidad=0):
-        return self.cantidad * self.precio
-    def precioTotalPrePago(self,cantidad):
-        return self.cantidad * self.pre_pago
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=30,blank=True)
+    apellidos = models.CharField(max_length=60,blank=True)
+    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
+    doc_nro = models.CharField(max_length=10)
+    email = models.EmailField(max_length=60,blank=True)
+    telefono = models.CharField(max_length=50, blank=True)
+    celular = models.CharField(max_length=50, blank=True)
+    pais = models.ForeignKey(Pais,null=True, blank=True)
+    empresa = models.ForeignKey(Empresa,null=True, blank=True)
+    creado = models.DateField(auto_now_add=True, editable=False)
+    editado = models.DateTimeField(auto_now=True, editable=False)
+    def __unicode__(self):
+        return self.nombre
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
-    cantidad_personas = models.IntegerField()
-    fecha_viaje = models.DateField()
     precio = models.FloatField(blank=True)
+    fecha_viaje = models.DateField()
     pre_pago = models.FloatField(blank=True)
-    modo_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
+    cantidad_pasajeros = models.IntegerField()
+    modalidad_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
     # llego_de = (recomendado, web, web_reserva, oficina)
     tx = models.CharField(max_length=64, blank=True)
-    viajeros = models.ManyToManyField(Persona, blank=True)
-    email = models.EmailField(max_length=100,blank=True)
-    ip = models.GenericIPAddressField(null=True,blank=True)
-    empresa = models.ForeignKey(Empresa)
+    pasajeros = models.ManyToManyField(Pasajero, blank=True)
     pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
+    estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
+    ip = models.GenericIPAddressField(null=True,blank=True)
+    cliente = models.ForeignKey(Cliente)
+    empresa = models.ForeignKey(Empresa)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
+    editado = models.DateTimeField(auto_now=True, editable=False)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
         self.pre_pago = self.paquete.pre_pago
@@ -105,6 +124,14 @@ class Reserva(models.Model):
     def __unicode__(self):
         return "Una reserva de "+self.email
     def precioTotal(self):
-        return self.cantidad_personas * self.precio
+        return self.cantidad_pasajeros * self.precio
     def precioTotalPrePago(self):
-        return self.cantidad_personas * self.pre_pago
+        return self.cantidad_pasajeros * self.pre_pago
+class Comentario(models.Model):
+    titulo = models.CharField(max_length=60)
+    comentario = models.TextField()
+    empresa = models.ForeignKey(Empresa)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
+    estado = models.BooleanField(default=True)
+    def __unicode__(self):
+        return "Comentario"
