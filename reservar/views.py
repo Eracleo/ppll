@@ -150,7 +150,7 @@ def dePaypal(request):
             body = "Detalles de pago de su reserva\n"
             body +="Paquete: " + str(reserva.paquete) + "\n"
             body +="Viajeros: " + str(reserva.cantidad_personas) + "\n"
-            body +="Detalles de tus reserva: https://quipu.negotu.com/pdf/books/"+str(reserva.id)+"-reserve-"+str(reserva.fecha_viaje.year)+"-"+str(reserva.fecha_viaje.month)+"-"+str(reserva.fecha_viaje.day)+".pdf\n"
+            body +="Detalles de tus reserva: https://quipu.negotu.com/pdf/books/"+str(reserva.id)+"-"+reserva.tx+"-reserve-"+str(reserva.fecha_viaje.year)+"-"+str(reserva.fecha_viaje.month)+"-"+str(reserva.fecha_viaje.day)+".pdf\n"
             body +="Total a pagar: " + str(reserva.pre_pago)
             correo = EmailMessage(title, body, to=[reserva.email])
             correo.send()
