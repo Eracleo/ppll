@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.template import RequestContext, loader
 from .models import Paquete, Empresa, Reserva, Persona
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
 from collections import defaultdict
@@ -17,7 +16,6 @@ def index(request):
 # EMPRESA
 @login_required
 def empresaDetail(request):
-    context_instance = RequestContext(request)
     try:
         id_user = request.user.id
         empresa = Empresa.objects.get(user_id = id_user)
@@ -165,7 +163,6 @@ def paqueteEdit(request, id):
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):
-    context_instance = RequestContext(request)
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')

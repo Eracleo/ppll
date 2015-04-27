@@ -1,15 +1,7 @@
 from django.shortcuts import render
 from .forms import PersonaForm
-from django.views.generic import ListView
 from pyllik.models import Paquete, Pais, Reserva,Persona
 from django.http import HttpResponseRedirect
-from django.http import HttpRequest
-from django.shortcuts import redirect
-from django.http import HttpResponse
-from django.core.urlresolvers import reverse
-from  django.forms.models  import  modelformset_factory
-from  django.forms.models  import  inlineformset_factory
-from django.template import RequestContext
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
