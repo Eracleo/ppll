@@ -13,25 +13,31 @@ def reserva(request,id):
     response = HttpResponse(content_type='application/pdf')
     obj = Reserva.objects.get(id=id)
 
+    y = 730
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
     p.setLineWidth(.3)
     p.setFont('Helvetica', 20)
-    p.drawString(50,730,obj.empresa.razon_social)
+    p.drawString(50,y,obj.empresa.razon_social)
     p.setFont('Helvetica', 13)
-    p.drawString(50,715,obj.empresa.direccion)
+    y=y-15
+    p.drawString(50,y,obj.empresa.direccion)
     p.setFont('Helvetica', 18)
-    p.drawString(280,690,obj.paquete.nombre)
+    y=y-25
+    p.drawString(280,y,obj.paquete.nombre) #690
     p.setFont('Helvetica', 13)
-
-    p.drawString(280,670,'Price per Person USD$')
-    p.drawString(480,670,str(obj.pre_pago))
-    p.drawString(280,650,'Number of passenger')
-    p.drawString(480,650,str(obj.cantidad_personas))
-    p.drawString(280,630,'Total Price USD$')
-    p.drawString(480,630,str(obj.cantidad_personas*obj.pre_pago))
-    p.drawString(280,610,'Travel Date')
-    p.drawString(480,610,str(obj.fecha_viaje))
+    y=y-20
+    p.drawString(280,y,'Price per Person USD$')
+    p.drawString(480,y,str(obj.pre_pago))
+    y=y-20
+    p.drawString(280,y,'Number of passenger') # 650
+    p.drawString(480,y,str(obj.cantidad_personas))
+    y = y - 20
+    p.drawString(280,y,'Total Price USD$') # 630
+    p.drawString(480,y,str(obj.cantidad_personas*obj.pre_pago))
+    y = y - 20
+    p.drawString(280,y,'Travel Date') # 610
+    p.drawString(480,y,str(obj.fecha_viaje))
 
     p.drawString(50,550,'Reserve by:')
     p.drawString(130,550,obj.email)

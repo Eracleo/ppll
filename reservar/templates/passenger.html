@@ -77,12 +77,14 @@
   {% csrf_token %}
     <div class="row">
       <div class="col-sm-6 texto-titulo">Producto</div>
-      <div class="col-sm-6 tr texto-titulo">TOTAL PRICE</div>
+      <div class="col-sm-3 tr texto-titulo">TOTAL PRICE</div>
+      <div class="col-sm-3 tr texto-titulo">TOTAL PRE-PAGO</div>
     </div>
     <div class="linea"></div>
     <div class="row">
       <div class="col-sm-6 producto">{{paquete}}</div>
-      <div class="col-sm-6 precio tr">US$ {{monto}}*{{cantidad_personas}}</div>
+      <div class="col-sm-3 precio tr">US$ {{precio_total}}</div>
+      <div class="col-sm-3 precio tr">US$ {{precio_total_pre}}</div>
     </div>
     <p class="passanger">Passager(s)</p>
 

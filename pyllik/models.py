@@ -11,7 +11,7 @@ PAGO_ESTADO = (
     ('re','En Reserva'),
     ('ad','Con Adelanto'),
     ('pc','Completado'),
-    ('pc','Incompleto'),
+    ('in','Incompleto'),
     ('ca','Cancelado'),
     )
 MODO_PAGO = (
@@ -32,9 +32,12 @@ class Rubro(models.Model):
 class Empresa(models.Model):
     rubro = models.ForeignKey(Rubro)
     razon_social = models.CharField(max_length=100)
+    ruc = models.CharField(max_length=11)
     direccion = models.CharField(max_length=120)
     telefono = models.CharField(max_length=120, blank=True)
-    ruc = models.CharField(max_length=11)
+    #claro = models.CharField(max_length=20, blank=True)
+    #movistar = models.CharField(max_length=20, blank=True)
+    #email = models.EmailField(max_length=64, blank=True)
     web = models.URLField(max_length=64, blank=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
     paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
@@ -75,6 +78,10 @@ class Paquete(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.nombre
+    def precioTotal(self,cantidad=0):
+        return self.cantidad * self.precio
+    def precioTotalPrePago(self,cantidad):
+        return self.cantidad * self.pre_pago
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
     cantidad_personas = models.IntegerField()
@@ -97,3 +104,7 @@ class Reserva(models.Model):
         super(Reserva,self).save(*args,**kwargs)
     def __unicode__(self):
         return "Una reserva de "+self.email
+    def precioTotal(self):
+        return self.cantidad_personas * self.precio
+    def precioTotalPrePago(self):
+        return self.cantidad_personas * self.pre_pago

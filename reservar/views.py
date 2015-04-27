@@ -73,12 +73,13 @@ def personas(request):
                     persona.save()
                     reserva.viajeros.add(persona)
 
-            titulo = 'LLIKA EIRL - Negotu.com'
-            contenido = 'Reserva creada correctamente' + "\n"
-            contenido +='Paquete: ' + paquete.nombre + "\n"
-            contenido +='Viajeros:' + cantidad_personas + "\n"
-            contenido +='Total a pagar: ' + monto
-            correo = EmailMessage(titulo, contenido, to=[email])
+            # Send message
+            title = 'LLIKA EIRL - Negotu.com'
+            body = 'Reserva creada correctamente' + "\n"
+            body +='Paquete: ' + paquete.nombre + "\n"
+            body +='Viajeros:' + cantidad_personas + "\n"
+            body +='Total a pagar: ' + monto
+            correo = EmailMessage(title, body, to=[email])
             correo.send()
 
             return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
@@ -95,6 +96,8 @@ def personas(request):
                 'form':form,
                 'email':email,
                 'logo': empresa_logo,
+                'precio_total': int(cantidad_personas) * paquete.precio,
+                'precio_total_pre': int(cantidad_personas) * paquete.pre_pago,
             }
         return render(request,'passenger.html',context)
     else:
@@ -150,15 +153,29 @@ def dePaypal(request):
             else :
                 reserva.pago_estado = 'in'
             reserva.save()
-            return HttpResponseRedirect('/reservar/confirmado/')
-        else :
-            return HttpResponseRedirect('/')
+            # Send message
+            title = "Negotu.com"
+            body = "Detalles de pago de su reserva\n"
+            body +="Paquete: " + str(reserva.paquete) + "\n"
+            body +="Viajeros: " + str(reserva.cantidad_personas) + "\n"
+            body +="Detalles de tus reserva: https://quipu.negotu.com/pdf/books/"+str(reserva.id)+"-reserve-"+str(reserva.fecha_viaje.year)+"-"+str(reserva.fecha_viaje.month)+"-"+str(reserva.fecha_viaje.day)+".pdf\n"
+            body +="Total a pagar: " + str(reserva.pre_pago)
+            correo = EmailMessage(title, body, to=[reserva.email])
+            correo.send()
+
+            return HttpResponseRedirect("/reservar/confirmado/?id="+str(reserva.id)+"&y="+str(reserva.fecha_viaje.year)+"&m="+str(reserva.fecha_viaje.month)+"&d="+str(reserva.fecha_viaje.day)+"&tx="+tx)
     return HttpResponseRedirect('/reservar/cancelado/')
 def confirmado(request):
     empresa_logo = request.session["logo_pago"]
-    del request.session["logo_pago"]
-    return render(request,'confirmation.html',{'logo':empresa_logo})
+    ctx = {
+        'logo':empresa_logo,
+        'id':request.GET.get('id'),
+        'y':request.GET.get('y'),
+        'm':request.GET.get('m'),
+        'd':request.GET.get('d'),
+        'tx':request.GET.get('tx'),
+        }
+    return render(request,'confirmation.html',ctx)
 def cancelado(request):
     empresa_logo = request.session["logo_pago"]
     return render(request,'cancelado.html',{'logo':empresa_logo})
-
