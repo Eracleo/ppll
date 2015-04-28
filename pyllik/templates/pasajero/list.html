@@ -13,7 +13,7 @@
     </thead>
 		{% for obj in objs %}
 			<tr>
-        <td><a href="/empresa/persona/detail/{{obj.id}}"><b>{{obj.apellidos}} </b> {{obj.nombre}}</a></td>
+        <td><a href="/empresa/pasajero/detail/{{obj.id}}"><b>{{obj.apellidos}} </b> {{obj.nombre}}</a></td>
         <td>{{obj.get_doc_tipo_display}} <b>{{obj.doc_nro}}</b></td>
         <td>{{obj.email}}</td>
         <td>{{obj.pais}}</td>

@@ -48,8 +48,10 @@ def pasajeros(request):
         form = ReservarForm(request.POST)
         form.viajeros_instances = PasajeroFormset(request.POST)
         if form.is_valid():
+            # Talvez solo buscar y actualizar
             cliente = Cliente()
             cliente.email = email
+            cliente.empresa = paquete.empresa
             cliente.save()
             reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
             reserva.save()
@@ -67,13 +69,23 @@ def pasajeros(request):
                     pasajero.save()
                     reserva.pasajeros.add(pasajero)
             # Send message
-            title = 'LLIKA EIRL - Negotu.com'
-            body = 'Reserva creada correctamente' + "\n"
-            body +='Paquete: ' + paquete.nombre + "\n"
-            body +='Viajeros:' + cantidad_pasajeros + "\n"
-            body +='Total a pagar: ' + monto
-            correo = EmailMessage(title, body, to=[email])
-            correo.send()
+            empresa = reserva.empresa
+            title = empresa.razon_social + " - INVOICE "+ str(reserva.id)
+            body = "<p><b>"+empresa.razon_social + "</b></p><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
+            body += "<h3>INVOICE CREATED Nro "+str(reserva.id)+"</h3>"
+            body += "<b>Name of Tour:</b> " + paquete.nombre
+            body += "<br><b>Price per Person:</b> " + str(reserva.pre_pago)
+            body += "<br><b>Number of Traveler</b>: " + cantidad_pasajeros
+            body += "<br><b>Total Price</b>: " + cantidad_pasajeros
+            body += "<br><b>Advance's mount ("+str(paquete.porcentaje)+"%)</b>: " + cantidad_pasajeros
+            body += "<br><b>Tax</b>: " + monto
+            body += "<br><br>Total payment</b>: " + monto
+            body += "<br><br>Link of Payment</b>: https://quipu.negotu.com/reservar/pagar/" + str(reserva.id)
+            body += "<br>Reserved by</b>: " + email
+            body += "<br><br><p><b>Terms & Conditions:</b></p>" + empresa.terminos_condiciones
+            msg = EmailMessage(title, body, to=[email,empresa.email])
+            msg.content_subtype = "html"
+            msg.send()
 
             return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
         else:

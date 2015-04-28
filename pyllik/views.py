@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from .models import Paquete, Empresa, Reserva, Pasajero
+from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
 from django.http import HttpResponseRedirect
@@ -219,6 +219,27 @@ def pasajeros(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     objs_list = Pasajero.objects.filter(empresa_id = empresa_id)
+    paginator = Paginator(objs_list, 30)
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        objs = paginator.page(1)
+    except EmptyPage:
+        objs = paginator.page(paginator.num_pages)
+    return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo})
+# Cliente
+@login_required
+def clienteDetail(request, id):
+    empresa_id = request.session["empresa"]
+    obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
+    empresa_logo = request.session["logo"]
+    return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
+@login_required
+def clientes(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    objs_list = Cliente.objects.filter(empresa_id = empresa_id)
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:

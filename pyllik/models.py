@@ -98,7 +98,7 @@ class Cliente(models.Model):
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
-        return self.nombre
+        return self.email
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
     precio = models.FloatField(blank=True)
