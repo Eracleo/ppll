@@ -64,9 +64,121 @@
   },
   {
     "model": "pyllik.pais",
-    "pk": 2,
+    "pk": 1,
     "fields": {
       "nombre": "Peru"
+    }
+  },
+  {
+    "model": "pyllik.pais",
+    "pk": 2,
+    "fields": {
+      "nombre": "Argentina"
+    }
+  },
+  {
+    "model": "pyllik.TipoDocumento",
+    "pk": 1,
+    "fields": {
+      "nombre": "Documento Indentificación"
+    }
+  },
+  {
+    "model": "pyllik.TipoDocumento",
+    "pk": 2,
+    "fields": {
+      "nombre": "Pasaporte"
+    }
+  },
+  {
+    "model": "pyllik.FormaPago",
+    "pk": 1,
+    "fields": {
+      "nombre": "Efectivo"
+    }
+  },
+  {
+    "model": "pyllik.FormaPago",
+    "pk": 2,
+    "fields": {
+      "nombre": "Paypal"
+    }
+  },
+  {
+    "model": "pyllik.ReservadoMediante",
+    "pk": 1,
+    "fields": {
+      "nombre": "Web"
+    }
+  },
+  {
+    "model": "pyllik.ReservadoMediante",
+    "pk": 2,
+    "fields": {
+      "nombre": "Oficina"
+    }
+  },
+  {
+    "model": "pyllik.EstadoReserva",
+    "pk": 1,
+    "fields": {
+      "nombre": "Iniciado"
+    }
+  },
+  {
+    "model": "pyllik.EstadoReserva",
+    "pk": 2,
+    "fields": {
+      "nombre": "Dialogo"
+    }
+  },
+  {
+    "model": "pyllik.EstadoReserva",
+    "pk": 3,
+    "fields": {
+      "nombre": "Con viajeros"
+    }
+  },
+  {
+    "model": "pyllik.EstadoReserva",
+    "pk": 4,
+    "fields": {
+      "nombre": "Confirmado"
+    }
+  },
+  {
+    "model": "pyllik.EstadoReserva",
+    "pk": 5,
+    "fields": {
+      "nombre": "Cancelado"
+    }
+  },
+  {
+    "model": "pyllik.EstadoPago",
+    "pk": 1,
+    "fields": {
+      "nombre": "Inicial"
+    }
+  },
+  {
+    "model": "pyllik.EstadoPago",
+    "pk": 2,
+    "fields": {
+      "nombre": "Con Adelanto"
+    }
+  },
+  {
+    "model": "pyllik.EstadoPago",
+    "pk": 2,
+    "fields": {
+      "nombre": "Con incompleto"
+    }
+  },
+  {
+    "model": "pyllik.EstadoPago",
+    "pk": 2,
+    "fields": {
+      "nombre": "Pago Completado"
     }
   }
 ]

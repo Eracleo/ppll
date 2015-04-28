@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import PasajeroForm
-from pyllik.models import Paquete, Pais, Reserva,Pasajero, Cliente
+from pyllik.models import Paquete, Pais, Reserva,Pasajero, Cliente,EstadoReserva,FormaPago,EstadoPago,ReservadoMediante
 from django.http import HttpResponseRedirect
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
@@ -54,6 +54,10 @@ def pasajeros(request):
             cliente.empresa = paquete.empresa
             cliente.save()
             reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
+            reserva.estado = EstadoReserva.objects.get(id=1)
+            reserva.forma_pago = FormaPago.objects.get(id=2)
+            reserva.pago_estado = EstadoPago.objects.get(id=1)
+            reserva.reservado_mediante = ReservadoMediante.objects.get(id=1)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
@@ -71,18 +75,22 @@ def pasajeros(request):
             # Send message
             empresa = reserva.empresa
             title = empresa.razon_social + " - INVOICE "+ str(reserva.id)
-            body = "<p><b>"+empresa.razon_social + "</b></p><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
-            body += "<h3>INVOICE CREATED Nro "+str(reserva.id)+"</h3>"
-            body += "<b>Name of Tour:</b> " + paquete.nombre
-            body += "<br><b>Price per Person:</b> " + str(reserva.pre_pago)
-            body += "<br><b>Number of Traveler</b>: " + cantidad_pasajeros
-            body += "<br><b>Total Price</b>: " + cantidad_pasajeros
-            body += "<br><b>Advance's mount ("+str(paquete.porcentaje)+"%)</b>: " + cantidad_pasajeros
-            body += "<br><b>Tax</b>: " + monto
-            body += "<br><br>Total payment</b>: " + monto
-            body += "<br><br>Link of Payment</b>: https://quipu.negotu.com/reservar/pagar/" + str(reserva.id)
-            body += "<br>Reserved by</b>: " + email
+            body = "<img heigth='50' src='httpw://quipu.negotu.com"+empresa.logo.url+"'>"
+            body += "<h3>"+empresa.razon_social + "</h3><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
+            body += "<h2>INVOICE CREATED Nro "+str(reserva.id)+"</h2><table>"
+            body += "<tr><td width='160px'>Tour Name </td><td>: " + paquete.nombre
+            body += "<tr><td width='160px'>Tour Date </td><td>: " + str(reserva.fecha_viaje)
+            body += "</td></tr><tr><td>Tour price per Person</td><td>: USD $ " + str(reserva.precio)
+            body += "</td></tr><tr><td>Number of Travelers</td><td>: " + str(reserva.cantidad_pasajeros)
+            body += "</td></tr><tr><td>Total Price</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.precio)
+            body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(reserva.precioTotalPrePago())# str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Tax</td><td>: 0.00"
+            body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Link of Payment</td><td>: https://quipu.negotu.com/reservar/pagar/" + str(reserva.id)
+            body += "</td><tr><td>Booked by</td><td>: " + email
+            body += "</td></tr></table>"
             body += "<br><br><p><b>Terms & Conditions:</b></p>" + empresa.terminos_condiciones
+            body += "<br><br><p align='right'> Power by:<b><a href='http://negotu.com'>negotu.com</a></b></p>"
             msg = EmailMessage(title, body, to=[email,empresa.email])
             msg.content_subtype = "html"
             msg.send()
@@ -154,19 +162,34 @@ def dePaypal(request):
         if reserva.id == int(pdt['item_number']):
             if float(pdt['payment_gross']) >= reserva.cantidad_pasajeros * reserva.pre_pago:
                 reserva.tx = tx
-                reserva.pago_estado = 'ad'
+                reserva.pago_estado = '3'
             else :
-                reserva.pago_estado = 'in'
+                reserva.pago_estado = '4'
             reserva.save()
             # Send message
-            title = "Negotu.com"
-            body = "Detalles de pago de su reserva\n"
-            body +="Paquete: " + str(reserva.paquete) + "\n"
-            body +="Viajeros: " + str(reserva.cantidad_pasajeros) + "\n"
-            body +="Detalles de tus reserva: https://quipu.negotu.com/pdf/books/"+str(reserva.id)+"-"+reserva.tx+"-reserve-"+str(reserva.fecha_viaje.year)+"-"+str(reserva.fecha_viaje.month)+"-"+str(reserva.fecha_viaje.day)+".pdf\n"
-            body +="Total a pagar: " + str(reserva.pre_pago)
-            correo = EmailMessage(title, body, to=[reserva.email])
-            correo.send()
+            empresa = reserva.empresa
+            title = empresa.razon_social + " - INVOICE "+ str(reserva.id)
+            body = "<img heigth='50' src='httpw://quipu.negotu.com"+empresa.logo.url+"'>"
+            body += "<h3>"+empresa.razon_social + "</h3><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
+            body += "<h2>RECEIPT</h2><table>"
+            body += "<tr><td width='160px'>Tour Name </td><td>: " + paquete.nombre
+            body += "<tr><td>Tour Date </td><td>: " + str(reserva.fecha_viaje)
+            body += "</td></tr><tr><td>Tour price per Person</td><td>: USD $ " + str(reserva.precio)
+            body += "</td></tr><tr><td>Number of Travelers</td><td>: " + str(reserva.cantidad_pasajeros)
+            body += "</td></tr><tr><td>Total Price</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.precio)
+            body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Tax</td><td>: 0.00"
+            body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Date of paymet</td><td>: " + str(reserva.id)
+            body += "</td></tr><tr><td>Paymet form</td><td>: Paypal"
+            body += "</td></tr><tr><td>Transaction ID</td><td>: " + tx
+            body += "</td><tr><td>Booked by</td><td>: " + email
+            body += "</td></tr></table>"
+            body += "<br><br><p><b>Terms & Conditions:</b></p>" + empresa.terminos_condiciones
+            body += "<br><br><p align='right'> Power by:<b><a href='http://negotu.com'>negotu.com</a></b></p>"
+            msg = EmailMessage(title, body, to=[email,empresa.email])
+            msg.content_subtype = "html"
+            msg.send()
 
             return HttpResponseRedirect("/reservar/confirmado/?id="+str(reserva.id)+"&y="+str(reserva.fecha_viaje.year)+"&m="+str(reserva.fecha_viaje.month)+"&d="+str(reserva.fecha_viaje.day)+"&tx="+tx)
     return HttpResponseRedirect('/reservar/cancelado/')

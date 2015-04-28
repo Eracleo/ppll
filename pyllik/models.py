@@ -3,24 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from thumbs import ImageWithThumbsField
-DOC_TIPO = (
-    ('di','Document Identification'),
-    ('ps','Passport'),
-    )
-PAGO_ESTADO = (
-    ('re','En Reserva'),
-    ('ad','Con Adelanto'),
-    ('pc','Completado'),
-    ('in','Incompleto'),
-    ('ca','Cancelado'),
-    )
-MODO_PAGO = (
-    ('pa','Paypay'),
-    ('wu','Wester Union'),
-    ('ba','Banco'),
-    ('pe','Presencial'),
-    ('ot','Otros'),
-    )
 class Pais(models.Model):
     nombre = models.CharField(max_length=30)
     def __unicode__(self):
@@ -39,18 +21,21 @@ class Empresa(models.Model):
     movistar = models.CharField(max_length=20, blank=True)
     email = models.EmailField(max_length=64, blank=True)
     web = models.URLField(max_length=64, blank=True)
-    paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
-    paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
-    nro_paquetes = models.IntegerField(default=5)
     logo = ImageWithThumbsField(upload_to='logos_empresa')
     terminos_condiciones = models.URLField(max_length=120, blank=True, help_text="URL Terminos y condiciones.")
+    abreviatura = models.CharField(max_length=3,unique=True)
+    paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
+    paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
     owner = models.ForeignKey(User,related_name='owner')
     trabajadores = models.ManyToManyField(User)
-    abreviatura = models.CharField(max_length=3,unique=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.razon_social
+class TipoDocumento(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
 class Trabajador(models.Model):
     direccion = models.CharField(max_length=60)
     user = models.ForeignKey(User)
@@ -99,23 +84,43 @@ class Cliente(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.email
+class FormaPago(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
+class EstadoPago(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
+class EstadoReserva(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
+class ReservadoMediante(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
 class Reserva(models.Model):
     paquete = models.ForeignKey(Paquete)
     precio = models.FloatField(blank=True)
-    fecha_viaje = models.DateField()
     pre_pago = models.FloatField(blank=True)
+    # Porcentaje
+    fecha_viaje = models.DateField()
     cantidad_pasajeros = models.IntegerField()
-    modalidad_pago = models.CharField(max_length=2, choices=MODO_PAGO, default='pa')
-    # llego_de = (recomendado, web, web_reserva, oficina)
-    tx = models.CharField(max_length=64, blank=True)
     pasajeros = models.ManyToManyField(Pasajero, blank=True)
-    pago_estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
-    estado = models.CharField(max_length=2, choices=PAGO_ESTADO, default='re')
     ip = models.GenericIPAddressField(null=True,blank=True)
+    reservado_mediante = models.ForeignKey(ReservadoMediante)
     cliente = models.ForeignKey(Cliente)
     empresa = models.ForeignKey(Empresa)
+    estado = models.ForeignKey(EstadoReserva)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
+    # Detalles de pago
+    monto_pagado = models.FloatField(default=0)
+    fecha_pago = models.DateTimeField(null=True)
+    tx = models.CharField(max_length=64, blank=True)
+    forma_pago = models.ForeignKey(FormaPago)
+    estado_pago = models.ForeignKey(EstadoPago)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
         self.pre_pago = self.paquete.pre_pago
@@ -127,7 +132,7 @@ class Reserva(models.Model):
         return self.cantidad_pasajeros * self.precio
     def precioTotalPrePago(self):
         return self.cantidad_pasajeros * self.pre_pago
-class Comentario(models.Model):
+class ComentarioReserva(models.Model):
     titulo = models.CharField(max_length=60)
     comentario = models.TextField()
     empresa = models.ForeignKey(Empresa)

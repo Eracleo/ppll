@@ -6,7 +6,7 @@
       <tr>
         <th>ID</th>
         <th>Fecha de Viaje</th>
-        <th>Falta</th>
+        <!--th>Falta</th-->
         <th>Paquete</th>
         <th>Viajeros</th>
         <th>Email / IP</th>
@@ -17,12 +17,12 @@
     <tr>
       <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}</a></td>
       <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
-			<td>{{reserva.fecha_viaje|timeuntil}}</td>
+			<!--td>reserva.fecha_viaje|timeuntil}}</td-->
 			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
-			<td><a href="/empresa/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_personas}}</a></td>
-			<td>{{reserva.email}} <b>/ {{reserva.ip}}</b></td>
+			<td><a href="/empresa/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_pasajeros}}</a></td>
+			<td><a href="/empresa/cliente/detail/{{reserva.cliente.id}}">{{reserva.cliente}}</a> <b>/ {{reserva.ip}}</b></td>
       <td>{{reserva.creado|date:"Y-m-d"}}</td>
-			<td>{{reserva.get_pago_estado_display}}</td>
+			<td>{{reserva.estado_pago}}</td>
     </tr>
 		{% endfor %}
 	</table>
