@@ -15,14 +15,21 @@ def reserva(request,id):
     response = HttpResponse(content_type='application/pdf')
     empresa_id = request.session["empresa"]
     obj = Reserva.objects.get(id=id,empresa_id = empresa_id)
+    ref = "http://127.0.0.1:8000"+obj.empresa.logo.url
 
-    y = 730
+    y = 700
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
+
+    p.drawImage(ref, 50, y, 90,45)
+    y  = y - 20
+
     p.setLineWidth(.3)
     p.setFont('Helvetica', 20)
     p.drawString(50,y,obj.empresa.razon_social)
     p.setFont('Helvetica', 13)
+
+
     y=y-15
     p.drawString(50,y,obj.empresa.direccion)
     p.setFont('Helvetica', 18)
@@ -42,11 +49,11 @@ def reserva(request,id):
     p.drawString(280,y,'Travel Date') # 610
     p.drawString(480,y,str(obj.fecha_viaje))
 
-    p.drawString(50,550,'Reserve by:')
-    p.drawString(130,550,obj.cliente.email)
-    p.drawString(50,530,'Date:')
-    p.drawString(130,530,str(obj.creado))
-    p.line(50,500,560,500)
+    p.drawString(50,500,'Reserve by:')
+    p.drawString(130,500,obj.cliente.email)
+    p.drawString(50,480,'Date:')
+    p.drawString(130,480,str(obj.creado))
+    p.line(50,470,560,470)
     p.showPage()
     p.save()
     pdf = buffer.getvalue()
@@ -59,9 +66,13 @@ def reserve(request,id,tx):
     # response['Content-Disposition'] = 'attachment; filename="reserva.pdf"'
     response = HttpResponse(content_type='application/pdf')
     obj = Reserva.objects.get(id=id,tx=tx)
-    y = 730
+    y = 700
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
+
+    p.drawImage(ref, 50, y, 90,45)
+    y  = y - 20
+
     p.setLineWidth(.3)
     p.setFont('Helvetica', 20)
     p.drawString(50,y,obj.empresa.razon_social)
@@ -85,11 +96,11 @@ def reserve(request,id,tx):
     p.drawString(280,y,'Travel Date') # 610
     p.drawString(480,y,str(obj.fecha_viaje))
 
-    p.drawString(50,550,'Reserve by:')
-    p.drawString(130,550,obj.cliente.email)
-    p.drawString(50,530,'Date:')
-    p.drawString(130,530,str(obj.creado))
-    p.line(50,500,560,500)
+    p.drawString(50,500,'Reserve by:')
+    p.drawString(130,500,obj.cliente.email)
+    p.drawString(50,480,'Date:')
+    p.drawString(130,480,str(obj.creado))
+    p.line(50,470,560,470)
     p.showPage()
     p.save()
     pdf = buffer.getvalue()
