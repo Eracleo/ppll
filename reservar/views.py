@@ -172,22 +172,22 @@ def dePaypal(request):
             body = "<img heigth='50' src='httpw://quipu.negotu.com"+empresa.logo.url+"'>"
             body += "<h3>"+empresa.razon_social + "</h3><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
             body += "<h2>RECEIPT</h2><table>"
-            body += "<tr><td width='160px'>Tour Name </td><td>: " + paquete.nombre
+            body += "<tr><td width='160px'>Tour Name </td><td>: " + str(reserva.paquete)
             body += "<tr><td>Tour Date </td><td>: " + str(reserva.fecha_viaje)
             body += "</td></tr><tr><td>Tour price per Person</td><td>: USD $ " + str(reserva.precio)
             body += "</td></tr><tr><td>Number of Travelers</td><td>: " + str(reserva.cantidad_pasajeros)
             body += "</td></tr><tr><td>Total Price</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.precio)
-            body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Advance's mount (%)</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
             body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
             body += "</td></tr><tr><td>Date of paymet</td><td>: " + str(reserva.id)
             body += "</td></tr><tr><td>Paymet form</td><td>: Paypal"
             body += "</td></tr><tr><td>Transaction ID</td><td>: " + tx
-            body += "</td><tr><td>Booked by</td><td>: " + email
+            body += "</td><tr><td>Booked by</td><td>: " + str(reserva.cliente)
             body += "</td></tr></table>"
             body += "<br><br><p><b>Terms & Conditions:</b></p>" + empresa.terminos_condiciones
             body += "<br><br><p align='right'> Power by:<b><a href='http://negotu.com'>negotu.com</a></b></p>"
-            msg = EmailMessage(title, body, to=[email,empresa.email])
+            msg = EmailMessage(title, body, to=[str(reserva.cliente),empresa.email])
             msg.content_subtype = "html"
             msg.send()
 

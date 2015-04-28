@@ -66,6 +66,8 @@ def reserve(request,id,tx):
     # response['Content-Disposition'] = 'attachment; filename="reserva.pdf"'
     response = HttpResponse(content_type='application/pdf')
     obj = Reserva.objects.get(id=id,tx=tx)
+    ref = "http://127.0.0.1:8000"+obj.empresa.logo.url
+
     y = 700
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=letter)
