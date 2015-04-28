@@ -40,12 +40,14 @@ class Trabajador(models.Model):
     direccion = models.CharField(max_length=60)
     user = models.ForeignKey(User)
     empresa = models.ForeignKey(Empresa)
+    doc_tipo = models.ForeignKey(TipoDocumento)
+    doc_nro = models.CharField(max_length=10)
     def __unicode__(self):
         return self.user
 class Pasajero(models.Model):
     nombre = models.CharField(max_length=30)
     apellidos = models.CharField(max_length=60)
-    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
+    doc_tipo = models.ForeignKey(TipoDocumento)
     doc_nro = models.CharField(max_length=10)
     email = models.EmailField(max_length=60,blank=True)
     telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
@@ -73,7 +75,7 @@ class Paquete(models.Model):
 class Cliente(models.Model):
     nombre = models.CharField(max_length=30,blank=True)
     apellidos = models.CharField(max_length=60,blank=True)
-    doc_tipo = models.CharField(max_length=2, choices=DOC_TIPO)
+    doc_tipo = models.ForeignKey(TipoDocumento,null=True,blank=True)
     doc_nro = models.CharField(max_length=10)
     email = models.EmailField(max_length=60,blank=True)
     telefono = models.CharField(max_length=50, blank=True)
@@ -129,9 +131,9 @@ class Reserva(models.Model):
     def __unicode__(self):
         return "Una reserva de "+self.email
     def precioTotal(self):
-        return self.cantidad_pasajeros * self.precio
+        return int(self.cantidad_pasajeros) * self.precio
     def precioTotalPrePago(self):
-        return self.cantidad_pasajeros * self.pre_pago
+        return int(self.cantidad_pasajeros) * self.pre_pago
 class ComentarioReserva(models.Model):
     titulo = models.CharField(max_length=60)
     comentario = models.TextField()

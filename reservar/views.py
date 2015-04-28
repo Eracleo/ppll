@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import PasajeroForm
-from pyllik.models import Paquete, Pais, Reserva,Pasajero, Cliente,EstadoReserva,FormaPago,EstadoPago,ReservadoMediante
+from pyllik.models import Paquete, Pais,TipoDocumento,Reserva,Pasajero, Cliente,EstadoReserva,FormaPago,EstadoPago,ReservadoMediante
 from django.http import HttpResponseRedirect
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
@@ -56,7 +56,7 @@ def pasajeros(request):
             reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
             reserva.estado = EstadoReserva.objects.get(id=1)
             reserva.forma_pago = FormaPago.objects.get(id=2)
-            reserva.pago_estado = EstadoPago.objects.get(id=1)
+            reserva.estado_pago = EstadoPago.objects.get(id=1)
             reserva.reservado_mediante = ReservadoMediante.objects.get(id=1)
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
@@ -64,7 +64,7 @@ def pasajeros(request):
                     pasajero = Pasajero()
                     pasajero.nombre= item['nombre']
                     pasajero.apellidos= item['apellidos']
-                    pasajero.doc_tipo= item['doc_tipo']
+                    pasajero.doc_tipo = item['doc_tipo']
                     pasajero.doc_nro= item['doc_nro']
                     pasajero.pais= item['pais']
                     pasajero.telefono= item['telefono']
@@ -82,10 +82,10 @@ def pasajeros(request):
             body += "<tr><td width='160px'>Tour Date </td><td>: " + str(reserva.fecha_viaje)
             body += "</td></tr><tr><td>Tour price per Person</td><td>: USD $ " + str(reserva.precio)
             body += "</td></tr><tr><td>Number of Travelers</td><td>: " + str(reserva.cantidad_pasajeros)
-            body += "</td></tr><tr><td>Total Price</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.precio)
-            body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(reserva.precioTotalPrePago())# str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td>Total Price</td><td>:  USD $ " + str(reserva.precioTotal())
+            body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(reserva.precioTotalPrePago())
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
-            body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
+            body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(reserva.precioTotalPrePago())
             body += "</td></tr><tr><td>Link of Payment</td><td>: https://quipu.negotu.com/reservar/pagar/" + str(reserva.id)
             body += "</td><tr><td>Booked by</td><td>: " + email
             body += "</td></tr></table>"
