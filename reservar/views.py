@@ -191,7 +191,7 @@ def dePaypal(request):
             body += "</td></tr><tr><td>Advance's mount (%)</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
             body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
-            body += "</td></tr><tr><td>Date of paymet</td><td>: " + str(reserva.id)
+            body += "</td></tr><tr><td>Date of paymet</td><td>: " + str(reserva.fecha_pago)
             body += "</td></tr><tr><td>Paymet form</td><td>: Paypal"
             body += "</td></tr><tr><td>Transaction ID</td><td>: " + tx
             body += "</td><tr><td>Booked by</td><td>: " + str(reserva.cliente)
