@@ -7,27 +7,39 @@
         <td><b>Original:</b> {{obj.precio}} <b>Adelanto:</b> {{obj.pre_pago}}</td>
     </tr>
     <tr>
-        <td><b>tx:</b></td>
-        <td>{{obj.tx}}</td>
-    </tr>
-    <tr>
         <td><b>Fecha Viaje:</b></td>
         <td>{{obj.fecha_viaje}}</td>
     </tr>
     <tr>
-        <td><b>Modalidad de pago:</b></td>
+        <td><b>tx:</b></td>
+        <td>{{obj.tx}}</td>
+    </tr>
+    <tr>
+        <td><b>Fecha de Pago:</b></td>
+        <td>{{obj.fecha_pago}}</td>
+    </tr>
+    <tr>
+        <td><b>Forma de pago:</b></td>
         <td>
-            {{obj.get_modo_pago_display}}
+            {{obj.forma_pago}}
             <a href="/reservar/pagar/{{obj.id}}">Pagar</a>
         </td>
     </tr>
     <tr>
-        <td><b>Estado:</b></td>
-        <td>{{ obj.get_pago_estado_display }}</td>
+        <td><b>Estado de Pago:</b></td>
+        <td>{{ obj.estado_pago }}</td>
     </tr>
     <tr>
-        <td><b>creado:</b></td>
+        <td><b>Estado de Reserva:</b></td>
+        <td>{{ obj.estado }}</td>
+    </tr>
+    <tr>
+        <td><b>Creado:</b></td>
         <td>{{obj.creado}}</td>
+    </tr>
+    <tr>
+        <td><b>Cliente:</b></td>
+        <td><a href="/empresa/cliente/detail/{{obj.cliente.id}}">{{obj.cliente}}</a></td>
     </tr>
 </table>
 <a name="viajeros"></a>
@@ -50,6 +62,7 @@
     </tr>
 {% endfor %}
 </table>
+
 <p>
     <a href="/pdf/books/{{obj.id}}-reserve-{{obj.fecha_viaje|date:"Y-m-d"}}.pdf" class="btn btn-default">  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> PDF</a>
     <a href="javascript:print()" class="btn btn-default" ><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>

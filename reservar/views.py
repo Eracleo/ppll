@@ -6,6 +6,7 @@ from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
 import paypal
+import datetime
 def get_ip(request):
     ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
     if ip:
@@ -161,10 +162,13 @@ def dePaypal(request):
     if success :
         if reserva.id == int(pdt['item_number']):
             if float(pdt['payment_gross']) >= reserva.cantidad_pasajeros * reserva.pre_pago:
-                reserva.tx = tx
-                reserva.pago_estado = '3'
+                reserva.estado_pago = EstadoPago.objects.get(id=3)
+                reserva.estado = EstadoReserva.objects.get(id=2)
             else :
-                reserva.pago_estado = '4'
+                reserva.estado_pago = EstadoPago.objects.get(id=4)
+                reserva.estado = EstadoReserva.objects.get(id=3)
+            reserva.tx = tx
+            reserva.fecha_pago = datetime.datetime.now()
             reserva.save()
             # Send message
             empresa = reserva.empresa
