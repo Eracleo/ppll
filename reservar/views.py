@@ -121,6 +121,13 @@ def pagar(request,id):
     request.session["logo_pago"] = ''
     empresa_logo = obj.empresa.logo.url
     request.session["logo_pago"] = empresa_logo
+    if obj.tx != "":
+        empresa = obj.empresa
+        ctx = {
+            'logo':empresa_logo,
+            'empresa':empresa,
+        }
+        return render(request,'pagado.html',ctx)
     # Datos a enviar
     paypal = {
         'paypal_url':"https://www.sandbox.paypal.com/cgi-bin/webscr",

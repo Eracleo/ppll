@@ -1,0 +1,14 @@
+{% extends "layout/base_pagos.html" %}
+{% block menu %}
+    <li>1. Products</li>
+    <li>2. Passangers</li>
+    <li class="active">3. Payments</li>
+    <li>4. Confirm</li>
+{% endblock %}
+{% block content %}
+<p class="texto-titulo">Reserva pagado</p>
+<div class="linea"></div>
+<p><b>Pongase en contacto con nosotros</b></p>
+<h2>{{empresa.razon_social}}</h2>
+<p><b>Address:</b> {{ empresa.direccion }}<br><b>Phono:</b> {{ empresa.telefono }}<br><b>Web:</b> {{empresa.web}}</p>
+{% endblock %}
