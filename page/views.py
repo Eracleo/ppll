@@ -15,7 +15,7 @@ def reserva(request,id):
     response = HttpResponse(content_type='application/pdf')
     empresa_id = request.session["empresa"]
     obj = Reserva.objects.get(id=id,empresa_id = empresa_id)
-    ref = "http://127.0.0.1:8000"+obj.empresa.logo.url
+    ref = "https://quipu.negotu.com"+obj.empresa.logo.url
 
     y = 700
     buffer = BytesIO()
@@ -66,7 +66,7 @@ def reserve(request,id,tx):
     # response['Content-Disposition'] = 'attachment; filename="reserva.pdf"'
     response = HttpResponse(content_type='application/pdf')
     obj = Reserva.objects.get(id=id,tx=tx)
-    ref = "http://127.0.0.1:8000"+obj.empresa.logo.url
+    ref = "https://quipu.negotu.com"+obj.empresa.logo.url
 
     y = 700
     buffer = BytesIO()
