@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '&vnh9%r1op3x)lgv!&r*yj=ja!dtk$2o2))#wvp$p3w=rzydl2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = False
 
@@ -61,13 +61,17 @@ WSGI_APPLICATION = 'ppll.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default1': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'negotu_quipu',
         'USER': 'root',
         'PASSWORD': 'toor132',
         'HOST': '',
         'PORT': '',
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

@@ -9,7 +9,7 @@ from django.db.models import Count
 from collections import defaultdict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
-
+import uuid
 @login_required
 def index(request):
     return empresaDetail(request)
@@ -34,6 +34,8 @@ def empresaDetail(request):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 if formAgregar.is_valid():
                     empresa = formAgregar.save()
+                    empresa.code = uuid.uuid1().hex
+                    empresa.save()
                     paquete = Paquete()
                     paquete.sku = empresa.abreviatura + "001"
                     paquete.nombre = "Paquete Inicial"
@@ -66,7 +68,7 @@ def empresaEdit(request):
             empresa.web = empresa_form.cleaned_data['web']
             empresa.telefono = empresa_form.cleaned_data['telefono']
             empresa.terminos_condiciones = empresa_form.cleaned_data['terminos_condiciones']
-            #empresa.nro_paquetes = empresa_form.cleaned_data['nro_paquetes']
+            empresa.code = uuid.uuid1().hex
             empresa.save()
             messages.success(request, 'Información de empresa actualizado.')
             return HttpResponseRedirect('/empresa/information')

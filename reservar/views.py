@@ -81,7 +81,7 @@ def pasajeros(request):
             title = empresa.razon_social + " - INVOICE "+ str(reserva.id)
             body = "<img heigth='50' src='httpw://quipu.negotu.com"+empresa.logo.url+"'>"
             body += "<h3>"+empresa.razon_social + "</h3><p>" + empresa.direccion + "<br>" + empresa.web + "</p>"
-            body += "<h2>INVOICE CREATED Nro "+str(reserva.id)+"</h2><table>"
+            body += "<h2>INVOICE CREATED Nro "+reserva.empresa.abreviatura+"-"+str(reserva.id)+"</h2><table>"
             body += "<tr><td width='160px'>Tour Name </td><td>: " + paquete.nombre
             body += "<tr><td width='160px'>Tour Date </td><td>: " + str(reserva.fecha_viaje)
             body += "</td></tr><tr><td>Tour price per Person</td><td>: USD $ " + str(reserva.precio)
@@ -90,7 +90,8 @@ def pasajeros(request):
             body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(reserva.precioTotalPrePago())
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
             body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(reserva.precioTotalPrePago())
-            body += "</td></tr><tr><td>Link of Payment</td><td>: https://quipu.negotu.com/reservar/pagar/" + str(reserva.id)
+            code = str(reserva.id)+str(reserva.empresa.code)
+            body += "</td></tr><tr><td>Link of Payment</td><td>: https://quipu.negotu.com/reservar/pagar/" + code
             body += "</td><tr><td>Booked by</td><td>: " + email
             body += "</td></tr></table>"
             body += "<br><br><p><b>Terms & Conditions:</b></p>" + empresa.terminos_condiciones
@@ -99,7 +100,7 @@ def pasajeros(request):
             msg.content_subtype = "html"
             msg.send()
 
-            return HttpResponseRedirect('/reservar/pagar/'+str(reserva.id))
+            return HttpResponseRedirect('/reservar/pagar/'+code)
         else:
             form = ReservarForm()
             form.viajeros_instances = PasajeroFormset()
