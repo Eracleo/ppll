@@ -100,7 +100,7 @@ ul.tabs li {
 }
 ul.tabs li a{
   line-height: 2;
-  padding: 5px 10px 3px;
+  padding:5px 10px;
   -khtml-border-radius-topleft: 6px;
   -moz-border-radius-topleft: 6px;
   -webkit-border-top-left-radius: 6px;
@@ -115,3 +115,4 @@ ul.tabs li a.active,
 ul.tabs li a:hover {
   background-color: #f0f0f0;
 }
+hr.top{margin-top: 0px;}
