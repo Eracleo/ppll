@@ -6,18 +6,17 @@
           <form class="form-signin" method="post" action="" id="form">
             {% csrf_token %}
             <input type="hidden" id="username" class="form-control" name="username" value="{{user.username}}" readonly="readonly">
-            <h2 class="form-signin-heading">Contraseña actual</h2>
+            <label>Contraseña actual</label>
             <div class="form-group">
             <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña Actual" name="password"  >
             </div>
-            <h2 class="form-signin-heading">Nueva contraseña</h2>
+            <label>Nueva contraseña</label>
             <div class="form-group">
             <input type="password" id="inputPassword1" class="form-control" placeholder="Ingrese Contraseña" name="newpassword1" required="True" ></div>
             <div class="form-group">
             <input type="password" id="inputPassword2" class="form-control" placeholder="Repita Contraseña" name="newpassword2" required="True" >
             </div>
-            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Entrar"/>
-            <input type="hidden" id="next" name="next" />
+            <input type="submit" class="btn btn-lg btn-success btn-block" value="Cambiar Contraseña"/>
             <input type="hidden" id="mensaje" name="mensaje" value="{{mensaje}}" />
             <input type="hidden" id="mensaje2" name="mensaje2"  />
           </form>

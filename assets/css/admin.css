@@ -1,5 +1,8 @@
 body{
 }
+h1,.h1{
+font-size: 22px;
+}
 #menu{
 margin-bottom: 0px;
 }
@@ -82,4 +85,33 @@ transition:all ease .8s;
 .caja:hover .info {
 filter: alpha(opacity=80);
 opacity: .8; /*Al hacer hover sobre la caja hacemos visible los datos*/
+}
+.head-content{
+}
+ul.tabs {
+margin: 0px;
+margin-top: 20px;
+min-height: 37px;
+}
+ul.tabs li {
+  float: left;
+  margin: 0 5px 0 0; /* LTR */
+  list-style: none;
+}
+ul.tabs li a{
+  line-height: 2;
+  padding: 5px 10px 3px;
+  -khtml-border-radius-topleft: 6px;
+  -moz-border-radius-topleft: 6px;
+  -webkit-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  -khtml-border-radius-topright: 6px;
+  -moz-border-radius-topright: 6px;
+  -webkit-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  background-color: #f0f0f0;
+}
+ul.tabs li a.active,
+ul.tabs li a:hover {
+  background-color: #f0f0f0;
 }

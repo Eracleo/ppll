@@ -80,8 +80,12 @@
       </div>
     </nav>
     <div class="container">
-      <!-- Main component -->
-      <h1>{% block title %}{% endblock%}</h1>
+        <div class="row">
+            <div class="col-sm-8"><h1><span class="glyphicon glyphicon-th"></span> {% block title %}{% endblock%}</h1></div>
+            <div class="col-sm-4"><ul class="tabs navbar-right">
+                {% block options %}{% endblock%}
+            </ul></div>
+        </div>
       {% if messages %}
         <div class="messages">
             {% for msg in messages %}
@@ -94,7 +98,7 @@
       {% block content %} {% endblock%}
       <div class="footer">
         <hr>
-        <p>© Negotu.com 2015</p>
+        <p><span class="glyphicon glyphicon-copyright-mark"></span>  Negotu.com 2015</p>
       </div>
     </div> <!-- /container -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>

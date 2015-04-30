@@ -1,5 +1,12 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}{{obj.nombre}} <small>Detalles</small>{% endblock %}
+{% block options %}
+    <li><a href="">Editar</a></li>
+    <li><a href="">Listar</a></li>
+    <li class="active"><a href="">Listar</a></li>
+    <li >Listar</li>
+    <li>Listar</li>
+{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <tr>
@@ -39,5 +46,5 @@
         <td>{{obj.descripcion|safe }}</td>
     </tr>
 </table>
-<p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-primary">Editar</a> </p>
+<p><a href="/empresa/paquete/edit/{{obj.id}}" class="btn btn-link "><span class="glyphicon glyphicon-edit"></span> Editar</a> </p>
 {% endblock%}
