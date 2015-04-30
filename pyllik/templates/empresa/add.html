@@ -23,7 +23,7 @@
         $('#id_paypal_email, #id_paypal_at').after('<span class="ayuda glyphicon glyphicon-question-sign "> </span>');
         $('.ayuda').hover(function(){
             $(this).next('.help-block').toggle("linear");
-        })  
+        })
     });
     $(function(){
         $("#id_razon_social").change(function() {
@@ -70,16 +70,56 @@
 {% endif %}
 <div class="row">
     <div class="col-lg-8">
-        <form action="" method="POST" enctype='multipart/form-data'>
+        <form action="" method="POST" enctype='multipart/form-data' id="form">
             {%csrf_token%}
-            {{formAgregar|bootstrap_horizontal}}
+            {{form|bootstrap_horizontal}}
             <p>
             <input type="hidden" value="{{abres}}" id="abres">
             <input type="hidden" id="nro" value="{{nro}}" name="nro">
-            <button type='submit' value='Guardar Empresa' class="btn btn-primary">Guardar Empresa</button>
-            <button type= "reset"class="btn btn-primary"> Limpiar</button></p>
+            <p align="right"><button type='submit' value='Guardar Empresa' class="btn btn-success">Guardar Empresa</button>
+            <button type= "reset"class="btn btn-warning"> Limpiar</button></p></p>
         </form>
     </div>
 </div>
 <p><a href="/user/logout">Cerrar Sesión</a></p>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      rubro: {
+        required: true
+      },
+      razon_social: {
+        minlength: 3,
+        required: true
+      },
+      ruc: {
+        minlength: 11,
+        maxlength: 11,
+        required: true
+      },
+      direccion: {
+        minlength: 3,
+        required: true
+      },
+      abreviatura: {
+        minlength: 3,
+        maxlength: 3,
+        required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
 {% endblock%}

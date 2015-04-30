@@ -72,6 +72,10 @@ class Paquete(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.nombre
+class TipoCliente(models.Model):
+    nombre = models.CharField(max_length=30)
+    def __unicode__(self):
+        return self.nombre
 class Cliente(models.Model):
     nombre = models.CharField(max_length=30,blank=True)
     apellidos = models.CharField(max_length=60,blank=True)
@@ -86,6 +90,24 @@ class Cliente(models.Model):
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.email
+class Pregunta(models.Model):
+    pregunta = models.TextField()
+    cliente = models.ForeignKey(Cliente)
+    user = models.ForeignKey(User)
+    empresa = models.ForeignKey(Empresa)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
+    estado = models.BooleanField(default=True)
+    def __unicode__(self):
+        return "Pregunta"
+class Respuesta(models.Model):
+    pregunta = models.TextField()
+    cliente = models.ForeignKey(Cliente)
+    user = models.ForeignKey(User)
+    empresa = models.ForeignKey(Empresa)
+    creado = models.DateTimeField(auto_now_add=True, editable=False)
+    editado = models.DateTimeField(auto_now=True, editable=False)
+    def __unicode__(self):
+        return "Pregunta"
 class FormaPago(models.Model):
     nombre = models.CharField(max_length=30)
     def __unicode__(self):

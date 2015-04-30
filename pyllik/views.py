@@ -29,7 +29,7 @@ def empresaDetail(request):
             if Empresa.objects.filter(abreviatura=abrev):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 messages.success(request, 'Información de empresa creado.')
-                return render(request,'empresa/add.html', {'formAgregar':formAgregar,'abres':'si','nro':int(nro)+1})
+                return render(request,'empresa/add.html', {'form':formAgregar,'abres':'si','nro':int(nro)+1})
             else:
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 if formAgregar.is_valid():
@@ -48,7 +48,7 @@ def empresaDetail(request):
                     return HttpResponseRedirect('/user/config')
         else:
             formAgregar = EmpresaForm()
-        return render(request,'empresa/add.html', {'formAgregar':formAgregar})
+        return render(request,'empresa/add.html', {'form':formAgregar})
     return render(request,'empresa/detail.html',{'obj':empresa,'logo':empresa_logo})
 
 @login_required

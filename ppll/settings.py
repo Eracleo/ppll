@@ -19,11 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '&vnh9%r1op3x)lgv!&r*yj=ja!dtk$2o2))#wvp$p3w=rzydl2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['quipu.negotu.com']
+ALLOWED_HOSTS = ['negotu.local']
 
 
 # Application definition
@@ -62,8 +62,12 @@ WSGI_APPLICATION = 'ppll.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'negotu_quipu',
+        'USER': 'root',
+        'PASSWORD': 'toor132',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
