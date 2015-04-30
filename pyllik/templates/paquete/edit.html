@@ -1,6 +1,11 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Editar Paquetes{% endblock %}
-
+{% block options %}
+    <li><a href="../detail/{{obj.id}}">Ver</a></li>
+    <li class="active">Editar</li>
+    <li><a href="../add">Nuevo</a></li>
+    <li><a href="../../paquetes">Listar</a></li>
+{% endblock %}
 {% block content %}
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script type="text/javascript">

@@ -1,5 +1,9 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Listar Paquetes{% endblock %}
+{% block title %}Paquetes{% endblock %}
+{% block options %}
+    <li><a href="paquete/add">Nuevo</a></li>
+    <li class="active">Listar</li>
+{% endblock %}
 {% block content %}
 	<table class="table table-striped table-bordered table-hover table-condensed">
     <thead>

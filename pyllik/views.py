@@ -159,7 +159,7 @@ def paqueteEdit(request, id):
                 'pre_pago':paquete.pre_pago,
                 'link':paquete.link,
             })
-    ctx = {'form':paquete_form,'Paquete':paquete,'logo':empresa_logo}
+    ctx = {'form':paquete_form,'obj':paquete,'logo':empresa_logo}
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):

@@ -1,6 +1,9 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Agregar Paquete <small>new</small>   {% endblock %}
-
+{% block options %}
+    <li class="active">Nuevo</li>
+    <li><a href="../../paquetes">Listar</a></li>
+{% endblock %}
 {% block content %}
 <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
 <script type="text/javascript">
