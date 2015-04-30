@@ -1,10 +1,10 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Reserva - {{obj.paquete}}{% endblock %}
+{% block title %}Reserva de {{obj.paquete}}{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <tr>
         <td width="180"><b>Precio(s):</b></td>
-        <td><b>Original:</b> {{obj.precio}} <b>Adelanto:</b> {{obj.pre_pago}}</td>
+        <td><b>Original:</b> USD $ {{obj.precio}} - <b>Adelanto:</b>USD $ {{obj.pre_pago}}</td>
     </tr>
     <tr>
         <td><b>Fecha Viaje:</b></td>
@@ -22,7 +22,7 @@
         <td><b>Forma de pago:</b></td>
         <td>
             {{obj.forma_pago}}
-            <a href="/reservar/pagar/{{obj.id}}{{obj.empresa.code}}">Pagar</a>
+            <a href="/reservar/pagar/{{obj.id}}{{obj.code}}">Pagar</a>
         </td>
     </tr>
     <tr>
@@ -43,7 +43,7 @@
     </tr>
 </table>
 <a name="viajeros"></a>
-<h2>Pasajeros</h2>
+<h4>Pasajeros</h4>
 <table class="table">
     <tr>
         <th>Nro</th>
@@ -56,7 +56,7 @@
     <tr>
         <td>{{ forloop.counter }}</td>
         <td><a href="/empresa/pasajero/detail/{{pasajero.id}}"><b>{{persona.apellidos}} </b> {{pasajero.nombre}}</a></td>
-        <td>{{pasajero.get_doc_tipo_display}} <b>{{pasajero.doc_nro}}</b></td>
+        <td>{{pasajero.doc_tipo}} <b> {{pasajero.doc_nro}}</b></td>
         <td>{{pasajero.email}}</td>
         <td>{{pasajero.pais}}</td>
     </tr>

@@ -7,6 +7,7 @@ from django.core.mail import EmailMessage
 from django import forms
 import paypal
 import datetime
+import uuid
 def get_ip(request):
     ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
     if ip:
@@ -62,6 +63,7 @@ def pasajeros(request):
             reserva.forma_pago = FormaPago.objects.get(id=2)
             reserva.estado_pago = EstadoPago.objects.get(id=1)
             reserva.reservado_mediante = ReservadoMediante.objects.get(id=1)
+            reserva.code = uuid.uuid1().hex
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
@@ -90,7 +92,7 @@ def pasajeros(request):
             body += "</td></tr><tr><td>Advance's mount ("+str(paquete.porcentaje)+"%)</td><td>:  USD $ " + str(reserva.precioTotalPrePago())
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
             body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(reserva.precioTotalPrePago())
-            code = str(reserva.id)+str(reserva.empresa.code)
+            code = str(reserva.id)+str(reserva.code)
             body += "</td></tr><tr><td>Link of Payment</td><td>: https://quipu.negotu.com/reservar/pagar/" + code
             body += "</td><tr><td>Booked by</td><td>: " + email
             body += "</td></tr></table>"
@@ -120,9 +122,9 @@ def pasajeros(request):
         return render(request,'passenger.html',context)
     else:
         return HttpResponseRedirect('reservar/paquete/BIB002')
-def pagar(request,id):
+def pagar(request,id,code):
     try:
-        obj = Reserva.objects.get(id=id)
+        obj = Reserva.objects.get(id=id,code=code)
     except Reserva.DoesNotExist:
         return render(request,'404-reservar.html')
     request.session["logo_pago"] = ''

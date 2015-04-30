@@ -143,6 +143,7 @@ class Reserva(models.Model):
     # Detalles de pago
     monto_pagado = models.FloatField(default=0)
     fecha_pago = models.DateTimeField(null=True)
+    code = models.CharField(max_length=32,default="9233e6dcef7311e480b9a0f3c1cb9533",editable=False)
     tx = models.CharField(max_length=64, blank=True)
     forma_pago = models.ForeignKey(FormaPago)
     estado_pago = models.ForeignKey(EstadoPago)
