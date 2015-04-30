@@ -1,7 +1,6 @@
 {% extends 'layout/base_admin.html' %}
-{% block title %}{{ user.username }}{% endblock %}
+
 {% block content %}
-<hr>
 <dl class="dl-horizontal">
 	<dt>Username: </dt>
 	<dd>{{ user.username }}</dd>
@@ -13,7 +12,7 @@
 	<dd>{{ user.last_login }}</dd>
 	<dt>Miembro desde: </dt>
 	<dd>{{ user.date_joined }}</dd>
-	<p><a href="/user/cambiar">Cambiar Contraseña</a> | <a href="/user/edit">Editar Informacón de usuario</a> | <a href="/empresa/information">Información de la empresa</a> | <a href="/user/logout">Salir</a> </p>
+	<p><a href="/user/cambiar" class="btn btn-link ">Cambiar Contraseña</a> <a href="/user/edit" class="btn btn-link ">Editar Informacón de usuario</a> <a href="/empresa/information" class="btn btn-link ">Información de la empresa</a> <a href="/user/logout" class="btn btn-link "><span class="glyphicon glyphicon-off"></span> Salir</a> </p>
 </dl>
 
 {% endblock %}
