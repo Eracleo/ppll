@@ -125,14 +125,20 @@ def paqueteList(request):
 @login_required
 def paqueteDetail(request, id):
     empresa_id = request.session["empresa"]
-    paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
+    try:
+        paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
+    except Paquete.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'paquete/detail.html',{'obj':paquete,'logo':empresa_logo})
 @login_required
 def paqueteEdit(request, id):
     empresa_id = request.session["empresa"]
-    paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
+    try:
+        paquete = Paquete.objects.get(id=id,empresa_id = empresa_id)
+    except Paquete.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     if request.method == 'POST':
         paquete_form = PaqueteEditForm(request.POST)
         if paquete_form.is_valid():
@@ -205,13 +211,19 @@ def reservaList(request):
 def reservaDetail(request, id):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
+    try:
+        reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
+    except Reserva.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
 # Pasajero
 @login_required
 def pasajeroDetail(request, id):
     empresa_id = request.session["empresa"]
-    obj = Pasajero.objects.get(id=id,empresa_id = empresa_id)
+    try:
+        obj = Pasajero.objects.get(id=id,empresa_id = empresa_id)
+    except Reserva.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     empresa_logo = request.session["logo"]
     return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
 @login_required
@@ -232,8 +244,11 @@ def pasajeros(request):
 @login_required
 def clienteDetail(request, id):
     empresa_id = request.session["empresa"]
-    obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
     empresa_logo = request.session["logo"]
+    try:
+        obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
+    except Cliente.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
 @login_required
 def clientes(request):

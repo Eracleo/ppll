@@ -1,3 +1,6 @@
-<h1>Error 500</h1>
-<p>Algo anda mal, vuelva mas tarde</p>
-<p>Pongase en contacto con nosotros, y solicite un nuevo diseño para 500</p>
+{% extends "layout/base.html" %}
+{% block title %}Error 500{% endblock %}
+{% block content %}
+<p align="center">Pongase en contacto con nosotros</p>
+<p align="center"><a href="/" class="btn btn-primary">Ir a la página principal</a></p>
+{% endblock %}

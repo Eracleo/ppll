@@ -1,3 +1,6 @@
-<h1>Error 403</h1>
-<p>Usted no es permitido para esta action, vuelva mas tarde</p>
-<p>Pongase en contacto con nosotros, y solicite un nuevo diseño para 403</p>
+{% extends "layout/base.html" %}
+{% block title %}Error 403{% endblock %}
+{% block content %}
+<p align="center">Usted no esta permitido en esta action</p>
+<p align="center"><a href="/" class="btn btn-primary">Ir a la página principal</a></p>
+{% endblock %}

@@ -1,3 +1,7 @@
-<h1>Error 404</h1>
-<p>pagina no encontrada, vuelva mas tarde</p>
-<p>Pongase en contacto con nosotros, y solicite un nuevo diseño para 404</p>
+{% extends "layout/base.html" %}
+{% block title %}Error 404{% endblock %}
+{% block content %}
+<p align="center">Parece que ha habido con la página que estabas buscando</p>
+<h4 align="center">Es posible que la entrada haya sido eliminada o que la dirección no exista</h4>
+<p align="center"><a href="/" class="btn btn-primary">Ir a la página principal</a></p>
+{% endblock %}

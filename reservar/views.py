@@ -15,7 +15,10 @@ def get_ip(request):
         ip = request.META.get("REMOTE_ADDR", "")
     return ip
 def detalle(request, sku):
-    paquete = Paquete.objects.get(sku=sku)
+    try:
+        paquete = Paquete.objects.get(sku=sku)
+    except Paquete.DoesNotExist:
+        return render(request,'404-reservar.html')
     request.session["logo_pago"] = paquete.empresa.logo.url
     empresa_logo = request.session["logo_pago"]
     if request.method == 'GET' and paquete.estado:
@@ -117,7 +120,10 @@ def pasajeros(request):
     else:
         return HttpResponseRedirect('reservar/paquete/BIB002')
 def pagar(request,id):
-    obj = Reserva.objects.get(id=id)
+    try:
+        obj = Reserva.objects.get(id=id)
+    except Reserva.DoesNotExist:
+        return render(request,'404-reservar.html')
     request.session["logo_pago"] = ''
     empresa_logo = obj.empresa.logo.url
     request.session["logo_pago"] = empresa_logo
@@ -161,8 +167,10 @@ def pagar(request,id):
 def dePaypal(request):
     tx = request.GET.get('tx')
     ir = request.GET.get('item_number')
-
-    reserva = Reserva.objects.get(id=ir)
+    try:
+        reserva = Reserva.objects.get(id=ir)
+    except Reserva.DoesNotExist:
+        return render(request,'404-reservar.html')
     at = reserva.empresa.paypal_at
 
     success,pdt = paypal.paypal_check(tx,at)
