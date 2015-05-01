@@ -1,7 +1,7 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}{{obj.nombre}} <small>Detalles</small>{% endblock %}
 {% block options %}
-    <li class="active">Ver</li>
+    <li class="active"><a href="#">Ver</a></li>
     <li><a href="../edit/{{obj.id}}">Editar</a></li>
     <li><a href="../add">Nuevo</a></li>
     <li><a href="../../paquetes">Listar</a></li>

@@ -79,14 +79,14 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div class="container">
+    <div class="container" id="admin">
         <div class="row">
-            <div class="col-sm-8"><h1>{% block title %}{% endblock%}</h1></div>
-            <div class="col-sm-4"><ul class="tabs navbar-right">
+            <div class="col-sm-7"><h1>{% block title %}{% endblock%}</h1>
+        <hr class="top"></div>
+            <div class="col-sm-5"><ul class="nav nav-tabs">
                 {% block options %}{% endblock%}
             </ul></div>
         </div>
-        <hr class="top">
       {% if messages %}
         <div class="messages">
             {% for msg in messages %}

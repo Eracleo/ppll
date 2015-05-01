@@ -26,8 +26,8 @@ class Empresa(models.Model):
     abreviatura = models.CharField(max_length=3,unique=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
     paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
-    code = models.CharField(max_length=32,editable=False)
-    owner = models.ForeignKey(User,related_name='owner',editable=False)
+    code = models.CharField(max_length=32)
+    owner = models.ForeignKey(User,related_name='owner')
     trabajadores = models.ManyToManyField(User)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
@@ -40,7 +40,7 @@ class TipoDocumento(models.Model):
 class Trabajador(models.Model):
     direccion = models.CharField(max_length=60)
     user = models.ForeignKey(User)
-    empresa = models.ForeignKey(Empresa,editable=False)
+    empresa = models.ForeignKey(Empresa)
     doc_tipo = models.ForeignKey(TipoDocumento)
     doc_nro = models.CharField(max_length=10)
     def __unicode__(self):
@@ -53,7 +53,7 @@ class Pasajero(models.Model):
     email = models.EmailField(max_length=60,blank=True)
     telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
     pais = models.ForeignKey(Pais,null=True, blank=True)
-    empresa = models.ForeignKey(Empresa,null=True, blank=True,editable=False)
+    empresa = models.ForeignKey(Empresa,null=True, blank=True)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
@@ -81,30 +81,30 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=30,blank=True)
     apellidos = models.CharField(max_length=60,blank=True)
     doc_tipo = models.ForeignKey(TipoDocumento,null=True,blank=True)
-    doc_nro = models.CharField(max_length=10)
-    email = models.EmailField(max_length=60,blank=True)
+    doc_nro = models.CharField(max_length=10,blank=True)
+    email = models.EmailField(max_length=60)
     telefono = models.CharField(max_length=50, blank=True)
     celular = models.CharField(max_length=50, blank=True)
     pais = models.ForeignKey(Pais,null=True, blank=True)
-    empresa = models.ForeignKey(Empresa,null=True, blank=True,editable=False)
+    empresa = models.ForeignKey(Empresa)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
         return self.email
 class Pregunta(models.Model):
     pregunta = models.TextField()
-    cliente = models.ForeignKey(Cliente,editable=False)
+    cliente = models.ForeignKey(Cliente)
     user = models.ForeignKey(User)
-    empresa = models.ForeignKey(Empresa,editable=False)
+    empresa = models.ForeignKey(Empresa)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
     def __unicode__(self):
         return "Pregunta"
 class Respuesta(models.Model):
     pregunta = models.TextField()
-    cliente = models.ForeignKey(Cliente,editable=False)
+    cliente = models.ForeignKey(Cliente)
     user = models.ForeignKey(User)
-    empresa = models.ForeignKey(Empresa,editable=False)
+    empresa = models.ForeignKey(Empresa)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
@@ -135,15 +135,15 @@ class Reserva(models.Model):
     pasajeros = models.ManyToManyField(Pasajero, blank=True)
     ip = models.GenericIPAddressField(null=True,blank=True)
     reservado_mediante = models.ForeignKey(ReservadoMediante)
-    cliente = models.ForeignKey(Cliente,editable=False)
-    empresa = models.ForeignKey(Empresa,editable=False)
+    cliente = models.ForeignKey(Cliente)
+    empresa = models.ForeignKey(Empresa)
     estado = models.ForeignKey(EstadoReserva)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     # Detalles de pago
     monto_pagado = models.FloatField(default=0)
     fecha_pago = models.DateTimeField(null=True)
-    code = models.CharField(max_length=32,default="9233e6dcef7311e480b9a0f3c1cb9533",editable=False)
+    code = models.CharField(max_length=32,editable=False)
     tx = models.CharField(max_length=64, blank=True)
     forma_pago = models.ForeignKey(FormaPago)
     estado_pago = models.ForeignKey(EstadoPago)
@@ -161,7 +161,7 @@ class Reserva(models.Model):
 class ComentarioReserva(models.Model):
     titulo = models.CharField(max_length=60)
     comentario = models.TextField()
-    empresa = models.ForeignKey(Empresa,editable=False)
+    empresa = models.ForeignKey(Empresa)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     estado = models.BooleanField(default=True)
     def __unicode__(self):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Paquete, Empresa
+from .models import Paquete, Empresa, Pasajero, Cliente
 from suit_ckeditor.widgets import CKEditorWidget
 
 class PaqueteForm(forms.ModelForm):
@@ -45,3 +45,11 @@ class PaypalAccountForm(forms.ModelForm):
     class Meta:
         model = Empresa
         exclude = ('owner','nro_paquetes','direccion','razon_social','rubro','ruc','web','logo','terminos_condiciones','abreviatura','trabajadores','email','movistar','claro')
+class ClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        exclude = ('editado','creado')
+class PasajeroForm(forms.ModelForm):
+    class Meta:
+        model = Pasajero
+        exclude = ('editado','creado')

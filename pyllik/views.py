@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -57,41 +57,21 @@ def empresaDetail(request):
 def empresaEdit(request):
     user_id = request.user.id
     empresa = Empresa.objects.get(owner = user_id)
-    #Guarda el formulario en la BD
     if request.method == 'POST':
-        empresa_form = EmpresaFormEdit(request.POST,request.FILES)
-        if empresa_form.is_valid():
-            empresa.razon_social = empresa_form.cleaned_data['razon_social']
-            empresa.rubro = empresa_form.cleaned_data['rubro']
-            empresa.direccion = empresa_form.cleaned_data['direccion']
-            empresa.ruc = empresa_form.cleaned_data['ruc']
-            empresa.web = empresa_form.cleaned_data['web']
-            empresa.telefono = empresa_form.cleaned_data['telefono']
-            empresa.terminos_condiciones = empresa_form.cleaned_data['terminos_condiciones']
-            empresa.code = uuid.uuid1().hex
-            empresa.save()
-            messages.success(request, 'Información de empresa actualizado.')
-            return HttpResponseRedirect('/empresa/information')
+        form = EmpresaFormEdit(request.POST,request.FILES,instance=empresa)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Información de empresa actualizado.')
+                return HttpResponseRedirect('/empresa/information')
     if request.method == 'GET':
-        empresa_form = EmpresaFormEdit(initial=
-            {
-                'rubro':empresa.rubro,
-                'razon_social':empresa.razon_social,
-                'ruc':empresa.ruc,
-                'razon_social':empresa.razon_social,
-                'ruc':empresa.ruc,
-                'direccion':empresa.direccion,
-                'web':empresa.web,
-                'telefono':empresa.telefono,
-                'terminos_condiciones':empresa.terminos_condiciones,
-            })
-    ctx = {'empresa_form':empresa_form,'empresa':empresa,}
-    return render(request,'empresa/edit.html', ctx)
+        form = EmpresaFormEdit(instance=empresa)
+    ctx = {'form':form,'empresa':empresa,}
+    return render(request,'edit.html', ctx)
 @login_required
 def paypal_account(request):
     user_id = request.user.id
     empresa = Empresa.objects.get(owner = user_id)
-    #Guarda el formulario en la BD
     if request.method == 'POST':
         empresa_form = PaypalAccountForm(request.POST,request.FILES)
         if empresa_form.is_valid():
@@ -106,9 +86,8 @@ def paypal_account(request):
                 'paypal_email':empresa.paypal_email,
                 'paypal_at':empresa.paypal_at,
             })
-    ctx = {'empresa_form':empresa_form,'empresa':empresa,'titulo':"Editar"}
-    return render(request,'form.html', ctx)
-
+    ctx = {'form':empresa_form,'empresa':empresa}
+    return render(request,'edit.html', ctx)
 @login_required
 def paqueteList(request):
     empresa_id = request.session["empresa"]
@@ -122,7 +101,6 @@ def paqueteList(request):
         paquetes = paginator.page(1)
     except EmptyPage:
         paquetes = paginator.page(paginator.num_pages)
-
     return render(request,'paquete/list.html',{'objs':paquetes,'logo':empresa_logo})
 @login_required
 def paqueteDetail(request, id):
@@ -142,32 +120,17 @@ def paqueteEdit(request, id):
     except Paquete.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
     if request.method == 'POST':
-        paquete_form = PaqueteEditForm(request.POST)
-        if paquete_form.is_valid():
-            paquete.nombre = paquete_form.cleaned_data['nombre']
-            paquete.precio = paquete_form.cleaned_data['precio']
-            paquete.porcentaje = paquete_form.cleaned_data['porcentaje']
-            paquete.pre_pago = paquete_form.cleaned_data['pre_pago']
-            paquete.descripcion = paquete_form.cleaned_data['descripcion']
-            paquete.estado = paquete_form.cleaned_data['estado']
-            paquete.link = paquete_form.cleaned_data['link']
-            paquete.save()
-            return HttpResponseRedirect('/empresa/paquetes')
+        form = PaqueteEditForm(request.POST,instance=paquete)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Datos actualizados.')
+                return HttpResponseRedirect('/empresa/paquetes')
         else:
-            messages.warning(request, 'Datod no validos')
+            messages.warning(request, 'Datos no validos')
     if request.method == 'GET':
-        paquete_form = PaqueteForm(initial=
-            {
-                'sku':paquete.sku,
-                'nombre':paquete.nombre,
-                'precio':paquete.precio,
-                'descripcion':paquete.descripcion,
-                'estado':paquete.estado,
-                'porcentaje':paquete.porcentaje,
-                'pre_pago':paquete.pre_pago,
-                'link':paquete.link,
-            })
-    ctx = {'form':paquete_form,'obj':paquete,'logo':empresa_logo}
+        form = PaqueteForm(instance=paquete)
+    ctx = {'form':form,'obj':paquete,'logo':empresa_logo}
     return render(request,'paquete/edit.html', ctx)
 @login_required
 def paqueteAdd(request):
@@ -176,23 +139,23 @@ def paqueteAdd(request):
     ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')
     nombre_empresa = Paquete(empresa_id=empresa_id)
     if request.method == 'POST':
-        formAgregar = PaqueteForm(request.POST,instance=nombre_empresa)
-        if formAgregar.is_valid():
-            formAgregar.save()
+        form = PaqueteForm(request.POST,instance=nombre_empresa)
+        if form.is_valid():
+            form.save()
             messages.success(request, 'Paquete creado.')
             return HttpResponseRedirect('/empresa/paquetes')
         else:
             messages.warning(request, 'Verefique los campos.')
             ctx = {
             'ultimo':ultimo.sku,
-            'formAgregar':formAgregar,
+            'formAgregar':form,
             'logo':empresa_logo,}
             return render(request,'paquete/add.html', ctx)
     else:
-        formAgregar=PaqueteForm()
+        form=PaqueteForm()
         ctx = {
             'ultimo':ultimo.sku,
-            'form':formAgregar,
+            'form':form,
             'logo':empresa_logo,}
         return render(request,'paquete/add.html', ctx)
 @login_required
@@ -229,6 +192,27 @@ def pasajeroDetail(request, id):
     empresa_logo = request.session["logo"]
     return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
 @login_required
+def pasajeroEdit(request, id):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    try:
+        pasajero = Pasajero.objects.get(id=id,empresa_id = empresa_id)
+    except Pasajero.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
+    if request.method == 'POST':
+        form = PasajeroForm(request.POST,instance=pasajero)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Actualizado')
+                return HttpResponseRedirect('/empresa/pasajeros')
+        else:
+            messages.warning(request, 'Datos no validos')
+    if request.method == 'GET':
+        form = PasajeroForm(instance=pasajero)
+    ctx = {'form':form,'logo':empresa_logo}
+    return render(request,'edit.html', ctx)
+@login_required
 def pasajeros(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
@@ -251,7 +235,28 @@ def clienteDetail(request, id):
         obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
     except Cliente.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
-    return render(request,'pasajero/detail.html',{'obj':obj,'logo':empresa_logo})
+    return render(request,'cliente/detail.html',{'obj':obj,'logo':empresa_logo})
+@login_required
+def clienteEdit(request, id):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    try:
+        obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
+    except Cliente.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
+    if request.method == 'POST':
+        form = ClienteForm(request.POST,instance=obj)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Actualizado')
+                return HttpResponseRedirect('/empresa/clientes')
+        else:
+            messages.warning(request, 'Datos no validos')
+    if request.method == 'GET':
+        form = ClienteForm(instance=obj)
+    ctx = {'form':form,'logo':empresa_logo}
+    return render(request,'edit.html', ctx)
 @login_required
 def clientes(request):
     empresa_id = request.session["empresa"]
@@ -265,7 +270,29 @@ def clientes(request):
         objs = paginator.page(1)
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
-    return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo})
+    return render(request,'cliente/list.html',{'objs':objs,'logo':empresa_logo})
+@login_required
+def clienteAdd(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Cliente creado.')
+                return HttpResponseRedirect('/empresa/clientes')
+        else:
+            messages.warning(request, 'Verefique los campos.')
+            ctx = {
+            'form':form,
+            'logo':empresa_logo,}
+            return render(request,'add.html', ctx)
+    form=ClienteForm()
+    ctx = {
+        'form':form,
+        'logo':empresa_logo,}
+    return render(request,'add.html', ctx)
 def error404(request):
     return render(request,'errors/404.html')
 def error403(request):

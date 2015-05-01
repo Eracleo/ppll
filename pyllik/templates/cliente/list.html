@@ -1,10 +1,11 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Viajeros{% endblock %}
+{% block title %}Clientes{% endblock %}
 {% block content %}
 {%if objs%}
 	<table class="table table-hover table-condensed">
     <thead>
       <tr>
+        <th>  </th>
         <th>Apellidos y Nombre(s) </th>
         <th>Documento</th>
         <th>E-mail</th>
@@ -13,7 +14,8 @@
     </thead>
 		{% for obj in objs %}
 			<tr>
-        <td><a href="/empresa/pasajero/detail/{{obj.id}}"><b>{{obj.apellidos}} </b> {{obj.nombre}}</a></td>
+        <td><a href="/empresa/cliente/detail/{{obj.id}}"><span class="glyphicon glyphicon-eye-open"> </span></a></td>
+        <td><a href="/empresa/cliente/detail/{{obj.id}}"><b>{{obj.apellidos}} </b> {{obj.nombre}}</a></td>
         <td>{{obj.doc_tipo}} <b>{{obj.doc_nro}}</b></td>
         <td>{{obj.email}}</td>
         <td>{{obj.pais}}</td>

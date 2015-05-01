@@ -1,16 +1,25 @@
 body{
 }
 h1,.h1{
-font-size: 22px;
+font-size: 25px;
+margin-top: 5px;
+}/*
+a{
+  color: rgb(190, 131, 22);
 }
+a:hover{
+  color: rgb(156, 106, 14);
+}*/
 #menu{
-margin-bottom: 0px;
 }
-.form-group {
+#admin .nav-tabs>li{
+    float: right;
+}
+#admin .form-group {
 display: inline-block;
 width: 100%;
 }
-span.ayuda {
+#admin span.ayuda {
 position: absolute;
 right: -10px;
 top: 10px;
@@ -18,8 +27,8 @@ font-size: 1em;
 color: #ed9c28;
 cursor: pointer;
 }
-.has-error p.help-block,
-p.help-block{
+#admin .has-error p.help-block,
+#admin p.help-block{
 padding: 10px;
 display: none;
 position: absolute;
@@ -29,8 +38,8 @@ z-index: 100;
 width: 200px;
 top: 20px;
 }
-.has-error .error,
-.has-error .help-block {
+#admin .has-error .error,
+#admin .has-error .help-block {
 padding: 5px;
 display: block;
 position: static;
@@ -39,7 +48,7 @@ background: rgb(255, 219, 219);
 margin-top: 5px;
 color: red;
 }
-span.ayuda1{
+#admin span.ayuda1{
 	position: absolute;
 	right: 200px;
 	top: 150px;
@@ -54,19 +63,19 @@ span.ayuda1{
   -webkit-font-smoothing: antialiased;
 }
 
-.caja {
+#admin .caja {
 position: absolute;
 top: 244px;
 right: 339px;
  /*Para poder ubicar la info dentro de la caja*/
 margin: 10px auto;
 }
-.caja img {
+#admin .caja img {
 /*border:2px solid black;*/
   width: 15px;
   background: orangered;
 }
-.info {
+#admin .info {
 width: 200px;
 height: -10px;
 position: absolute; /*Info sobre la imagen*/
@@ -82,35 +91,8 @@ background: black;
 -webkit-transition:all ease .8s ;
 transition:all ease .8s;
 }
-.caja:hover .info {
+#admin .caja:hover .info {
 filter: alpha(opacity=80);
 opacity: .8; /*Al hacer hover sobre la caja hacemos visible los datos*/
 }
-.head-content{
-}
-ul.tabs {
-margin: 0px;
-margin-top: 20px;
-min-height: 37px;
-}
-ul.tabs li {
-  float: left;
-  margin: 0 5px 0 0; /* LTR */
-  list-style: none;
-  padding:5px 10px;
-  line-height: 2;
-  -khtml-border-radius-topleft: 6px;
-  -moz-border-radius-topleft: 6px;
-  -webkit-border-top-left-radius: 6px;
-  border-top-left-radius: 6px;
-  -khtml-border-radius-topright: 6px;
-  -moz-border-radius-topright: 6px;
-  -webkit-border-top-right-radius: 6px;
-  border-top-right-radius: 6px;
-}
-ul.tabs li.active,
-ul.tabs li:hover {
-  background-color: #f0f0f0;
-}
-ul.tabs li a:hover{text-decoration: none;}
-hr.top{margin-top: 0px;}
+#admin hr.top{margin-top: 0px;}

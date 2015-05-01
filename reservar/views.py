@@ -25,7 +25,6 @@ def detalle(request, sku):
     if request.method == 'GET' and paquete.estado:
         context = {
             'paquete':paquete,
-            'range':xrange(1,16),
             'logo': empresa_logo,
         }
         return render(request,'product.html',context)

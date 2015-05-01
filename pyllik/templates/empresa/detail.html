@@ -1,27 +1,30 @@
 {% extends "layout/base_admin.html"%}
 {% block title %}{{ obj.razon_social }}{% endblock %}
 {% block content %}
-<hr>
-<dl class="dl-horizontal">
-	<dt>Rubro:</dt>
-	<dd>{{obj.rubro }}</dd>
-	<dt>RUC: </dt>
-	<dd>{{obj.ruc}}</dd>
-	<dt>Dirección: </dt>
-	<dd>{{obj.direccion}}</dd>
-	<dt>WEB: </dt>
-	<dd><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></dd>
-</dl>
-<hr>
-<dl class="dl-horizontal">
-	<dt>Información de Paypal</dt>
-	<dd>(<a href="/empresa/edit/paypal_account">editar</a>)</dd>
-	<dt>Abreviatura:</dt>
-	<dd>{{obj.abreviatura }}</dd>
-	<dt>E-mail: </dt>
-	<dd>{{ obj.paypal_email}}</a></dd>
-	<dt>Identity Token (at): </dt>
-	<dd>{{ obj.paypal_at}}</a></dd>
-</dl>
-<hr>
+<div class="row">
+	<div class="col-sm-6">
+		<dl class="dl-horizontal">
+			<dt>Rubro:</dt>
+			<dd>{{obj.rubro }}</dd>
+			<dt>RUC: </dt>
+			<dd>{{obj.ruc}}</dd>
+			<dt>Dirección: </dt>
+			<dd>{{obj.direccion}}</dd>
+			<dt>WEB: </dt>
+			<dd><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></dd>
+		</dl>
+	</div>
+	<div class="col-sm-6">
+		<dl class="dl-horizontal">
+			<dt>Información de Paypal</dt>
+			<dd>(<a href="/empresa/edit/paypal_account">editar</a>)</dd>
+			<dt>Abreviatura:</dt>
+			<dd>{{obj.abreviatura }}</dd>
+			<dt>E-mail: </dt>
+			<dd>{{ obj.paypal_email}}</a></dd>
+			<dt>Identity Token (at): </dt>
+			<dd>{{ obj.paypal_at}}</a></dd>
+		</dl>
+	</div>
+</div>
 {% endblock %}

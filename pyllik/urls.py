@@ -18,7 +18,10 @@ urlpatterns = patterns('',
     # Pasajeros
     url(r'^pasajero/detail/(?P<id>\d+)$','pyllik.views.pasajeroDetail', name='pasajeroDetail'),
     url(r'^pasajeros$','pyllik.views.pasajeros', name='pasajeros'),
+    url(r'^pasajero/edit/(?P<id>\d+)$','pyllik.views.pasajeroEdit', name='pasajeroEdit'),
     # Clientes
     url(r'^clientes$','pyllik.views.clientes', name='clientes'),
+    url(r'^cliente/add/$','pyllik.views.clienteAdd', name='clienteAdd'),
     url(r'^cliente/detail/(?P<id>\d+)$','pyllik.views.clienteDetail', name='clienteDetail'),
+    url(r'^cliente/edit/(?P<id>\d+)$','pyllik.views.clienteEdit', name='clienteEdit'),
 )

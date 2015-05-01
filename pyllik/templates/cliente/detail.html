@@ -1,12 +1,10 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Perfil Turista{% endblock %}
+{% block title %}Información{% endblock %}
 {% block options %}
 <li><a href="../edit/{{obj.id}}">Editar</a></li>
 <li class="active"><a href="#">Ver</a></li>
 {% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-sm-6">
 <table class="table table-striped">
     <tr>
         <td width="200"><b>Nombres y Apellidos:</b></td>
@@ -33,9 +31,4 @@
         <td>{{obj.creado}}</td>
     </tr>
 </table>
-    </div>
-    <div class="col-sm-6">
-
-    </div>
-</div>
 {% endblock%}

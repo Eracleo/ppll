@@ -2,7 +2,7 @@
 {% block title %}Reservas{% endblock %}
 {% block content %}
 {% if objs %}
-	<table class="table table-bordered table-condesed table-hover">
+	<table class="table table-condesed table-hover">
       <tr>
         <th>ID</th>
         <th>Fecha de Viaje</th>
@@ -15,7 +15,7 @@
     </tr>
 		{% for reserva in objs %}
     <tr>
-      <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.id}}{{reserva.paquete.sku}}</a></td>
+      <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.paquete.sku}}-{{reserva.id}}</a></td>
       <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
 			<!--td>reserva.fecha_viaje|timeuntil}}</td-->
 			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
