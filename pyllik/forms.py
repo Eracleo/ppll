@@ -48,7 +48,7 @@ class PaypalAccountForm(forms.ModelForm):
 class ClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
-        exclude = ('editado','creado')
+        fields = ('nombre','apellidos', 'doc_tipo','doc_nro','email','telefono','celular','pais')
 class PasajeroForm(forms.ModelForm):
     class Meta:
         model = Pasajero

@@ -137,9 +137,9 @@ def paqueteAdd(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     ultimo = Paquete.objects.filter(empresa_id = empresa_id).latest('id')
-    nombre_empresa = Paquete(empresa_id=empresa_id)
+    paquete = Paquete(empresa_id=empresa_id)
     if request.method == 'POST':
-        form = PaqueteForm(request.POST,instance=nombre_empresa)
+        form = PaqueteForm(request.POST,instance=paquete)
         if form.is_valid():
             form.save()
             messages.success(request, 'Paquete creado.')
@@ -226,6 +226,29 @@ def pasajeros(request):
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
     return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo})
+@login_required
+def pasajeroAdd(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    if request.method == 'POST':
+        obj = Pasajero(empresa_id=empresa_id)
+        form = PasajeroForm(request.POST,instance=obj)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Pasajero creado.')
+                return HttpResponseRedirect('/empresa/pasajeros')
+        else:
+            messages.warning(request, 'Verefique los campos.')
+            ctx = {
+            'form':form,
+            'logo':empresa_logo,}
+            return render(request,'add.html', ctx)
+    form=PasajeroForm()
+    ctx = {
+        'form':form,
+        'logo':empresa_logo,}
+    return render(request,'add.html', ctx)
 # Cliente
 @login_required
 def clienteDetail(request, id):
@@ -276,7 +299,8 @@ def clienteAdd(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
     if request.method == 'POST':
-        form = ClienteForm(request.POST)
+        obj = Cliente(empresa_id=empresa_id)
+        form = ClienteForm(request.POST,instance=obj)
         if form.is_valid():
             if form.cleaned_data:
                 form.save()

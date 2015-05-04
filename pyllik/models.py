@@ -53,7 +53,7 @@ class Pasajero(models.Model):
     email = models.EmailField(max_length=60,blank=True)
     telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
     pais = models.ForeignKey(Pais,null=True, blank=True)
-    empresa = models.ForeignKey(Empresa,null=True, blank=True)
+    empresa = models.ForeignKey(Empresa,null=True, blank=True,editable=False)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
@@ -86,7 +86,7 @@ class Cliente(models.Model):
     telefono = models.CharField(max_length=50, blank=True)
     celular = models.CharField(max_length=50, blank=True)
     pais = models.ForeignKey(Pais,null=True, blank=True)
-    empresa = models.ForeignKey(Empresa)
+    empresa = models.ForeignKey(Empresa,editable=False)
     creado = models.DateField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     def __unicode__(self):
