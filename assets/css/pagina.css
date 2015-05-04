@@ -1,0 +1,33 @@
+.form-group {
+display: inline-block;
+width: 100%;
+}
+span.ayuda {
+position: absolute;
+right: -10px;
+top: 10px;
+font-size: 1em;
+color: #ed9c28;
+cursor: pointer;
+}
+.has-error p.help-block,
+p.help-block{
+padding: 10px;
+display: none;
+position: absolute;
+right: -10px;
+background: #FFF7CF;
+z-index: 100;
+width: 200px;
+top: 20px;
+}
+.has-error .error,
+.has-error .help-block {
+padding: 5px;
+display: block;
+position: static;
+width: initial;
+background: rgb(255, 219, 219);
+margin-top: 5px;
+color: red;
+}
