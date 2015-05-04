@@ -26,7 +26,7 @@ class Empresa(models.Model):
     abreviatura = models.CharField(max_length=3,unique=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")
     paypal_at = models.CharField(max_length=64,help_text="Código de identicacion en paypal") # IdentityToken
-    code = models.CharField(max_length=32)
+    code = models.CharField(max_length=32,blank=True,editable=False)
     owner = models.ForeignKey(User,related_name='owner')
     trabajadores = models.ManyToManyField(User)
     creado = models.DateField(auto_now_add=True, editable=False)
