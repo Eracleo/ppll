@@ -1,7 +1,18 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Reservas{% endblock %}
+{% block options %}
+    <li class="active"><a href="#">Listar</a></li>
+{% endblock %}
 {% block content %}
+<script type="text/javascript">
+    $(function() {
+        $( "#id_fecha_viaje" ).datepicker({ dateFormat: "yy-mm-dd" ,minDate: 0 });
+  });
+</script>
 {% if objs %}
+  <form method="get">
+  {{form.as_p}}
+  </form>
 	<table class="table table-condesed table-hover">
       <tr>
         <th></th>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from .models import Paquete, Empresa, Pasajero, Cliente
+from .models import Paquete, Empresa, Pasajero, Cliente,Reserva
 from suit_ckeditor.widgets import CKEditorWidget
 
 class PaqueteForm(forms.ModelForm):
@@ -57,3 +57,8 @@ class PasajeroForm(forms.ModelForm):
     class Meta:
         model = Pasajero
         exclude = ('editado','creado')
+# Buscar
+class BuscarReservaForm(forms.ModelForm):
+    class Meta:
+        model = Reserva
+        fields = ('fecha_viaje','estado','estado_pago',)

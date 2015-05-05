@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -175,16 +175,17 @@ def paqueteAdd(request):
 def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Reserva.objects.filter(empresa_id = empresa_id).order_by('-id')
+    objs_list = Reserva.objects.filter(empresa_id = empresa_id,fecha_viaje='2015-05-20').order_by('-id')
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
+    form = BuscarReservaForm()
     try:
         objs = paginator.page(page)
     except PageNotAnInteger:
         objs = paginator.page(1)
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
-    return render(request,'reserva/list.html',{'objs':objs,'logo':empresa_logo})
+    return render(request,'reserva/list.html',{'objs':objs,'logo':empresa_logo,'form':form})
 @login_required
 def reservaDetail(request, id):
     empresa_id = request.session["empresa"]

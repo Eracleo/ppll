@@ -13,7 +13,6 @@
         <th>Precio (Dolares)</th>
         <th>Adelanto de Reserva (Dolares)</th>
         <th>Descripción</th>
-        <th width="90px">Creado</th>
         <th width="80px">Accion</th>
       </tr>
     </thead>
@@ -24,7 +23,6 @@
             <td>USD <b>{{paquete.precio}}</b></td>
       			<td>USD <b>{{paquete.pre_pago}}</b></td>
       			<td>{{paquete.descripcion|safe }}</td>
-      			<td>{{paquete.creado|date:"Y-m-d"}}</td>
             <td align="center"> {% ifequal paquete.estado True %}
                    <a href="#" title="Habilitado" style="color:green"><span class="glyphicon glyphicon-ok-sign"></span></a>
                 {% else %} <a href="#" title="Desabilitado" style="color:red"><span class="glyphicon glyphicon-remove-sign"></span></a>
