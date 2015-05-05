@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -295,7 +295,8 @@ def clienteDetail(request, id):
         obj = Cliente.objects.get(id=id,empresa_id = empresa_id)
     except Cliente.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
-    return render(request,'cliente/detail.html',{'obj':obj,'logo':empresa_logo})
+    reservas = obj.reserva_set.all()
+    return render(request,'cliente/detail.html',{'obj':obj,'logo':empresa_logo,'reservas':reservas})
 @login_required
 def clienteEdit(request, id):
     empresa_id = request.session["empresa"]
@@ -321,7 +322,15 @@ def clienteEdit(request, id):
 def clientes(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Cliente.objects.filter(empresa_id = empresa_id)
+    filtro = {}
+    filtro['empresa_id'] = empresa_id
+    if request.GET.get('email'):
+        filtro['email'] = request.GET.get('email');
+    if request.GET.get('pais'):
+        filtro['pais_id'] = request.GET.get('pais');
+    cliente =Cliente(**filtro)
+    form = BuscarClienteForm(instance=cliente)
+    objs_list = Cliente.objects.filter(**filtro)
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
@@ -330,7 +339,7 @@ def clientes(request):
         objs = paginator.page(1)
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
-    return render(request,'cliente/list.html',{'objs':objs,'logo':empresa_logo})
+    return render(request,'cliente/list.html',{'objs':objs,'logo':empresa_logo,'form':form})
 @login_required
 def clienteAdd(request):
     empresa_id = request.session["empresa"]

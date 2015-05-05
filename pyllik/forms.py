@@ -61,3 +61,7 @@ class BuscarReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ('fecha_viaje','estado','estado_pago',)
+class BuscarClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ('email','pais',)

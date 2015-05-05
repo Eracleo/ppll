@@ -52,11 +52,14 @@ def pasajeros(request):
         form = ReservarForm(request.POST)
         form.viajeros_instances = PasajeroFormset(request.POST)
         if form.is_valid():
-            # Talvez solo buscar y actualizar
-            cliente = Cliente()
-            cliente.email = email
-            cliente.empresa = paquete.empresa
-            cliente.save()
+            try:
+                cliente = Cliente.objects.get(email = email,empresa_id=paquete.empresa_id)
+            except Cliente.DoesNotExist:
+                cliente = Cliente()
+                cliente.email = email
+                cliente.empresa = paquete.empresa
+                cliente.save()
+
             reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
             reserva.estado = EstadoReserva.objects.get(id=1)
             reserva.forma_pago = FormaPago.objects.get(id=2)
