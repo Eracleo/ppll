@@ -1,0 +1,41 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Editar{% endblock %}
+{% block options %}
+    <li class="active"><a href="#">Editar</a></li>
+{% endblock %}
+{% block content %}
+{% load bootstrap %}
+<div class="row">
+    <div class="col-lg-8">
+        <form action="" method="POST" id="form" enctype='multipart/form-data' >
+            {%csrf_token%}
+            {{form|bootstrap_horizontal}}
+            <p align="right"><button type= "submit" class="btn btn-success"> Guardar</button>
+        <button type= "reset" class="btn btn-warning"> Limpiar</button> </p>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+ $('#form').validate({
+  errorElement: "span",
+  rules: {
+      nombre: {
+        minlength: 2,
+          required: true
+      }
+  },
+  highlight: function(element) {
+   $(element).closest('.form-group')
+   .removeClass('has-success').addClass('has-error');
+  },
+  success: function(element) {
+   element
+   .addClass('help-inline')
+   .closest('.form-group')
+   .removeClass('has-error').addClass('has-success');
+  }
+ });
+});
+</script>
+{% endblock%}

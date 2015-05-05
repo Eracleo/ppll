@@ -1,5 +1,9 @@
 {% extends "layout/base_admin.html"%}
 {% block title %}{{ obj.razon_social }}{% endblock %}
+{% block options %}
+    <li><a href="/empresa/edit">Editar</a></li>
+    <li class="active"><a href="#">Ver</a></li>
+{% endblock %}
 {% block content %}
 <div class="row">
 	<div class="col-sm-6">
@@ -13,6 +17,7 @@
 			<dt>WEB: </dt>
 			<dd><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></dd>
 		</dl>
+		<p><a href="/empresa/edit/logo">Cambiar Logo</a></p>
 	</div>
 	<div class="col-sm-6">
 		<dl class="dl-horizontal">

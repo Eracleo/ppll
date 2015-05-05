@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -52,7 +52,20 @@ def empresaDetail(request):
             formAgregar = EmpresaForm()
         return render(request,'empresa/add.html', {'form':formAgregar})
     return render(request,'empresa/detail.html',{'obj':empresa,'logo':empresa_logo})
-
+@login_required
+def logo(request):
+    user_id = request.user.id
+    empresa = Empresa.objects.get(owner = user_id)
+    if request.method == 'POST':
+        form = EmpresaFormEditLogo(request.POST,request.FILES,instance=empresa)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Logo de la empresa actualizado.')
+                return HttpResponseRedirect('/user/config')
+    form = EmpresaFormEditLogo(instance=empresa)
+    ctx = {'form':form,'empresa':empresa,}
+    return render(request,'empresa/logo.html', ctx)
 @login_required
 def empresaEdit(request):
     user_id = request.user.id
