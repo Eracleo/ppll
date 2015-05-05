@@ -13,3 +13,4 @@ user/migrations/*.pyc
 user/migrations/*.py
 carga/logos_empresa/*.jpg
 carga/logos_empresa/*.png
+carga/logos_empresa/*.gif
