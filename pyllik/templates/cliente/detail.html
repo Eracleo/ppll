@@ -40,6 +40,7 @@
         <th> </th>
         <th>Fecha de Viaje</th>
         <th>Paquete</th>
+        <th>Fecha Reserva</th>
         <th>Estado reserva</th>
         <th>Estado pago</th>
     </tr>
@@ -48,8 +49,9 @@
             <td><a href="/empresa/reserva/detail/{{reserva.id}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
             <td>{{reserva.fecha_viaje}}</td>
             <td>{{reserva.paquete}}</td>
-            <td>{{reserva.estado}}</td>
-            <td>{{reserva.estado_pago}}</td>
+      <td>{{reserva.creado|date:"Y-m-d"}}</td>
+      <td class="estado-{{reserva.estado_pago.id}}">{{reserva.estado_pago}}</td>
+      <td class="estado-{{reserva.estado.id}}">{{reserva.estado}}</td>
         </tr>
     {%endfor%}
 </table>

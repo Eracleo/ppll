@@ -21,7 +21,7 @@ class Empresa(models.Model):
     movistar = models.CharField(max_length=20, blank=True)
     email = models.EmailField(max_length=64, blank=True)
     web = models.URLField(max_length=64, blank=True)
-    logo = ImageWithThumbsField(upload_to='logos_empresa')
+    logo = ImageWithThumbsField(upload_to='logos_empresa', sizes=((150,50),))
     terminos_condiciones = models.URLField(max_length=120, blank=True, help_text="URL Terminos y condiciones.")
     abreviatura = models.CharField(max_length=3,unique=True)
     paypal_email = models.EmailField(max_length=100,help_text="E-mail relacionado con paypal")

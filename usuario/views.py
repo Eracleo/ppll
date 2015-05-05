@@ -64,7 +64,7 @@ def config(request):
         request.session["empresa"] = empresa.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
-        request.session["logo"] = empresa.logo.url
+        request.session["logo"] = empresa.logo.url_150x50
         return HttpResponseRedirect('/empresa')
     except Empresa.DoesNotExist:
         messages.info(request, 'Informacion de empresa falta crear')
