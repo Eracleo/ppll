@@ -116,6 +116,20 @@ def paqueteList(request):
         paquetes = paginator.page(paginator.num_pages)
     return render(request,'paquete/list.html',{'objs':paquetes,'logo':empresa_logo})
 @login_required
+def paquetesRendimiento(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    objs_list = Paquete.objects.filter(empresa_id = empresa_id).order_by('-id')
+    paginator = Paginator(objs_list, 30)
+    page = request.GET.get('page')
+    try:
+        paquetes = paginator.page(page)
+    except PageNotAnInteger:
+        paquetes = paginator.page(1)
+    except EmptyPage:
+        paquetes = paginator.page(paginator.num_pages)
+    return render(request,'paquete/rendimiento.html',{'objs':paquetes,'logo':empresa_logo})
+@login_required
 def paqueteDetail(request, id):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
@@ -175,14 +189,17 @@ def paqueteAdd(request):
 def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
+    filtro = {}
+    filtro['empresa_id'] = empresa_id
+    if request.GET.get('estado'):
+        filtro['estado_id'] = request.GET.get('estado');
+    if request.GET.get('estado_pago'):
+        filtro['estado_pago_id'] = request.GET.get('estado_pago');
     if request.GET.get('fecha_viaje'):
-        fecha = request.GET.get('fecha_viaje');
-        objs_list = Reserva.objects.filter(empresa_id = empresa_id,fecha_viaje=fecha).order_by('-id')
-        reserva = Reserva(fecha_viaje=fecha)
-        form = BuscarReservaForm(instance=reserva)
-    else:
-        form = BuscarReservaForm()
-        objs_list = Reserva.objects.filter(empresa_id = empresa_id).order_by('-id')
+        filtro['fecha_viaje'] = request.GET.get('fecha_viaje');
+    reserva = Reserva(**filtro)
+    form = BuscarReservaForm(instance=reserva)
+    objs_list = Reserva.objects.filter(**filtro).order_by('-id')
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:

@@ -2,6 +2,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Paquetes
     url(r'^paquetes$','pyllik.views.paqueteList', name='paqueteList'),
+    url(r'^paquetes/rendimiento$','pyllik.views.paquetesRendimiento', name='paquetesRendimiento'),
     url(r'^paquete/detail/(?P<id>\d+)$','pyllik.views.paqueteDetail', name='paqueteDetail'),
     url(r'^paquete/edit/(?P<id>\d+)$','pyllik.views.paqueteEdit', name='paqueteEdit'),
     url(r'^paquete/add/$','pyllik.views.paqueteAdd', name='paqueteAdd'),
@@ -13,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^edit/logo$','pyllik.views.logo', name='logo'),
     # Reservas
     url(r'^reservas$','pyllik.views.reservaList', name='reservaList'),
+    #url(r'^reservas/analytics$','pyllik.views.reservaAnalytics', name='reservaAnalytics'),
     url(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetail', name='reservaDetail'),
     #rl(r'^reserva/edit/(?P<id>\d+)$','pyllik.views.reservaEdit', name='reservaEdit'),
     #rl(r'^reserva/add$','pyllik.views.reservaAdd', name='reservaAdd'),

@@ -14,21 +14,15 @@
     }});
   });
 </script>
-{% load bootstrap %}
+{% load bootstrap%}
   <form method="get" id="form" class="buscar">
   <div class="row">
     <div class="col-sm-3">
-      {{form.fecha_viaje|bootstrap}}
+      {{form|bootstrap}}
     </div>
     <div class="col-sm-3">
-      {{form.estado|bootstrap}}
-    </div>
-    <div class="col-sm-3">
-      {{form.estado_pago|bootstrap}}
-    </div>
-    <div class="col-sm-3">
-        <p><br>
-          <input type="submit" class="btn btn-primary" value="Filtar"> <a href="reservas" class="btn btn-default">Todas</a></p>
+        <p><a href="reservas">Todas</a></p>
+  <input type="submit" class="btn btn-primary" value="Filtar">
     </div>
   </div>
   </form>
@@ -86,7 +80,7 @@
 </nav>
 {%else%}
 <div class="alert alert-danger">
-  (0) reservas encontradas
+  Reservas no encontradas
 </div>
 {% endif %}
 {% endblock%}
