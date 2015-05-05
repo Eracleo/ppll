@@ -219,22 +219,25 @@ def reservaDetail(request, id):
         return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
 @login_required
-def reservaEstado(request,id):
+def reservaEstado(request, id):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    obj = Reserva.objects.filter(empresa_id=empresa_id,id=id)
+    try:
+        reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
+    except Reserva.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
     if request.method == 'POST':
-        form = ReservaEstadoForm(request.POST,instance=obj)
-        if empresa_form.is_valid():
-            empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
-            empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
-            empresa.save()
-            messages.success(request, 'Información de empresa actualizado.')
-            return HttpResponseRedirect('/empresa/information')
+        form = ReservaEstadoForm(request.POST,instance=reserva)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Estados actualizado')
+                return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
         else:
-            messages.success(request, 'Información de empresa actualizado.')
-    form = ReservaEstadoForm(instance=obj)
-    ctx = {'form':form,'empresa':empresa}
+            messages.warning(request, 'Datos no validos')
+    if request.method == 'GET':
+        form = ReservaEstadoForm(instance=reserva)
+    ctx = {'form':form,'logo':empresa_logo}
     return render(request,'edit.html', ctx)
 # Pasajero
 @login_required

@@ -57,8 +57,6 @@ class PasajeroForm(forms.ModelForm):
         model = Pasajero
         exclude = ('editado','creado')
 class ReservaEstadoForm(forms.ModelForm):
-    paypal_email = forms.CharField(required=True,max_length=60)
-    paypal_at = forms.CharField(required=True,max_length=64)
     class Meta:
         model = Reserva
         fields  = ('estado','estado_pago',)
