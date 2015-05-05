@@ -96,12 +96,12 @@ filter: alpha(opacity=80);
 opacity: .8; /*Al hacer hover sobre la caja hacemos visible los datos*/
 }
 #admin hr.top{margin-top: 0px;}
-tr.estado-1 {
+td.estado-1 {
 background: rgb(255, 245, 213);
 }
-tr.estado-2 {
+td.estado-2 {
 background: rgb(219, 252, 189);
 }
-tr.estado-3 {
+td.estado-3 {
 background: rgb(248, 226, 230);
 }

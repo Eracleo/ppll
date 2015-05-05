@@ -4,25 +4,27 @@
 {% if objs %}
 	<table class="table table-condesed table-hover">
       <tr>
-        <th>ID</th>
+        <th></th>
         <th>Fecha de Viaje</th>
-        <th>Falta</th>
+        <th>Viaje en</th>
         <th>Paquete</th>
         <th>Viajeros</th>
-        <th>Email / IP</th>
-        <th>Creado</th>
-        <th>Estado</th>
+        <th>E-mail</th>
+        <th>Fecha de Reserva</th>
+        <th>Estado pago</th>
+        <th>Estado reserva</th>
     </tr>
 		{% for reserva in objs %}
-    <tr class="estado-{{reserva.estado.id}}">
-      <td><a href="/empresa/reserva/detail/{{reserva.id}}">{{reserva.paquete.sku}}-{{reserva.id}}</a></td>
+    <tr>
+      <td><a href="/empresa/reserva/detail/{{reserva.id}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
       <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
 			<td>{{reserva.fecha_viaje|timeuntil}}</td>
 			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
 			<td><a href="/empresa/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_pasajeros}}</a></td>
-			<td><a href="/empresa/cliente/detail/{{reserva.cliente.id}}">{{reserva.cliente}}</a> <b>/ {{reserva.ip}}</b></td>
+			<td><a href="/empresa/cliente/detail/{{reserva.cliente.id}}">{{reserva.cliente}}</a></td>
       <td>{{reserva.creado|date:"Y-m-d"}}</td>
-			<td>{{reserva.estado_pago}}</td>
+      <td class="estado-{{reserva.estado_pago.id}}">{{reserva.estado_pago}}</td>
+			<td class="estado-{{reserva.estado.id}}">{{reserva.estado}}</td>
     </tr>
 		{% endfor %}
 	</table>
