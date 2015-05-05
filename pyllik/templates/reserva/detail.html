@@ -1,5 +1,9 @@
 {% extends "layout/base_admin.html" %}
 {% block title %}Reserva de {{obj.paquete}}{% endblock %}
+{% block options %}
+    <li><a href="/empresa/reserva/edit/estado/{{obj.id}}">Cambiar Estado</a></li>
+    <li class="active"><a href="#">Ver</a></li>
+{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <tr>
@@ -43,7 +47,7 @@
     </tr>
     <tr>
         <td><b>Cliente:</b></td>
-        <td><a href="/empresa/cliente/detail/{{obj.cliente.id}}">{{obj.cliente}}</a></td>
+        <td><a href="/empresa/cliente/detail/{{obj.cliente.id}}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{obj.cliente}}</a></td>
     </tr>
 </table>
 <a name="viajeros"></a>

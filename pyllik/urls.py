@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^reservas$','pyllik.views.reservaList', name='reservaList'),
     #url(r'^reservas/analytics$','pyllik.views.reservaAnalytics', name='reservaAnalytics'),
     url(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetail', name='reservaDetail'),
+    url(r'^reserva/edit/estado/(?P<id>\d+)$','pyllik.views.reservaEstado', name='reservaEstado'),
     #rl(r'^reserva/edit/(?P<id>\d+)$','pyllik.views.reservaEdit', name='reservaEdit'),
     #rl(r'^reserva/add$','pyllik.views.reservaAdd', name='reservaAdd'),
     # Pasajeros

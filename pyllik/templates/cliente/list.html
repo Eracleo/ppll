@@ -28,6 +28,7 @@
         <th>E-mail</th>
         <th>Pais</th>
         <th>Reservas</th>
+        <th></th>
       </tr>
     </thead>
 		{% for obj in objs %}
@@ -40,6 +41,7 @@
         <td>{{obj.email}}</td>
         <td>{{obj.pais}}</td>
         <td><a href="/empresa/cliente/detail/{{obj.id}}#reservas"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>{{reservas}}</td>
+        <td></td>
       </tr>
 		{% endfor %}
 	</table>

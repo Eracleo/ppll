@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -218,6 +218,24 @@ def reservaDetail(request, id):
     except Reserva.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
+@login_required
+def reservaEstado(request,id):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    obj = Reserva.objects.filter(empresa_id=empresa_id,id=id)
+    if request.method == 'POST':
+        form = ReservaEstadoForm(request.POST,instance=obj)
+        if empresa_form.is_valid():
+            empresa.paypal_email = empresa_form.cleaned_data['paypal_email']
+            empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
+            empresa.save()
+            messages.success(request, 'Información de empresa actualizado.')
+            return HttpResponseRedirect('/empresa/information')
+        else:
+            messages.success(request, 'Información de empresa actualizado.')
+    form = ReservaEstadoForm(instance=obj)
+    ctx = {'form':form,'empresa':empresa}
+    return render(request,'edit.html', ctx)
 # Pasajero
 @login_required
 def pasajeroDetail(request, id):
