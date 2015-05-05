@@ -61,4 +61,4 @@ class PasajeroForm(forms.ModelForm):
 class BuscarReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
-        fields = ('fecha_viaje','estado','estado_pago',)
+        fields = ('fecha_viaje',)

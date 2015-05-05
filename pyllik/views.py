@@ -175,10 +175,16 @@ def paqueteAdd(request):
 def reservaList(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Reserva.objects.filter(empresa_id = empresa_id,fecha_viaje='2015-05-20').order_by('-id')
+    if request.GET.get('fecha_viaje'):
+        fecha = request.GET.get('fecha_viaje');
+        objs_list = Reserva.objects.filter(empresa_id = empresa_id,fecha_viaje=fecha).order_by('-id')
+        reserva = Reserva(fecha_viaje=fecha)
+        form = BuscarReservaForm(instance=reserva)
+    else:
+        form = BuscarReservaForm()
+        objs_list = Reserva.objects.filter(empresa_id = empresa_id).order_by('-id')
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
-    form = BuscarReservaForm()
     try:
         objs = paginator.page(page)
     except PageNotAnInteger:

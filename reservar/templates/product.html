@@ -18,7 +18,11 @@
     });
 
     $(function() {
-        $( "#fecha" ).datepicker({ dateFormat: "yy-mm-dd" ,minDate: 0 });
+        $( "#fecha" ).datepicker({ dateFormat: "yy-mm-dd" ,minDate: 0 ,beforeShow: function() {
+        setTimeout(function(){
+            $('.ui-datepicker').css('z-index', 9999);
+        }, 0);
+    }});
   });
 </script>
 
