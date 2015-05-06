@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm,ReservaForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -218,6 +218,43 @@ def reservaDetail(request, id):
     except Reserva.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
+@login_required
+def reservaPaquete(request,sku):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    try:
+        paquete = Paquete.objects.get(sku=sku,empresa_id = empresa_id)
+    except Paquete.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        try:
+            cliente = Cliente.objects.get(email = email,empresa_id=paquete.empresa_id)
+        except Cliente.DoesNotExist:
+            cliente = Cliente()
+            cliente.email = email
+            cliente.empresa = paquete.empresa
+            cliente.save()
+        obj = Reserva(empresa_id=empresa_id,paquete_id=paquete.id,cliente_id=cliente.id)
+        form = ReservaForm(request.POST,instance=obj)
+        if form.is_valid():
+            if form.cleaned_data:
+                form.save()
+                messages.success(request, 'Reserva creado.')
+                return HttpResponseRedirect('/empresa/reservas')
+        else:
+            messages.warning(request, 'Verefique los campos.')
+            ctx = {
+            'form':form,
+            'paquete':paquete,
+            'logo':empresa_logo,}
+            return render(request,'reserva/paquete.html', ctx)
+    form=ReservaForm()
+    ctx = {
+        'paquete':paquete,
+        'form':form,
+        'logo':empresa_logo,}
+    return render(request,'reserva/paquete.html', ctx)
 @login_required
 def reservaEstado(request, id):
     empresa_id = request.session["empresa"]

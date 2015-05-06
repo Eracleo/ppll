@@ -18,7 +18,7 @@ urlpatterns = patterns('',
     url(r'^reserva/detail/(?P<id>\d+)$','pyllik.views.reservaDetail', name='reservaDetail'),
     url(r'^reserva/edit/estado/(?P<id>\d+)$','pyllik.views.reservaEstado', name='reservaEstado'),
     #rl(r'^reserva/edit/(?P<id>\d+)$','pyllik.views.reservaEdit', name='reservaEdit'),
-    #rl(r'^reserva/add$','pyllik.views.reservaAdd', name='reservaAdd'),
+    url(r'^reserva/paquete/(?P<sku>\w{6})$','pyllik.views.reservaPaquete', name='reservaPaquete'),
     # Pasajeros
     url(r'^pasajeros$','pyllik.views.pasajeros', name='pasajeros'),
     url(r'^pasajero/add$','pyllik.views.pasajeroAdd', name='pasajeroAdd'),

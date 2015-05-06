@@ -21,7 +21,7 @@ SECRET_KEY = '&vnh9%r1op3x)lgv!&r*yj=ja!dtk$2o2))#wvp$p3w=rzydl2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['negotu.local']
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'reservar',
     'bootstrapform',
     'suit_ckeditor',
+    'ajax',
 )
 
 MIDDLEWARE_CLASSES = (

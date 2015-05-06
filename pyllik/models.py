@@ -134,10 +134,10 @@ class Reserva(models.Model):
     cantidad_pasajeros = models.IntegerField()
     pasajeros = models.ManyToManyField(Pasajero, blank=True)
     ip = models.GenericIPAddressField(null=True,blank=True)
-    reservado_mediante = models.ForeignKey(ReservadoMediante)
+    reservado_mediante = models.ForeignKey(ReservadoMediante,default=1)
     cliente = models.ForeignKey(Cliente)
     empresa = models.ForeignKey(Empresa)
-    estado = models.ForeignKey(EstadoReserva)
+    estado = models.ForeignKey(EstadoReserva,verbose_name="Estado Reserva",default=1)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     # Detalles de pago
@@ -145,8 +145,8 @@ class Reserva(models.Model):
     fecha_pago = models.DateTimeField(null=True)
     code = models.CharField(max_length=32,editable=False)
     tx = models.CharField(max_length=64, blank=True)
-    forma_pago = models.ForeignKey(FormaPago)
-    estado_pago = models.ForeignKey(EstadoPago)
+    forma_pago = models.ForeignKey(FormaPago,default=1)
+    estado_pago = models.ForeignKey(EstadoPago,default=1)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
         self.pre_pago = self.paquete.pre_pago

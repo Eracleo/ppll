@@ -105,6 +105,15 @@ background: rgb(219, 252, 189);
 td.estado-3 {
 background: rgb(248, 226, 230);
 }
+td.estado-4 {
+background: rgb(182, 182, 250);;
+}
+td.estado-5 {
+background: rgb(102, 241, 47);
+}
+td.estado-6 {
+background: rgb(255, 124, 124);
+}
 
 
 .ui-datepicker {
