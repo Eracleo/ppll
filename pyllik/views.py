@@ -10,6 +10,13 @@ from collections import defaultdict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 import uuid
+def get_ip(request):
+    ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
+    if ip:
+        ip = ip.split(", ")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR", "")
+    return ip
 @login_required
 def index(request):
     return empresaDetail(request)
@@ -227,7 +234,9 @@ def reservaPaquete(request,sku):
     except Paquete.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
     if request.method == 'POST':
+        ip=get_ip(request)
         email = request.POST.get('email')
+        code = uuid.uuid1().hex
         try:
             cliente = Cliente.objects.get(email = email,empresa_id=paquete.empresa_id)
         except Cliente.DoesNotExist:
@@ -235,7 +244,7 @@ def reservaPaquete(request,sku):
             cliente.email = email
             cliente.empresa = paquete.empresa
             cliente.save()
-        obj = Reserva(empresa_id=empresa_id,paquete_id=paquete.id,cliente_id=cliente.id)
+        obj = Reserva(empresa_id=empresa_id,paquete_id=paquete.id,cliente_id=cliente.id,ip=ip,code=code)
         form = ReservaForm(request.POST,instance=obj)
         if form.is_valid():
             if form.cleaned_data:
