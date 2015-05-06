@@ -122,28 +122,28 @@
     "model": "pyllik.EstadoReserva",
     "pk": 1,
     "fields": {
-      "nombre": "Iniciado"
+      "nombre": "Pre-reserva "
     }
   },
   {
     "model": "pyllik.EstadoReserva",
     "pk": 2,
     "fields": {
-      "nombre": "Dialogo"
+      "nombre": "Reserva"
     }
   },
   {
     "model": "pyllik.EstadoReserva",
     "pk": 3,
     "fields": {
-      "nombre": "Con viajeros"
+      "nombre": "Ejecución"
     }
   },
   {
     "model": "pyllik.EstadoReserva",
     "pk": 4,
     "fields": {
-      "nombre": "Confirmado"
+      "nombre": "Finalizado"
     }
   },
   {
@@ -157,28 +157,35 @@
     "model": "pyllik.EstadoPago",
     "pk": 1,
     "fields": {
-      "nombre": "Inicial"
+      "nombre": "Iniciado"
     }
   },
   {
     "model": "pyllik.EstadoPago",
     "pk": 2,
     "fields": {
-      "nombre": "Con Adelanto"
+      "nombre": "En Espera"
     }
   },
   {
     "model": "pyllik.EstadoPago",
     "pk": 3,
     "fields": {
-      "nombre": "Con incompleto"
+      "nombre": "Prepago"
     }
   },
   {
     "model": "pyllik.EstadoPago",
     "pk": 4,
     "fields": {
-      "nombre": "Pago Completado"
+      "nombre": "Pagado"
+    }
+  },
+  {
+    "model": "pyllik.EstadoPago",
+    "pk": 5,
+    "fields": {
+      "nombre": "Devolución"
     }
   }
 ]
