@@ -61,10 +61,10 @@ def pasajeros(request):
                 cliente.save()
 
             reserva = Reserva(paquete=paquete, cantidad_pasajeros=cantidad_pasajeros, fecha_viaje=fecha_viaje, cliente=cliente,ip=ip)
-            reserva.estado = EstadoReserva.objects.get(id=1)
-            reserva.forma_pago = FormaPago.objects.get(id=2)
-            reserva.estado_pago = EstadoPago.objects.get(id=1)
-            reserva.reservado_mediante = ReservadoMediante.objects.get(id=1)
+            reserva.estado_id = 1
+            reserva.forma_pago_id = 2
+            reserva.estado_pago_id = 1
+            reserva.reservado_mediante_id = 2
             reserva.code = uuid.uuid1().hex
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
