@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
 from django.contrib.auth.decorators import login_required
-from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm,ReservaForm
+from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm,ReservaForm,BuscarPasajeroForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.db.models import Count
@@ -320,7 +320,15 @@ def pasajeroEdit(request, id):
 def pasajeros(request):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
-    objs_list = Pasajero.objects.filter(empresa_id = empresa_id)
+    filtro = {}
+    filtro['empresa_id'] = empresa_id
+    if request.GET.get('doc_nro'):
+        filtro['doc_nro'] = request.GET.get('doc_nro');
+    if request.GET.get('pais'):
+        filtro['pais_id'] = request.GET.get('pais');
+    pasajero =Pasajero(**filtro)
+    form = BuscarPasajeroForm(instance=pasajero)
+    objs_list = Pasajero.objects.filter(**filtro)
     paginator = Paginator(objs_list, 30)
     page = request.GET.get('page')
     try:
@@ -329,7 +337,7 @@ def pasajeros(request):
         objs = paginator.page(1)
     except EmptyPage:
         objs = paginator.page(paginator.num_pages)
-    return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo})
+    return render(request,'pasajero/list.html',{'objs':objs,'logo':empresa_logo,'form':form})
 @login_required
 def pasajeroAdd(request):
     empresa_id = request.session["empresa"]

@@ -6,6 +6,7 @@
     <li>4. Confirm</li>
 {% endblock %}
 {% block content %}
+{% load bootstrap %}
 <script type="text/javascript">
     function valida(f) {
         var ok = true;
@@ -101,10 +102,7 @@
                     <label class="control-label">First Name</label>
                     <input id="id_form-{{ forloop.counter0 }}-nombre" maxlength="15" name="form-{{ forloop.counter0 }}-nombre" type="text" class="form-control" required>
                   </div>
-                  <div class="form-group">
-                    <label class="control-label">Document Type</label>
-                    {{ persona.doc_tipo}}
-                  </div>
+                  {{ persona.doc_tipo|bootstrap}}
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -125,10 +123,7 @@
               </div>
               <div class="row">
                 <div class="col-sm-6">
-                  <div class="form-group">
-                    <label class="control-label">Pais</label><br>
-                    {{ persona.pais}}
-                  </div>
+                    {{ persona.pais|bootstrap}}
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">

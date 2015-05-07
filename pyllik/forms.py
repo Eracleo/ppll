@@ -29,7 +29,6 @@ class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
         fields  = ('rubro','ruc','razon_social','direccion','abreviatura','telefono',)
-
 class EmpresaFormEdit(forms.ModelForm):
     razon_social = forms.CharField(max_length=40)
     direccion = forms.CharField(max_length=40)
@@ -73,3 +72,7 @@ class BuscarClienteForm(forms.ModelForm):
     class Meta:
         model = Cliente
         fields = ('email','pais',)
+class BuscarPasajeroForm(forms.ModelForm):
+    class Meta:
+        model = Pasajero
+        fields = ('doc_nro','pais',)
