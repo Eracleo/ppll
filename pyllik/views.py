@@ -269,7 +269,7 @@ def reservaAddPasajero(request, id):
                 pasajero = Pasajero()
                 pasajero.nombre= item['nombre'].value()
                 pasajero.apellidos= item['apellidos'].value()
-                pasajero.doc_tipo_id = item['email'].value()
+                pasajero.doc_tipo_id = item['doc_tipo'].value()
                 pasajero.doc_nro= item['doc_tipo'].value()
                 pasajero.pais_id= item['pais'].value()
                 pasajero.telefono= item['telefono'].value()
@@ -277,6 +277,8 @@ def reservaAddPasajero(request, id):
                 pasajero.empresa = reserva.empresa
                 pasajero.save()
                 reserva.pasajeros.add(pasajero)
+            reserva.estado_id = 3
+            reserva.save()
             messages.success(request, 'Pasajeros agregados')
         return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
     else:
