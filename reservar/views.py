@@ -123,7 +123,7 @@ def pasajeros(request):
             }
         return render(request,'passenger.html',context)
     else:
-        return HttpResponseRedirect('reservar/paquete/BIB002')
+        return HttpResponseRedirect('reservar/paquete/'+paquete.sku)
 def pagar(request,id,code):
     try:
         obj = Reserva.objects.get(id=id,code=code)

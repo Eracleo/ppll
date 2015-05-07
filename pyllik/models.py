@@ -51,7 +51,7 @@ class Pasajero(models.Model):
     doc_tipo = models.ForeignKey(TipoDocumento)
     doc_nro = models.CharField(max_length=10)
     email = models.EmailField(max_length=60,blank=True)
-    telefono = models.CharField(max_length=50, blank=True,help_text="Formato de Telefono: +512 123456789 o +51 123456789")
+    telefono = models.CharField(max_length=50, blank=True)
     pais = models.ForeignKey(Pais,null=True, blank=True)
     empresa = models.ForeignKey(Empresa,null=True, blank=True,editable=False)
     creado = models.DateField(auto_now_add=True, editable=False)
@@ -137,7 +137,7 @@ class Reserva(models.Model):
     reservado_mediante = models.ForeignKey(ReservadoMediante,default=1)
     cliente = models.ForeignKey(Cliente)
     empresa = models.ForeignKey(Empresa)
-    estado = models.ForeignKey(EstadoReserva,verbose_name="Estado Reserva",default=1)
+    estado = models.ForeignKey(EstadoReserva,verbose_name="Estado Reserva")
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     # Detalles de pago
@@ -145,8 +145,8 @@ class Reserva(models.Model):
     fecha_pago = models.DateTimeField(null=True)
     code = models.CharField(max_length=32,editable=False)
     tx = models.CharField(max_length=64, blank=True)
-    forma_pago = models.ForeignKey(FormaPago,default=1)
-    estado_pago = models.ForeignKey(EstadoPago,default=1)
+    forma_pago = models.ForeignKey(FormaPago)
+    estado_pago = models.ForeignKey(EstadoPago)
     def save(self, *args, **kwargs):
         self.empresa = self.paquete.empresa
         self.pre_pago = self.paquete.pre_pago

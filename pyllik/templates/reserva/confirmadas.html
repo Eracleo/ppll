@@ -1,0 +1,97 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Reservas{% endblock %}
+{% block options %}
+    <li class="active"><a href="#">Listar</a></li>
+{% endblock %}
+{% block content %}
+<script type="text/javascript">
+    $(function() {
+        $( "#id_fecha_viaje" ).datepicker(
+          { dateFormat: "yy-mm-dd" ,minDate: 0 ,beforeShow: function() {
+        setTimeout(function(){
+            $('.ui-datepicker').css('z-index', 9999);
+        }, 0);
+    }});
+  });
+</script>
+{% load bootstrap %}
+  <form method="get" id="form" class="buscar">
+  <div class="row">
+    <div class="col-sm-3">
+      {{form.fecha_viaje|bootstrap}}
+    </div>
+    <div class="col-sm-3">
+      {{form.estado|bootstrap}}
+    </div>
+    <div class="col-sm-3">
+      {{form.estado_pago|bootstrap}}
+    </div>
+    <div class="col-sm-3">
+        <p><br>
+          <input type="submit" class="btn btn-primary" value="Filtar"> <a href="reservas" class="btn btn-default">Todas</a></p>
+    </div>
+  </div>
+  </form>
+{% if objs %}
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+{% regroup objs by fecha_viaje|date:"Y" as objs_by_year %}
+    {% for year_points in objs_by_year %}
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading{{forloop.counter}}">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse{{forloop.counter}}" aria-expanded="false" aria-controls="collapse{{forloop.counter}}">
+          {{year_points.grouper}}
+        </a>
+      </h4>
+    </div>
+    <div id="collapse{{forloop.counter}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{forloop.counter}}">
+      <div class="panel-body">
+        {% regroup year_points.list by fecha_viaje|date:"M" as points_by_month %}
+            {% for month_points in points_by_month %}
+              <p><b>{{month_points.grouper}}</b></p>
+              {% regroup month_points.list by fecha_viaje|date:"d" as points_by_day %}
+              {% for day_points in points_by_day %}
+              <p>{{day_points.grouper}}</p>
+                <ul>
+                  {% for r in day_points.list %}
+                  <li>{{r.paquete}}</li>
+                  {% endfor %}
+                </ul>
+              {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+    {% endfor %}
+</div>
+<nav>
+  <ul class="pagination">
+    {% if objs.has_previous %}
+    <li>
+      <a href="?page={{ objs.previous_page_number }}" aria-label="Previous">
+        <span aria-hidden="true">Anterior</span>
+      </a>
+    </li>
+    {% endif %}
+    {% for item in objs.paginator.page_range %}
+    {% ifequal item objs.number %}
+      <li  class="active"><a href="?page={{ item }}" >{{item }}</a></li>
+    {% else %}
+      <li ><a href="?page={{ item }}" >{{item }}</a></li>
+    {% endifequal %}
+    {% endfor %}
+    {% if objs.has_next %}
+    <li>
+      <a href="?page={{ objs.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">Siguiente</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{%else%}
+<div class="alert alert-danger">
+  (0) reservas encontradas
+</div>
+{% endif %}
+{% endblock%}

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from .models import Paquete, Empresa, Reserva, Pasajero, Cliente
+from .models import Paquete, Empresa, Reserva, Pasajero, Cliente,TipoDocumento
 from django.contrib.auth.decorators import login_required
 from forms import PaqueteForm, PaqueteEditForm, EmpresaForm, EmpresaFormEdit,PaypalAccountForm,PasajeroForm,ClienteForm,EmpresaFormEditLogo,BuscarReservaForm,BuscarClienteForm,ReservaEstadoForm,ReservaForm,BuscarPasajeroForm
 from django.http import HttpResponseRedirect
@@ -10,6 +10,8 @@ from collections import defaultdict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 import uuid
+from django.forms.formsets import formset_factory
+from django import forms
 def get_ip(request):
     ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
     if ip:
@@ -217,6 +219,30 @@ def reservaList(request):
         objs = paginator.page(paginator.num_pages)
     return render(request,'reserva/list.html',{'objs':objs,'logo':empresa_logo,'form':form})
 @login_required
+def reservaConfirmadas(request):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    filtro = {}
+    filtro['empresa_id'] = empresa_id
+    if request.GET.get('estado'):
+        filtro['estado_id'] = request.GET.get('estado');
+    if request.GET.get('estado_pago'):
+        filtro['estado_pago_id'] = request.GET.get('estado_pago');
+    if request.GET.get('fecha_viaje'):
+        filtro['fecha_viaje'] = request.GET.get('fecha_viaje');
+    reserva = Reserva(**filtro)
+    form = BuscarReservaForm(instance=reserva)
+    objs_list = Reserva.objects.filter(**filtro).order_by('-fecha_viaje')
+    paginator = Paginator(objs_list, 30)
+    page = request.GET.get('page')
+    try:
+        objs = paginator.page(page)
+    except PageNotAnInteger:
+        objs = paginator.page(1)
+    except EmptyPage:
+        objs = paginator.page(paginator.num_pages)
+    return render(request,'reserva/confirmadas.html',{'objs':objs,'logo':empresa_logo,'form':form})
+@login_required
 def reservaDetail(request, id):
     empresa_id = request.session["empresa"]
     empresa_logo = request.session["logo"]
@@ -225,6 +251,37 @@ def reservaDetail(request, id):
     except Reserva.DoesNotExist:
         return render(request,'404-admin.html',{'logo':empresa_logo})
     return render(request,'reserva/detail.html',{'obj':reserva,'logo':empresa_logo})
+@login_required
+def reservaAddPasajero(request, id):
+    empresa_id = request.session["empresa"]
+    empresa_logo = request.session["logo"]
+    try:
+        reserva = Reserva.objects.get(id=id,empresa_id = empresa_id)
+    except Reserva.DoesNotExist:
+        return render(request,'404-admin.html',{'logo':empresa_logo})
+
+    PasajeroFormset= formset_factory(PasajeroForm, extra=reserva.cantidad_pasajeros, max_num=int(reserva.cantidad_pasajeros))
+
+    if request.method == 'POST':
+        form = PasajeroFormset(request.POST)
+        if form.is_valid():
+            for item in form:
+                pasajero = Pasajero()
+                pasajero.nombre= item['nombre'].value()
+                pasajero.apellidos= item['apellidos'].value()
+                pasajero.doc_tipo_id = item['email'].value()
+                pasajero.doc_nro= item['doc_tipo'].value()
+                pasajero.pais_id= item['pais'].value()
+                pasajero.telefono= item['telefono'].value()
+                pasajero.email= item['email'].value()
+                pasajero.empresa = reserva.empresa
+                pasajero.save()
+                reserva.pasajeros.add(pasajero)
+            messages.success(request, 'Pasajeros agregados')
+        return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
+    else:
+        form = PasajeroFormset()
+        return render(request,'add.html',{'obj':reserva,'logo':empresa_logo,'form':form})
 @login_required
 def reservaPaquete(request,sku):
     empresa_id = request.session["empresa"]
@@ -258,12 +315,13 @@ def reservaPaquete(request,sku):
             'paquete':paquete,
             'logo':empresa_logo,}
             return render(request,'reserva/paquete.html', ctx)
-    form=ReservaForm()
-    ctx = {
-        'paquete':paquete,
-        'form':form,
-        'logo':empresa_logo,}
-    return render(request,'reserva/paquete.html', ctx)
+    else:
+        form=ReservaForm()
+        ctx = {
+            'paquete':paquete,
+            'form':form,
+            'logo':empresa_logo,}
+        return render(request,'reserva/paquete.html', ctx)
 @login_required
 def reservaEstado(request, id):
     empresa_id = request.session["empresa"]
@@ -279,9 +337,7 @@ def reservaEstado(request, id):
                 form.save()
                 messages.success(request, 'Estados actualizado')
                 return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
-        else:
-            messages.warning(request, 'Datos no validos')
-    if request.method == 'GET':
+    else:
         form = ReservaEstadoForm(instance=reserva)
     ctx = {'form':form,'logo':empresa_logo}
     return render(request,'edit.html', ctx)
