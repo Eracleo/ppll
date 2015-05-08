@@ -1,7 +1,7 @@
 {% extends "layout/base_admin.html"%}
 {% block title %}{{ obj.razon_social }}{% endblock %}
 {% block options %}
-    <li><a href="/empresa/edit">Editar</a></li>
+    <li><a href="/crm/edit">Editar</a></li>
     <li class="active"><a href="#">Ver</a></li>
 {% endblock %}
 {% block content %}
@@ -17,12 +17,12 @@
 			<dt>WEB: </dt>
 			<dd><a href="{{ obj.web}}" target="_blanck">{{ obj.web}}</a></dd>
 		</dl>
-		<p><a href="/empresa/edit/logo">Cambiar Logo</a></p>
+		<p><a href="/crm/edit/logo">Cambiar Logo</a></p>
 	</div>
 	<div class="col-sm-6">
 		<dl class="dl-horizontal">
 			<dt>Información de Paypal</dt>
-			<dd>(<a href="/empresa/edit/paypal_account">editar</a>)</dd>
+			<dd>(<a href="/crm/edit/paypal_account">editar</a>)</dd>
 			<dt>Abreviatura:</dt>
 			<dd>{{obj.abreviatura }}</dd>
 			<dt>E-mail: </dt>

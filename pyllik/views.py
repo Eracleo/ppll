@@ -38,7 +38,7 @@ def empresaDetail(request):
             if Empresa.objects.filter(abreviatura=abrev):
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 messages.success(request, 'Información de empresa creado.')
-                return render(request,'empresa/add.html', {'form':formAgregar,'abres':'si','nro':int(nro)+1})
+                return render(request,'crm/add.html', {'form':formAgregar,'abres':'si','nro':int(nro)+1})
             else:
                 formAgregar = EmpresaForm(request.POST,request.FILES, instance=usuario)
                 if formAgregar.is_valid():
@@ -59,8 +59,8 @@ def empresaDetail(request):
                     return HttpResponseRedirect('/user/config')
         else:
             formAgregar = EmpresaForm()
-        return render(request,'empresa/add.html', {'form':formAgregar})
-    return render(request,'empresa/detail.html',{'obj':empresa,'logo':empresa_logo})
+        return render(request,'crm/add.html', {'form':formAgregar})
+    return render(request,'crm/detail.html',{'obj':empresa,'logo':empresa_logo})
 @login_required
 def logo(request):
     user_id = request.user.id
@@ -74,7 +74,7 @@ def logo(request):
                 return HttpResponseRedirect('/user/config')
     form = EmpresaFormEditLogo(instance=empresa)
     ctx = {'form':form,'empresa':empresa,}
-    return render(request,'empresa/logo.html', ctx)
+    return render(request,'crm/logo.html', ctx)
 @login_required
 def empresaEdit(request):
     user_id = request.user.id
@@ -85,7 +85,7 @@ def empresaEdit(request):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Información de empresa actualizado.')
-                return HttpResponseRedirect('/empresa/information')
+                return HttpResponseRedirect('/crm/information')
     if request.method == 'GET':
         form = EmpresaFormEdit(instance=empresa)
     ctx = {'form':form,'empresa':empresa,}
@@ -101,7 +101,7 @@ def paypal_account(request):
             empresa.paypal_at = empresa_form.cleaned_data['paypal_at']
             empresa.save()
             messages.success(request, 'Información de empresa actualizado.')
-            return HttpResponseRedirect('/empresa/information')
+            return HttpResponseRedirect('/crm/information')
     if request.method == 'GET':
         empresa_form = PaypalAccountForm(initial=
             {
@@ -161,7 +161,7 @@ def paqueteEdit(request, id):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Datos actualizados.')
-                return HttpResponseRedirect('/empresa/paquetes')
+                return HttpResponseRedirect('/crm/paquetes')
         else:
             messages.warning(request, 'Datos no validos')
     if request.method == 'GET':
@@ -179,7 +179,7 @@ def paqueteAdd(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Paquete creado.')
-            return HttpResponseRedirect('/empresa/paquetes')
+            return HttpResponseRedirect('/crm/paquetes')
         else:
             messages.warning(request, 'Verefique los campos.')
             ctx = {
@@ -280,7 +280,7 @@ def reservaAddPasajero(request, id):
             reserva.estado_id = 3
             reserva.save()
             messages.success(request, 'Pasajeros agregados')
-        return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
+        return HttpResponseRedirect('/crm/reserva/detail/'+str(reserva.id))
     else:
         form = PasajeroFormset()
         return render(request,'add.html',{'obj':reserva,'logo':empresa_logo,'form':form})
@@ -309,7 +309,7 @@ def reservaPaquete(request,sku):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Reserva creado.')
-                return HttpResponseRedirect('/empresa/reservas')
+                return HttpResponseRedirect('/crm/reservas')
         else:
             messages.warning(request, 'Verefique los campos.')
             ctx = {
@@ -338,7 +338,7 @@ def reservaEstado(request, id):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Estados actualizado')
-                return HttpResponseRedirect('/empresa/reserva/detail/'+str(reserva.id))
+                return HttpResponseRedirect('/crm/reserva/detail/'+str(reserva.id))
     else:
         form = ReservaEstadoForm(instance=reserva)
     ctx = {'form':form,'logo':empresa_logo}
@@ -367,7 +367,7 @@ def pasajeroEdit(request, id):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Actualizado')
-                return HttpResponseRedirect('/empresa/pasajeros')
+                return HttpResponseRedirect('/crm/pasajeros')
         else:
             messages.warning(request, 'Datos no validos')
     if request.method == 'GET':
@@ -407,7 +407,7 @@ def pasajeroAdd(request):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Pasajero creado.')
-                return HttpResponseRedirect('/empresa/pasajeros')
+                return HttpResponseRedirect('/crm/pasajeros')
         else:
             messages.warning(request, 'Verefique los campos.')
             ctx = {
@@ -444,7 +444,7 @@ def clienteEdit(request, id):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Actualizado')
-                return HttpResponseRedirect('/empresa/clientes')
+                return HttpResponseRedirect('/crm/clientes')
         else:
             messages.warning(request, 'Datos no validos')
     if request.method == 'GET':
@@ -484,7 +484,7 @@ def clienteAdd(request):
             if form.cleaned_data:
                 form.save()
                 messages.success(request, 'Cliente creado.')
-                return HttpResponseRedirect('/empresa/clientes')
+                return HttpResponseRedirect('/crm/clientes')
         else:
             messages.warning(request, 'Verefique los campos.')
             ctx = {

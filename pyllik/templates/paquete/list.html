@@ -32,7 +32,7 @@
     			<td>{{paquete.descripcion|safe }}</td>
           <td align="center">
             <a href="paquete/edit/{{paquete.id}}" title="Editar"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><a/>  <a href="/reservar/paquete/{{paquete.sku}}" title="Verificar"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span><a/>
-              <a href="/empresa/reserva/paquete/{{paquete.sku}}" title="Reservar tour"><span  aria-hidden="true" class="glyphicon glyphicon-shopping-cart"></span></a>
+              <a href="/crm/reserva/paquete/{{paquete.sku}}" title="Reservar tour"><span  aria-hidden="true" class="glyphicon glyphicon-shopping-cart"></span></a>
           </td>
       		</tr>
 		{% endfor %}

@@ -41,12 +41,12 @@
     </tr>
 		{% for reserva in objs %}
     <tr>
-      <td><a href="/empresa/reserva/detail/{{reserva.id}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
+      <td><a href="/crm/reserva/detail/{{reserva.id}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a></td>
       <td>{{reserva.fecha_viaje|date:"Y-m-d"}}</td>
 			<td>{{reserva.fecha_viaje|timeuntil}}</td>
-			<td><a href="/empresa/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
-			<td><a href="/empresa/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_pasajeros}}</a></td>
-			<td><a href="/empresa/cliente/detail/{{reserva.cliente.id}}">{{reserva.cliente}}</a></td>
+			<td><a href="/crm/paquete/detail/{{reserva.paquete.id}}">{{reserva.paquete}}</a></td>
+			<td><a href="/crm/reserva/detail/{{reserva.id}}#viajeros">{{reserva.cantidad_pasajeros}}</a></td>
+			<td><a href="/crm/cliente/detail/{{reserva.cliente.id}}">{{reserva.cliente}}</a></td>
       <td>{{reserva.creado|date:"Y-m-d"}}</td>
       <td class="estado-{{reserva.estado_pago.id}}">{{reserva.estado_pago}}</td>
 			<td class="estado-{{reserva.estado.id}}">{{reserva.estado}}</td>
