@@ -6,4 +6,4 @@ class PasajeroForm(forms.ModelForm):
     nombre = forms.CharField(required=True,max_length=15)
     class Meta:
         model = Pasajero
-        exclude = ('editado','creado')
+        exclude = ('editado','creado','tipo')

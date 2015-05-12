@@ -1,0 +1,30 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Información  <small> <a href="/crm/trabajadores"  title="Listar trabajadores"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></small>{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <tr>
+        <td width="200"><b>Username:</b></td>
+        <td>{{obj.user}}</td>
+    </tr>
+    <tr>
+        <td width="200"><b>Nombres y Apellidos:</b></td>
+        <td>{{obj.user.first_name}} {{obj.user.last_name}}</td>
+    </tr>
+    <tr>
+        <td><b>{{obj.doc_tipo}}:</b></td>
+        <td>{{obj.doc_nro}}</td>
+    </tr>
+    <tr>
+        <td><b>E-mail:</b></td>
+        <td>{{obj.user.email}}</td>
+    </tr>
+    <tr>
+        <td><b>Telefono:</b></td>
+        <td>{{obj.telefono}}</td>
+    </tr>
+    <tr>
+        <td><b>Dirección:</b></td>
+        <td>{{obj.direccion}}</td>
+    </tr>
+</table>
+{% endblock%}

@@ -115,6 +115,4 @@ EMAIL_HOST_USER = 'juan@llika.net'
 EMAIL_HOST_PASSWORD = 'juaneco2012'
 EMAIL_PORT = 587
 
-
-
-
+LOGO = "LOGO DE LA EMPRESA"

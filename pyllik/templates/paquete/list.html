@@ -1,9 +1,5 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Paquetes{% endblock %}
-{% block options %}
-    <li><a href="paquete/add">Nuevo</a></li>
-    <li class="active"><a href="#">Listar</a></li>
-{% endblock %}
+{% block title %}Paquetes <small> <a href="/crm/paquete/add" title="Agregar paquete"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></small>{% endblock %}
 {% block content %}
 	<table class="table table-hover table-condensed">
     <thead>

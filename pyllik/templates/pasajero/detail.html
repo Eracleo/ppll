@@ -1,9 +1,5 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Perfil Turista{% endblock %}
-{% block options %}
-<li><a href="../edit/{{obj.id}}">Editar</a></li>
-<li class="active"><a href="#">Ver</a></li>
-{% endblock %}
+{% block title %}Perfil Turista <small> <a href="/crm/pasajeros"  title="Listar pasajeros"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></small>{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-sm-6">

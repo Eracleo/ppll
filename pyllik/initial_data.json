@@ -1,58 +1,16 @@
 [
-  { "model": "auth.user",
-    "pk": 10,
+  {
+    "model": "auth.group",
+    "pk": 1,
     "fields": {
-      "username": "user1",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+      "name": "Dueño"
     }
   },
-  { "model": "auth.user",
-    "pk": 11,
+  {
+    "model": "auth.group",
+    "pk": 2,
     "fields": {
-      "username": "user2",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 12,
-    "fields": {
-      "username": "user3",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 13,
-    "fields": {
-      "username": "user4",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 14,
-    "fields": {
-      "username": "user5",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 15,
-    "fields": {
-      "username": "user6",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 16,
-    "fields": {
-      "username": "user7",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
-    }
-  },
-  { "model": "auth.user",
-    "pk": 17,
-    "fields": {
-      "username": "user8",
-      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+      "name": "Vendedor"
     }
   },
   {
@@ -186,6 +144,62 @@
     "pk": 5,
     "fields": {
       "nombre": "Devolución"
+    }
+  },
+  {
+    "model": "pyllik.TipoPasajero",
+    "pk": 1,
+    "fields": {
+      "nombre": "Infante"
+    }
+  },
+  {
+    "model": "pyllik.TipoPasajero",
+    "pk": 2,
+    "fields": {
+      "nombre": "Niño"
+    }
+  },
+  {
+    "model": "pyllik.TipoPasajero",
+    "pk": 3,
+    "fields": {
+      "nombre": "Estudiante"
+    }
+  },
+  {
+    "model": "pyllik.TipoPasajero",
+    "pk": 4,
+    "fields": {
+      "nombre": "Adulto"
+    }
+  },
+  { "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "user1",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "user2",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "user3",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
+    }
+  },
+  { "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "user4",
+      "password": "pbkdf2_sha256$15000$xrnHxJVZX06U$BzVp+S4+gUborcTf6wnXoaabE0mdvpE5plA9wGB8XsI="
     }
   }
 ]

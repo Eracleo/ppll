@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.template.context import RequestContext
-from pyllik.models import Empresa
+from pyllik.models import Empresa, Rubro, Trabajador,Paquete
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from forms import SignUpForm, EditForm
+from forms import SignUpForm, EditForm, EmpresaForm
 from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
-
 @login_required()
 def main(request):
     request.session["empresa"]=1
@@ -21,36 +20,44 @@ def logout_view(request):
     return HttpResponseRedirect('/user/login')
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            email = form.cleaned_data["email"]
-            first_name = form.cleaned_data["first_name"]
-            last_name = form.cleaned_data["last_name"]
-
+        signupF = SignUpForm(request.POST)
+        empresaF = EmpresaForm(request.POST)
+        if signupF.is_valid() and empresaF.is_valid():
+            username = signupF.cleaned_data["username"]
+            password = signupF.cleaned_data["password"]
+            email = signupF.cleaned_data["email"]
             user = User.objects.create_user(username, email, password)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.save()
 
-            titulo = 'Cuenta Creada Negotu'
+            empresa = empresaF.save()
+
+            trabajador = Trabajador(user_id=user.id,empresa_id=empresa.id)
+            trabajador.save()
+
+            paquete = Paquete()
+            paquete.sku = empresa.abreviatura + "001"
+            paquete.nombre = "Paquete Inicial"
+            paquete.estado = False
+            paquete.empresa = empresa
+            paquete.save()
+
             contenido = 'Estimado(a) '
-            contenido += first_name
+            contenido += username
             contenido += "\n\nGracias por su interes en Negotu.com\n\n\nTu cuenta fue creado.\n"
             contenido += "\n\nSu Cuenta:\nURL: https://quipu.negotu.com/user/\nUsuario: " + username +"\nPassword: "+ password +"\n\n\nLlika Inversiones E.I.R.L\n www.llika.com\nhttp://www.negotu.com\nTelefono: 051 084 232460"
-            correo = EmailMessage(titulo, contenido, to=[email])
+            correo = EmailMessage('Cuenta creada en Negotu', contenido, to=[email])
             correo.send()
             messages.success(request, 'Cuenta creada con exito. Revise su correo')
             return HttpResponseRedirect(reverse('main'))
         else:
             messages.warning(request, 'Verifique su Información.')
     else:
-        form = SignUpForm()
-    data = {
-        'form': form,
+        signupF = SignUpForm()
+        empresaF = EmpresaForm()
+    ctx = {
+        'signup': signupF,
+        'empresa': empresaF,
     }
-    return render(request,'user/signup.html', data)
+    return render(request,'user/signup.html', ctx)
 @login_required()
 def home(request):
     empresa_logo = request.session["logo"]
@@ -59,14 +66,14 @@ def home(request):
 def config(request):
     try:
         id_user = request.user.id
-        empresa = Empresa.objects.get(owner = id_user)
+        empresa = Trabajador.objects.get(user_id = id_user).empresa
         request.session["email"] = request.user.email
         request.session["empresa"] = empresa.id
         request.session["abreviatura"] = empresa.abreviatura
         request.session["razon_social"] = empresa.razon_social
         request.session["logo"] = empresa.logo.url_150x50
         return HttpResponseRedirect('/crm')
-    except Empresa.DoesNotExist:
+    except Trabajador.DoesNotExist:
         messages.info(request, 'Informacion de empresa falta crear')
         return HttpResponseRedirect('/crm/information')
 
@@ -78,7 +85,6 @@ def cambiar(request):
         newpass=request.POST['next']
         success = user.check_password(passa)
         if success :
-            # do your email changing magic
             user.set_password(newpass)
             user.save()
             messages.success(request, 'Su contraseña se ha cambiado satisfactoriamente.')
@@ -87,6 +93,7 @@ def cambiar(request):
             messages.warning(request, 'Ingrese Correctamente su contraseña. Por favor intenta otra vez..')
             return render(request,'user/cambiarpass.html', {'user': request.user})
     else:
+        messages.info(request,'Por favor, introduzca su contraseña antigua, por seguridad, y después introduzca la nueva contraseña dos veces para verificar que la ha escrito correctamente.')
         return render(request,'user/cambiarpass.html', {'user': request.user})
 
 def login_view(request):

@@ -48,12 +48,11 @@ class Trabajador(models.Model):
     user = models.OneToOneField(User,primary_key=True)
     doc_nro = models.CharField(max_length=10,verbose_name="D. I.")
     direccion = models.CharField(max_length=60)
-    email = models.CharField(max_length=60)
     telefono = models.CharField(max_length=60)
     celular = models.CharField(max_length=60)
     observaciones = models.TextField(blank=True)
     empresa = models.ForeignKey(Empresa)
-    foto = ImageWithThumbsField(upload_to='logos_empresa', sizes=((150,250),))
+    foto = ImageWithThumbsField(upload_to='trabajadores', sizes=((210,320),))
     def __unicode__(self):
         return str(self.user)
 class TrabajadorContacto(models.Model):
@@ -160,7 +159,7 @@ class Reserva(models.Model):
     estado = models.ForeignKey(EstadoReserva,verbose_name="Estado Reserva")
     estado_pago = models.ForeignKey(EstadoPago)
     code = models.CharField(max_length=32,default=uuid.uuid1().hex,editable=False)
-    nuevo = models.BooleanField(default=False)
+    nuevo = models.BooleanField(default=True)
     creado = models.DateTimeField(auto_now_add=True, editable=False)
     editado = models.DateTimeField(auto_now=True, editable=False)
     empresa = models.ForeignKey(Empresa)
@@ -171,7 +170,7 @@ class Reserva(models.Model):
         self.precio = self.paquete.precio
         super(Reserva,self).save(*args,**kwargs)
     def __unicode__(self):
-        return "Una reserva de "+str(self)
+        return "Una reserva de "+str(self.id)
     def precioTotal(self):
         return int(self.cantidad_pasajeros) * self.precio
     def precioTotalPrePago(self):
@@ -195,7 +194,9 @@ class Pago(models.Model):
     tx = models.CharField(max_length=64, blank=True)
     verificado = models.BooleanField(default=False)
     empresa = models.ForeignKey(Empresa)
-    nuevo = models.BooleanField(default=False)
+    nuevo = models.BooleanField(default=True)
     def save(self, *args, **kwargs):
         self.empresa = self.reserva.empresa
         super(Pago,self).save(*args,**kwargs)
+    def __unicode__(self):
+        return "pagado - "+str(self.ip)

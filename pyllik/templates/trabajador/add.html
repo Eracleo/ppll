@@ -1,0 +1,18 @@
+{% extends "layout/base_admin.html" %}
+{% block title %}Agregar  {% endblock %}
+{% block content %}
+{% load bootstrap %}
+<div class="row">
+	<div class="col-lg-8">
+		<form id="form" action="" method="POST">
+            {{form|bootstrap}}
+            {%csrf_token%}
+		    <p align="right"><button id="enviar" type= 'submit' class="btn btn-success"> Guardar</button>
+		    <button type= "reset" class="btn btn-warning"> Limpiar</button></p>
+		</form>
+	</div>
+</div>
+{% endblock%}
+
+
+

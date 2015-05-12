@@ -1,8 +1,5 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Viajeros{% endblock %}
-{% block options %}
-    <li class="active"><a href="#">Listar</a></li>
-{% endblock %}
+{% block title %}Viajeros <small> <a href="/crm/pasajero/add" title="Agregar pasajero"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a></small>{% endblock %}
 {% block content %}
 {% load bootstrap %}
 <form method="get" id="form" class="buscar">

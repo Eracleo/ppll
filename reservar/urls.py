@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from reservar import views
 urlpatterns = patterns('',
-    url(r'^paquete/(?P<sku>\w{6})$','reservar.views.detalle', name='detalle'),
+    url(r'^paquete/(?P<sku>\w{7})$','reservar.views.detalle', name='detalle'),
     #url(r'^pasajeros/(?P<id>\d+)$','reservar.views.pasajeros', name='pasajeros'),
    # url(r'^guardar/$','reservar.views.guaradarpasajeros', name='viajeros'),
     url(r'^pasajeros/$','reservar.views.pasajeros', name='pasajeros'),

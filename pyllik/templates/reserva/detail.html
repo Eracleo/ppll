@@ -1,9 +1,5 @@
 {% extends "layout/base_admin.html" %}
-{% block title %}Reserva de {{obj.paquete}}{% endblock %}
-{% block options %}
-    <li><a href="/crm/reserva/edit/estado/{{obj.id}}">Cambiar Estado</a></li>
-    <li class="active"><a href="#">Ver</a></li>
-{% endblock %}
+{% block title %}Reserva de {{obj.paquete}} <small> <a href="/crm/reservas"  title="Listar reservas"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a></small>{% endblock %}
 {% block content %}
 <table class="table table-striped">
     <tr>
@@ -13,14 +9,6 @@
     <tr>
         <td><b>Fecha Viaje:</b></td>
         <td>{{obj.fecha_viaje}}</td>
-    </tr>
-    <tr>
-        <td><b>tx:</b></td>
-        <td>{{obj.tx}}</td>
-    </tr>
-    <tr>
-        <td><b>Fecha de Pago:</b></td>
-        <td>{{obj.fecha_pago}}</td>
     </tr>
     <tr>
         <td><b>Forma de pago:</b></td>
@@ -71,7 +59,34 @@
     </tr>
 {% endfor %}
 </table>
-
+<a name="viajeros"></a>
+{% if pagos %}
+<h4>Pagos</h4>
+<table class="table">
+    <tr>
+        <th>Nro</th>
+        <th>Monto Depositado</th>
+        <th>Fecha de Pago</th>
+        <th>forma_pago</th>
+        <th>IP</th>
+        <th>Estado</th>
+        <th>tx</th>
+        <th>verificado</th>
+    </tr>
+{% for pago in pagos %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{pago.precio}}</td>
+        <td>{{pago.creado}}</td>
+        <td>{{pago.forma_pago}}</td>
+        <td>{{pago.ip}}</td>
+        <td>{{pago.estado}}</td>
+        <td>{{pago.tx}}</td>
+        <td>{% if pago.verificado %} <span class="glyphicon glyphicon-ok-circle" aria-hidden="true" style="color:green;"> </span> {%else%}<span class="glyphicon glyphicon-remove-circle" aria-hidden="true" style="color:red;"> </span>{%endif%}</td>
+    </tr>
+{% endfor %}
+</table>
+{%endif%}
 <p>
     <a href="/pdf/books/{{obj.id}}-reserve-{{obj.fecha_viaje|date:"Y-m-d"}}.pdf" class="btn btn-default">  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> PDF</a>
     <a href="javascript:print()" class="btn btn-default" ><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>

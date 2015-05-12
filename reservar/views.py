@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from .forms import PasajeroForm
-from pyllik.models import Paquete, Pais,TipoDocumento,Reserva,Pasajero, Cliente,EstadoReserva,FormaPago,EstadoPago,ReservadoMediante
+from pyllik.models import Paquete, Pais,TipoDocumento,Reserva,Pasajero, Cliente,EstadoReserva,FormaPago,EstadoPago,ReservadoMediante,Pago
 from django.http import HttpResponseRedirect
 from django.forms.formsets import formset_factory
 from django.core.mail import EmailMessage
 from django import forms
 import paypal
 import datetime
-import uuid
 def get_ip(request):
     ip = request.META.get("HTTP_X_FORWARDED_FOR", None)
     if ip:
@@ -65,7 +64,6 @@ def pasajeros(request):
             reserva.forma_pago_id = 2
             reserva.estado_pago_id = 1
             reserva.reservado_mediante_id = 2
-            reserva.code = uuid.uuid1().hex
             reserva.save()
             if form.viajeros_instances.cleaned_data is not None:
                 for item in form.viajeros_instances.cleaned_data:
@@ -132,7 +130,7 @@ def pagar(request,id,code):
     request.session["logo_pago"] = ''
     empresa_logo = obj.empresa.logo.url
     request.session["logo_pago"] = empresa_logo
-    if obj.tx != "":
+    if obj.estado_pago_id > 1:
         empresa = obj.empresa
         ctx = {
             'logo':empresa_logo,
@@ -143,8 +141,8 @@ def pagar(request,id,code):
     paypal = {
         'paypal_url':"https://www.sandbox.paypal.com/cgi-bin/webscr",
         'paypal_pdt_url':"https://www.sandbox.paypal.com/au/cgi-bin/webscr",
-        'return_url':"https://quipu.negotu.com/reservar/paypal/",
-        'cancel_url':"https://quipu.negotu.com/reservar/cancelado/",
+        'return_url':"http://127.0.0.1:8000/reservar/paypal/",
+        'cancel_url':"http://127.0.0.1:8000/reservar/cancelado/",
     }
     # Recuperar datos de la agencia
     agencia = obj.empresa
@@ -179,18 +177,28 @@ def dePaypal(request):
     at = reserva.empresa.paypal_at
 
     success,pdt = paypal.paypal_check(tx,at)
+    reserva.estado_pago_id=4
+    reserva.save()
+
     if success :
         if reserva.id == int(pdt['item_number']):
             if float(pdt['payment_gross']) >= reserva.cantidad_pasajeros * reserva.pre_pago:
-                reserva.estado_pago = EstadoPago.objects.get(id=3)
-                reserva.estado = EstadoReserva.objects.get(id=2)
+                reserva.estado_pago_id=3
+                reserva.estado_id=2
             else :
-                reserva.estado_pago = EstadoPago.objects.get(id=4)
-                reserva.estado = EstadoReserva.objects.get(id=3)
-            reserva.tx = tx
-            reserva.fecha_pago = datetime.datetime.now()
+                reserva.estado_pago_id=4
+                reserva.estado_id=3
+            #reserva.tx = tx
+            #reserva.fecha_pago = datetime.datetime.now()
             reserva.save()
-            # Send message
+
+            pago = Pago(reserva_id=reserva.id)
+            pago.precio = float(pdt['payment_gross'])
+            pago.empresa_id = reserva.empresa_id
+            pago.tx = tx
+            pago.ip = get_ip(request)
+            pago.forma_pago_id = 2
+            pago.save()
             empresa = reserva.empresa
             title = empresa.razon_social + " - INVOICE "+ str(reserva.id)
             body = "<img heigth='50' src='httpw://quipu.negotu.com"+empresa.logo.url+"'>"
@@ -216,7 +224,11 @@ def dePaypal(request):
             msg.send()
 
             return HttpResponseRedirect("/reservar/confirmado/?id="+str(reserva.id)+"&y="+str(reserva.fecha_viaje.year)+"&m="+str(reserva.fecha_viaje.month)+"&d="+str(reserva.fecha_viaje.day)+"&tx="+tx)
-    return HttpResponseRedirect('/reservar/cancelado/')
+        else:
+            return render(request,'404-reservar.html')
+    else :
+        return render(request,'500-reservar.html')
+    #return HttpResponseRedirect('/reservar/cancelado/')
 def confirmado(request):
     empresa_logo = request.session["logo_pago"]
     ctx = {

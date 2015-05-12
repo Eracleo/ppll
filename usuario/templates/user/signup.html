@@ -5,8 +5,15 @@
 <div class="row">
     <div class="col-lg-9">
         <form method="post" action="{% url 'signup' %}" id="form">
+          <fieldset>
+            <legend>Información de la Empresa</legend>
+            {{ empresa|bootstrap_horizontal:'col-lg-4'}}
+          </fieldset>
+          <fieldset>
+            <legend>Información Personal</legend>
             {% csrf_token %}
-            {{ form|bootstrap_horizontal:'col-lg-4'}}
+            {{ signup|bootstrap_horizontal:'col-lg-4'}}
+          </fieldset>
             <p><input type="submit" class="btn btn-primary" value="Crear cuenta"/></p>
         </form>
     </div>
