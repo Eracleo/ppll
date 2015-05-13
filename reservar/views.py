@@ -169,6 +169,7 @@ def pagar(request,id,code):
     return render(request,'payments.html',context)
 def dePaypal(request):
     tx = request.GET.get('tx')
+    tx = tx.upper()
     ir = request.GET.get('item_number')
     try:
         reserva = Reserva.objects.get(id=ir)
@@ -212,7 +213,7 @@ def dePaypal(request):
             body += "</td></tr><tr><td>Advance's mount (%)</td><td>:  USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
             body += "</td></tr><tr><td>Tax</td><td>: 0.00"
             body += "</td></tr><tr><td><p>Total payment</p></td><td>: USD $ " + str(int(reserva.cantidad_pasajeros)*reserva.pre_pago)
-            body += "</td></tr><tr><td>Date of paymet</td><td>: " + str(reserva.fecha_pago)
+            body += "</td></tr><tr><td>Date of paymet</td><td>: "
             body += "</td></tr><tr><td>Paymet form</td><td>: Paypal"
             body += "</td></tr><tr><td>Transaction ID</td><td>: " + tx
             body += "</td><tr><td>Booked by</td><td>: " + str(reserva.cliente)
@@ -230,7 +231,10 @@ def dePaypal(request):
         return render(request,'500-reservar.html')
     #return HttpResponseRedirect('/reservar/cancelado/')
 def confirmado(request):
-    empresa_logo = request.session["logo_pago"]
+    try :
+        empresa_logo = request.session["logo_pago"]
+    except:
+        empresa_logo = ""
     ctx = {
         'logo':empresa_logo,
         'id':request.GET.get('id'),
